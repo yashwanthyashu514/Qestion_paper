@@ -1,0 +1,53 @@
+const express = require('express');
+const router = express.Router();
+const Paper = require('../models/Paper');
+const auth = require('../middleware/auth');
+const checkRole = require('../middleware/role');
+
+// @route   POST /api/papers
+// @desc    Save a paper
+// @access  Teacher
+router.post('/', [auth, checkRole(['teacher'])], async (req, res) => {
+    try {
+        const paperData = {
+            ...req.body,
+            subject: req.user.subject,
+            teacherId: req.user.id
+        };
+        const paper = new Paper(paperData);
+        await paper.save();
+        res.json(paper);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+// @route   GET /api/papers
+// @desc    Get all papers of a teacher
+// @access  Teacher
+router.get('/', [auth, checkRole(['teacher'])], async (req, res) => {
+    try {
+        const papers = await Paper.find({ teacherId: req.user.id }).populate('questions');
+        res.json(papers);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+// @route   GET /api/papers/:id
+// @desc    Get a single paper
+// @access  Teacher
+router.get('/:id', [auth, checkRole(['teacher'])], async (req, res) => {
+    try {
+        const paper = await Paper.findById(req.params.id).populate('questions');
+        if (!paper) return res.status(404).json({ msg: 'Paper not found' });
+        res.json(paper);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+module.exports = router;

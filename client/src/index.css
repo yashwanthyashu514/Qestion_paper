@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #3b82f6; /* Blue 500 */
+  --secondary: #10b981; /* Emerald 500 */
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f3f4f6; /* Gray 100 */
+  margin: 0;
+  padding: 0;
+}
