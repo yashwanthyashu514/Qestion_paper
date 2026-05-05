@@ -60,14 +60,26 @@ const AddQuestion = () => {
                 <h3 className="text-xl font-bold mb-4 text-green-700">Add New Question</h3>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
-                        <select className="border p-2 rounded" value={formData.classes} onChange={e=>setFormData({...formData, classes: e.target.value})}>
+                        <select className="border p-2 rounded" value={formData.classes} onChange={e => {
+                            const val = e.target.value;
+                            const newFormData = { ...formData, classes: val };
+                            if (['JEE', 'KCET', 'NEET'].includes(val)) {
+                                newFormData.type = 'MCQ';
+                            }
+                            setFormData(newFormData);
+                        }}>
                             <option value="11">Class 11</option>
                             <option value="12">Class 12</option>
                             <option value="JEE">JEE</option>
                             <option value="KCET">KCET</option>
                             <option value="NEET">NEET</option>
                         </select>
-                        <select className="border p-2 rounded" value={formData.type} onChange={e=>setFormData({...formData, type: e.target.value})}>
+                        <select 
+                            className="border p-2 rounded" 
+                            value={formData.type} 
+                            onChange={e=>setFormData({...formData, type: e.target.value})}
+                            disabled={['JEE', 'KCET', 'NEET'].includes(formData.classes)}
+                        >
                             <option value="MCQ">MCQ</option>
                             <option value="1m">1 Mark</option>
                             <option value="2m">2 Marks</option>
@@ -81,8 +93,16 @@ const AddQuestion = () => {
                             <option value="hard">Hard</option>
                         </select>
                     </div>
-                    <input type="text" placeholder="Chapter Name" required className="w-full border p-2 rounded" value={formData.chapter} onChange={e=>setFormData({...formData, chapter: e.target.value})} />
-                    <input type="text" placeholder="Concept / Topic Name" required className="w-full border p-2 rounded" value={formData.concept} onChange={e=>setFormData({...formData, concept: e.target.value})} />
+                    <input type="text" list="chapters" placeholder="Chapter Name (Select or Type New)" required className="w-full border p-2 rounded" value={formData.chapter} onChange={e=>setFormData({...formData, chapter: e.target.value})} />
+                    <datalist id="chapters">
+                        {[...new Set(questions.map(q => q.chapter))].filter(Boolean).map(ch => <option key={ch} value={ch} />)}
+                    </datalist>
+                    
+                    <input type="text" list="concepts" placeholder="Concept / Topic Name (Select or Type New)" required className="w-full border p-2 rounded" value={formData.concept} onChange={e=>setFormData({...formData, concept: e.target.value})} />
+                    <datalist id="concepts">
+                        {[...new Set(questions.filter(q => !formData.chapter || q.chapter === formData.chapter).map(q => q.concept))].filter(Boolean).map(c => <option key={c} value={c} />)}
+                    </datalist>
+
                     <textarea placeholder="Question Text" required className="w-full border p-2 rounded h-32" value={formData.questionText} onChange={e=>setFormData({...formData, questionText: e.target.value})}></textarea>
                     
                     {formData.type === 'MCQ' && (

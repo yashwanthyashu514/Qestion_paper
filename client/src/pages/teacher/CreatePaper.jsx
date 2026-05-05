@@ -12,10 +12,23 @@ const CreatePaper = () => {
     const [selectedQuestions, setSelectedQuestions] = useState([]);
     const [previewQuestion, setPreviewQuestion] = useState(null);
     const [paperTitle, setPaperTitle] = useState('');
+    const [allQuestions, setAllQuestions] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/api/questions').then(res => setAllQuestions(res.data)).catch(console.error);
+    }, []);
+
+    const uniqueChapters = [...new Set(allQuestions.map(q => q.chapter))].filter(Boolean);
+    const uniqueConcepts = [...new Set(allQuestions.filter(q => !filters.chapter || q.chapter === filters.chapter).map(q => q.concept))].filter(Boolean);
 
     const fetchFilteredQuestions = async () => {
         try {
-            const queryParams = new URLSearchParams(filters).toString();
+            const queryData = { ...filters };
+            if (queryData.class) {
+                queryData.classes = queryData.class;
+                delete queryData.class;
+            }
+            const queryParams = new URLSearchParams(queryData).toString();
             const res = await axios.get(`http://localhost:5000/api/questions?${queryParams}`);
             setQuestions(res.data);
         } catch (err) {
@@ -67,23 +80,49 @@ const CreatePaper = () => {
 
             <div className="p-4 bg-white shadow flex gap-4 items-center">
                 <input type="text" placeholder="Paper Title" value={paperTitle} onChange={e=>setPaperTitle(e.target.value)} className="border p-2 rounded font-bold w-64" />
-                <select onChange={e=>setFilters({...filters, class: e.target.value})} className="border p-2 rounded">
+                <select 
+                    value={filters.class}
+                    onChange={e => {
+                        const val = e.target.value;
+                        const newFilters = { ...filters, class: val };
+                        if (['JEE', 'KCET', 'NEET'].includes(val)) {
+                            newFilters.type = 'MCQ';
+                        }
+                        setFilters(newFilters);
+                    }} 
+                    className="border p-2 rounded"
+                >
                     <option value="">All Classes</option>
                     <option value="11">Class 11</option><option value="12">Class 12</option>
                     <option value="JEE">JEE</option><option value="KCET">KCET</option><option value="NEET">NEET</option>
                 </select>
-                <select onChange={e=>setFilters({...filters, level: e.target.value})} className="border p-2 rounded">
+                <select 
+                    value={filters.level}
+                    onChange={e=>setFilters({...filters, level: e.target.value})} 
+                    className="border p-2 rounded"
+                >
                     <option value="">All Levels</option>
                     <option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option>
                 </select>
-                <select onChange={e=>setFilters({...filters, type: e.target.value})} className="border p-2 rounded">
+                <select 
+                    value={filters.type}
+                    onChange={e=>setFilters({...filters, type: e.target.value})} 
+                    className="border p-2 rounded"
+                    disabled={['JEE', 'KCET', 'NEET'].includes(filters.class)}
+                >
                     <option value="">All Types</option>
                     <option value="MCQ">MCQ</option><option value="1m">1 Mark</option>
                     <option value="2m">2 Marks</option><option value="3m">3 Marks</option>
                     <option value="4m">4 Marks</option><option value="5m">5 Marks</option>
                 </select>
-                <input type="text" placeholder="Chapter" onChange={e=>setFilters({...filters, chapter: e.target.value})} className="border p-2 rounded w-32" />
-                <input type="text" placeholder="Concept" onChange={e=>setFilters({...filters, concept: e.target.value})} className="border p-2 rounded w-32" />
+                <select value={filters.chapter} onChange={e=>setFilters({...filters, chapter: e.target.value, concept: ''})} className="border p-2 rounded w-40">
+                    <option value="">All Chapters</option>
+                    {uniqueChapters.map(ch => <option key={ch} value={ch}>{ch}</option>)}
+                </select>
+                <select value={filters.concept} onChange={e=>setFilters({...filters, concept: e.target.value})} className="border p-2 rounded w-40">
+                    <option value="">All Concepts</option>
+                    {uniqueConcepts.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
             </div>
 
             <div className="flex-1 flex overflow-hidden">
