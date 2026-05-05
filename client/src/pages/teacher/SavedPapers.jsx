@@ -21,6 +21,19 @@ const SavedPapers = () => {
         window.print();
     };
 
+    const handleDelete = async (e, id) => {
+        e.stopPropagation();
+        if (window.confirm('Are you sure you want to delete this paper?')) {
+            try {
+                await axios.delete(`http://localhost:5000/api/papers/${id}`);
+                setPapers(papers.filter(p => p._id !== id));
+            } catch (err) {
+                console.error(err);
+                alert('Failed to delete paper');
+            }
+        }
+    };
+
     if (selectedPaper) {
         return (
             <div>
@@ -87,7 +100,13 @@ const SavedPapers = () => {
                             <p className="text-xs text-gray-500 mt-1">Class: {p.classes.join(', ')} | Questions: {p.questions.length}</p>
                             <p className="text-xs text-gray-400 mt-1">Created: {new Date(p.createdAt).toLocaleDateString()}</p>
                         </div>
-                        <button className="bg-blue-100 text-blue-600 px-3 py-1 rounded text-sm font-bold">View</button>
+                        <div className="flex gap-2">
+                            <button className="bg-blue-100 text-blue-600 px-3 py-1 rounded text-sm font-bold hover:bg-blue-200">View</button>
+                            <button 
+                                onClick={(e) => handleDelete(e, p._id)} 
+                                className="bg-red-100 text-red-600 px-3 py-1 rounded text-sm font-bold hover:bg-red-200"
+                            >Delete</button>
+                        </div>
                     </div>
                 ))}
                 {papers.length === 0 && <p className="text-gray-500 col-span-2">No saved papers found.</p>}

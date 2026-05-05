@@ -50,4 +50,24 @@ router.get('/:id', [auth, checkRole(['teacher'])], async (req, res) => {
     }
 });
 
+// @route   DELETE /api/papers/:id
+// @desc    Delete a paper
+// @access  Teacher
+router.delete('/:id', [auth, checkRole(['teacher'])], async (req, res) => {
+    try {
+        const paper = await Paper.findById(req.params.id);
+        if (!paper) return res.status(404).json({ msg: 'Paper not found' });
+        
+        if (paper.teacherId.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'User not authorized' });
+        }
+        
+        await Paper.findByIdAndDelete(req.params.id);
+        res.json({ msg: 'Paper removed' });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 module.exports = router;
