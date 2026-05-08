@@ -290,7 +290,7 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
             <div style={S.viewToolbar} className="no-print">
                 <button style={S.btnBack} onClick={onBack}>← Back to Papers</button>
                 <div style={S.viewBtns}>
-                    {paper.status === 'Approved' ? (
+                    {paper.status?.toLowerCase() === 'approved' ? (
                         <>
                             <button style={S.btnPrint} onClick={() => window.print()}>🖨 Print Paper</button>
                             <button style={S.btnPdf} onClick={() => exportToWord('.print-area', `${paper.title.replace(/\s+/g, '_')}.doc`)}>⬇ Export Word</button>
