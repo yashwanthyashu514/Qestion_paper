@@ -32,7 +32,8 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/questions', questionRoutes);
 app.use('/api/papers', paperRoutes);
 app.use('/api/templates', templateRoutes);
-app.use('/uploads', express.static('../uploads'));
+const path = require('path');
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 const PORT = process.env.PORT || 5000;
 
