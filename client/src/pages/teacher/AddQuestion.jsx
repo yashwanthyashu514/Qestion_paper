@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import API_URL from '../config';
 
 const AddQuestion = () => {
     const [questions, setQuestions] = useState([]);
@@ -18,7 +17,7 @@ const AddQuestion = () => {
 
     const fetchQuestions = async () => {
         try {
-            const res = await axios.get(`${API_URL}/api/questions`);
+            const res = await axios.get('http://localhost:5000/api/questions');
             setQuestions(res.data);
         } catch (err) {
             console.error(err);
@@ -48,7 +47,7 @@ const AddQuestion = () => {
                 submitData.append('image', imageFile);
             }
 
-            await axios.post(`${API_URL}/api/questions`, submitData, {
+            await axios.post('http://localhost:5000/api/questions', submitData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             
@@ -65,7 +64,7 @@ const AddQuestion = () => {
     const handleDelete = async (id) => {
         if(window.confirm('Are you sure you want to delete this question?')) {
             try {
-                await axios.delete(`${API_URL}/api/questions/${id}`);
+                await axios.delete(`http://localhost:5000/api/questions/${id}`);
                 fetchQuestions();
             } catch (err) {
                 alert('Failed to delete question');
@@ -239,7 +238,7 @@ const AddQuestion = () => {
                             <p className="mt-2 text-base text-gray-900 font-medium whitespace-pre-wrap">{q.questionText}</p>
                             {q.imageUrl && (
                                 <div className="mt-3">
-                                    <img src={`${API_URL}${q.imageUrl}`} alt="Question Reference" className="max-h-48 rounded border border-gray-200" />
+                                    <img src={`http://localhost:5000${q.imageUrl}`} alt="Question Reference" className="max-h-48 rounded border border-gray-200" />
                                 </div>
                             )}
                             

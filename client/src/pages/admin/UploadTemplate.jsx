@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import API_URL from '../../config';
 import { useNavigate } from 'react-router-dom';
 
 const UploadTemplate = () => {
@@ -13,7 +12,7 @@ const UploadTemplate = () => {
         const data = new FormData();
         data.append('template', templateFile);
         try {
-            await axios.post(`${API_URL}/api/templates`, data, {
+            await axios.post('http://localhost:5000/api/templates', data, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             alert('Template uploaded successfully');

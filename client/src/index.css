@@ -1,12 +1,6 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-@font-face {
-  font-family: 'Voegies';
-  /* Make sure to place your Voegies font file in the client/public/fonts folder! */
-  src: local('Voegies'), url('/fonts/Voegies.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
 
 @theme {
   /* UNIVERSAL COLOR THEME */
@@ -22,7 +16,7 @@
   --color-surface: #ffffff;         /* Pure White (Cards, Modals) */
 
   /* UNIVERSAL TYPOGRAPHY */
-  --font-sans: 'Voegies', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
 }
 
 body {

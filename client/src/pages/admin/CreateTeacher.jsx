@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import API_URL from '../../config';
 import { useNavigate } from 'react-router-dom';
 
 const CreateTeacher = () => {
@@ -11,7 +10,7 @@ const CreateTeacher = () => {
     const handleCreateSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_URL}/api/admin/teachers`, formData);
+            await axios.post('http://localhost:5000/api/admin/teachers', formData);
             alert('Teacher created successfully');
             setFormData({ name: '', email: '', password: '', subject: '' });
             navigate('/admin/dashboard');
