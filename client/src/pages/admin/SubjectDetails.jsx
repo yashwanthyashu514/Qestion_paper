@@ -49,7 +49,7 @@ const SubjectDetails = () => {
 
     const handleStatusUpdate = async (id, status) => {
         try {
-            await axios.put(`${API_URL}/api/papers/admin/${id}/status`, { status });
+        await api.put(`/api/papers/admin/${id}/status`, { status });
             fetchData();
         } catch (err) {
             console.error(err);
