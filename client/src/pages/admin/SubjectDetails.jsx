@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import api, { API_URL } from '../../api';
 
 const SubjectDetails = () => {
     const { subject } = useParams();
@@ -16,8 +17,8 @@ const SubjectDetails = () => {
     const fetchData = async () => {
         try {
             const [teachersRes, papersRes] = await Promise.all([
-                axios.get('http://localhost:5000/api/admin/teachers'),
-                axios.get('http://localhost:5000/api/papers/admin/all')
+                api.get('/api/admin/teachers'),
+                api.get('/api/papers/admin/all')
             ]);
             setTeachers(teachersRes.data.filter(t => t.subject === subject));
             setPapers(papersRes.data.filter(p => p.subject === subject));
@@ -38,7 +39,7 @@ const SubjectDetails = () => {
     const handleDeleteTeacher = async (id) => {
         if(window.confirm('Are you sure you want to delete this teacher?')) {
             try {
-                await axios.delete(`http://localhost:5000/api/admin/teachers/${id}`);
+                await api.delete(`/api/admin/teachers/${id}`);
                 fetchData();
             } catch (err) {
                 console.error(err);
@@ -48,7 +49,7 @@ const SubjectDetails = () => {
 
     const handleStatusUpdate = async (id, status) => {
         try {
-            await axios.put(`http://localhost:5000/api/papers/admin/${id}/status`, { status });
+            await axios.put(`${API_URL}/api/papers/admin/${id}/status`, { status });
             fetchData();
         } catch (err) {
             console.error(err);

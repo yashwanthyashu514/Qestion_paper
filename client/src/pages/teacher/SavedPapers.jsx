@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { exportToWord } from '../../utils/exportWord';
+import api, { API_URL } from '../../api';
 
 /* ─── Inline styles ─── */
 const S = {
@@ -311,7 +312,7 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
             }}>
                 {activeTemplate?.fileUrl?.match(/\.(jpeg|jpg|gif|png)$/i) && (
                     <div style={{ marginBottom: '20px', borderBottom: '2px solid #000', paddingBottom: '16px', textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
-                        <img src={`http://localhost:5000${activeTemplate.fileUrl}`} alt="Header" style={{ maxWidth: '100%', maxHeight: '140px', objectFit: 'contain', margin: '0 auto', display: 'block' }} />
+                        <img src={`${API_URL}${activeTemplate.fileUrl}`} alt="Header" style={{ maxWidth: '100%', maxHeight: '140px', objectFit: 'contain', margin: '0 auto', display: 'block' }} />
                     </div>
                 )}
 
@@ -357,7 +358,7 @@ const QuestionList = ({ questions }) => (
                             <p style={{ whiteSpace: 'pre-wrap', textAlign: 'justify', fontSize: '15px', margin: 0 }}>{q.questionText}</p>
                             {q.imageUrl && (
                                 <div style={{ marginTop: '12px', marginBottom: '8px' }}>
-                                    <img src={`http://localhost:5000${q.imageUrl}`} alt="Diagram" style={{ maxWidth: '100%', maxHeight: '250px', objectFit: 'contain' }} />
+                                    <img src={`${API_URL}${q.imageUrl}`} alt="Diagram" style={{ maxWidth: '100%', maxHeight: '250px', objectFit: 'contain' }} />
                                 </div>
                             )}
                         </div>
@@ -396,8 +397,8 @@ const SavedPapers = () => {
         const fetchData = async () => {
             try {
                 const [papersRes, templatesRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/papers'),
-                    axios.get('http://localhost:5000/api/templates'),
+                    api.get('/api/papers'),
+                    api.get('/api/templates'),
                 ]);
                 setPapers(papersRes.data);
                 if (templatesRes.data.length > 0) setActiveTemplate(templatesRes.data[0]);
@@ -412,7 +413,7 @@ const SavedPapers = () => {
         e.stopPropagation();
         if (!window.confirm('Delete this paper? This cannot be undone.')) return;
         try {
-            await axios.delete(`http://localhost:5000/api/papers/${id}`);
+            await api.delete(`/api/papers/${id}`);
             setPapers(prev => prev.filter(p => p._id !== id));
         } catch {
             alert('Failed to delete paper.');
