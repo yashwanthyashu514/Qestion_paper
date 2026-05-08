@@ -1,20 +1,46 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const path = require('path');
 const Question = require('../models/Question');
 const auth = require('../middleware/auth');
 const checkRole = require('../middleware/role');
 
+// Set up multer for file upload
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../uploads/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, 'question-' + Date.now() + path.extname(file.originalname))
+    }
+});
+const upload = multer({ storage: storage });
+
 // @route   POST /api/questions
 // @desc    Add a question
 // @access  Teacher
-router.post('/', [auth, checkRole(['teacher'])], async (req, res) => {
+router.post('/', [auth, checkRole(['teacher']), upload.single('image')], async (req, res) => {
     try {
         // Teacher can only add question for their assigned subject
         const questionData = { ...req.body, subject: req.user.subject, createdBy: req.user.id };
         
+        // Handle options array parsing since it comes as a stringified JSON in FormData
+        if (req.body.options && typeof req.body.options === 'string') {
+            try {
+                questionData.options = JSON.parse(req.body.options);
+            } catch(e) {
+                console.error('Error parsing options:', e);
+            }
+        }
+        
         // Auto-generate Question ID
         const count = await Question.countDocuments();
         questionData.questionId = `Q-${req.user.subject.substring(0,3).toUpperCase()}-${Date.now()}-${count+1}`;
+
+        if (req.file) {
+            questionData.imageUrl = `/uploads/${req.file.filename}`;
+        }
 
         const question = new Question(questionData);
         await question.save();

@@ -23,6 +23,44 @@ router.post('/', [auth, checkRole(['teacher'])], async (req, res) => {
     }
 });
 
+// @route   GET /api/papers/admin/all
+// @desc    Get all papers (Admin)
+// @access  Admin
+router.get('/admin/all', [auth, checkRole(['admin'])], async (req, res) => {
+    try {
+        const papers = await Paper.find().populate('questions');
+        res.json(papers);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+// @route   PUT /api/papers/admin/:id/status
+// @desc    Update paper status (Admin)
+// @access  Admin
+router.put('/admin/:id/status', [auth, checkRole(['admin'])], async (req, res) => {
+    try {
+        const { status } = req.body;
+        if (!['Pending Approval', 'Approved', 'Rejected'].includes(status)) {
+            return res.status(400).json({ msg: 'Invalid status' });
+        }
+        
+        const paper = await Paper.findByIdAndUpdate(
+            req.params.id,
+            { $set: { status } },
+            { new: true }
+        );
+        
+        if (!paper) return res.status(404).json({ msg: 'Paper not found' });
+        
+        res.json(paper);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 // @route   GET /api/papers
 // @desc    Get all papers of a teacher
 // @access  Teacher

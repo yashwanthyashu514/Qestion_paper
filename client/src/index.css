@@ -1,13 +1,34 @@
 @import "tailwindcss";
 
-:root {
-  --primary: #3b82f6; /* Blue 500 */
-  --secondary: #10b981; /* Emerald 500 */
+@font-face {
+  font-family: 'Voegies';
+  /* Make sure to place your Voegies font file in the client/public/fonts folder! */
+  src: local('Voegies'), url('/fonts/Voegies.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@theme {
+  /* UNIVERSAL COLOR THEME */
+  /* Change these hex codes to update the entire application's color scheme */
+  --color-primary: #1e3a8a;       /* Deep Navy Blue (Headers, Navbars) */
+  --color-primary-hover: #1e40af; /* Slightly lighter Navy for hovers */
+  
+  --color-secondary: #d97706;       /* Professional Gold/Amber (Buttons, Accents) */
+  --color-secondary-hover: #b45309; /* Darker Gold for hovers */
+  
+  --color-accent: #3b82f6;          /* Bright Blue (Links, Highlights) */
+  --color-background: #f8fafc;      /* Soft Slate Gray (Main Background) */
+  --color-surface: #ffffff;         /* Pure White (Cards, Modals) */
+
+  /* UNIVERSAL TYPOGRAPHY */
+  --font-sans: 'Voegies', system-ui, sans-serif;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: #f3f4f6; /* Gray 100 */
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: #1e293b; /* Slate 800 - Professional dark gray text */
   margin: 0;
   padding: 0;
 }

@@ -7,7 +7,15 @@ const PaperSchema = new mongoose.Schema({
     teacherId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
     templateId: { type: mongoose.Schema.Types.ObjectId, ref: 'Template' },
-    createdAt: { type: Date, default: Date.now }
+    pattern: [{
+        sectionName: String,
+        numQuestions: Number,
+        type: { type: String },
+        description: String,
+        marks: Number
+    }],
+    createdAt: { type: Date, default: Date.now },
+    status: { type: String, enum: ['Pending Approval', 'Approved', 'Rejected'], default: 'Pending Approval' }
 });
 
 module.exports = mongoose.model('Paper', PaperSchema);

@@ -11,6 +11,7 @@ const QuestionSchema = new mongoose.Schema({
     questionText: { type: String, required: true },
     options: [{ type: String }], // For MCQ
     answer: { type: String },
+    imageUrl: { type: String },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     createdAt: { type: Date, default: Date.now }
 });

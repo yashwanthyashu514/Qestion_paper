@@ -1,143 +1,93 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import React, { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Routes, Route, Link, useLocation } from 'react-router-dom';
+import UploadTemplate from './UploadTemplate';
+import CreateTeacher from './CreateTeacher';
+import SubjectDetails from './SubjectDetails';
+import AdminPaperPreview from './AdminPaperPreview';
+
+const DashboardHome = () => {
+    const subjects = ['Physics', 'Chemistry', 'Biology', 'Maths', 'Computer Science', 'Kannada', 'English', 'Hindi'];
+    return (
+        <div className="animate-fade-in-up">
+            <div className="mb-8 bg-white p-6 rounded-xl shadow-sm border-l-4 border-[#1e3280]">
+                <h3 className="font-bold text-xl text-[#1e3280] mb-2">Welcome to the Admin Dashboard</h3>
+                <p className="text-gray-600 font-sans text-sm">
+                    Use the navigation at the top to upload the official college question paper template or create new teacher accounts.
+                    Click on any subject below to view the teachers assigned to that subject and all question papers they have generated.
+                </p>
+            </div>
+
+            <h2 className="text-xl font-bold mb-6 text-[#1e3280] border-b-4 border-blue-500 pb-2 inline-block tracking-wide">SUBJECT DIRECTORY</h2>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                {subjects.map(sub => (
+                    <Link 
+                        to={`/admin/dashboard/subject/${sub}`}
+                        key={sub}
+                        className="bg-white p-6 rounded-xl shadow-sm text-center font-bold text-lg transition border border-gray-100 text-gray-700 hover:shadow-md hover:border-blue-400 hover:text-blue-700 transform hover:-translate-y-1 flex flex-col items-center justify-center gap-3"
+                    >
+                        <div className="bg-blue-50 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-inner">
+                            {sub.charAt(0)}
+                        </div>
+                        {sub}
+                    </Link>
+                ))}
+            </div>
+        </div>
+    );
+};
 
 const AdminDashboard = () => {
     const { logout } = useContext(AuthContext);
     const navigate = useNavigate();
-    const [teachers, setTeachers] = useState([]);
-    const [showCreate, setShowCreate] = useState(false);
-    const [formData, setFormData] = useState({ name: '', email: '', password: '', subject: '' });
-    const [templateFile, setTemplateFile] = useState(null);
-
-    const fetchTeachers = async () => {
-        try {
-            const res = await axios.get('http://localhost:5000/api/admin/teachers');
-            setTeachers(res.data);
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    useEffect(() => {
-        fetchTeachers();
-    }, []);
-
-    const handleCreateSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await axios.post('http://localhost:5000/api/admin/teachers', formData);
-            setShowCreate(false);
-            setFormData({ name: '', email: '', password: '', subject: '' });
-            fetchTeachers();
-        } catch (err) {
-            alert(err.response?.data?.msg || 'Error creating teacher');
-        }
-    };
-
-    const handleDelete = async (id) => {
-        if(window.confirm('Are you sure?')) {
-            try {
-                await axios.delete(`http://localhost:5000/api/admin/teachers/${id}`);
-                fetchTeachers();
-            } catch (err) {
-                console.error(err);
-            }
-        }
-    };
-
-    const handleTemplateUpload = async (e) => {
-        e.preventDefault();
-        if(!templateFile) return;
-        const data = new FormData();
-        data.append('template', templateFile);
-        try {
-            await axios.post('http://localhost:5000/api/templates', data, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
-            alert('Template uploaded successfully');
-            setTemplateFile(null);
-        } catch(err) {
-            alert('Upload failed');
-        }
-    };
+    const location = useLocation();
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            <nav className="bg-blue-600 p-4 text-white flex justify-between items-center shadow-md">
-                <h1 className="text-xl font-bold">Admin Dashboard</h1>
-                <div className="space-x-4">
-                    <button onClick={() => setShowCreate(!showCreate)} className="bg-white text-blue-600 px-4 py-2 rounded font-semibold hover:bg-gray-100 transition">
-                        {showCreate ? 'Close' : '+ Create Teacher'}
-                    </button>
-                    <button onClick={() => { logout(); navigate('/'); }} className="bg-red-500 px-4 py-2 rounded font-semibold hover:bg-red-600 transition">
+        <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans">
+            {/* Top Navigation Bar - Dark Blue */}
+            <nav className="bg-[#1e3280] p-4 text-white flex justify-between items-center z-10 rounded-t-lg mx-4 mt-4 shadow-md">
+                <div 
+                    className="flex items-center cursor-pointer hover:opacity-80 transition gap-4"
+                    onClick={() => navigate('/admin/dashboard')}
+                >
+                    <div className="bg-white text-[#1e3280] font-black rounded-lg w-10 h-10 flex items-center justify-center text-xl shadow-sm">A</div>
+                    <h1 className="text-xl font-bold tracking-wide">
+                        Admin Portal
+                    </h1>
+                </div>
+                
+                <div className="space-x-3 flex items-center">
+                    <Link 
+                        to="/admin/dashboard/upload-template" 
+                        className={`px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-1 ${location.pathname.includes('upload-template') ? 'bg-white/20 text-white border border-white/50' : 'bg-transparent border border-blue-400 text-blue-100 hover:bg-white/10'}`}
+                    >
+                        Upload Template
+                    </Link>
+                    <Link 
+                        to="/admin/dashboard/create-teacher" 
+                        className={`px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-1 ${location.pathname.includes('create-teacher') ? 'bg-white/20 text-white border border-white/50' : 'bg-transparent border border-blue-400 text-blue-100 hover:bg-white/10'}`}
+                    >
+                        + Create Teacher
+                    </Link>
+                    <div className="w-px h-6 bg-blue-500/50 mx-2"></div>
+                    <button 
+                        onClick={() => { logout(); navigate('/'); }} 
+                        className="bg-transparent border border-blue-400 text-blue-100 px-5 py-2 rounded-lg text-sm font-semibold hover:bg-white/10 transition"
+                    >
                         Logout
                     </button>
                 </div>
             </nav>
 
-            <div className="p-8 max-w-6xl mx-auto">
-                {showCreate && (
-                    <div className="bg-white p-6 rounded shadow-md mb-8">
-                        <h2 className="text-xl font-bold mb-4">Create New Teacher</h2>
-                        <form onSubmit={handleCreateSubmit} className="grid grid-cols-2 gap-4">
-                            <input type="text" placeholder="Name" required value={formData.name} onChange={e=>setFormData({...formData, name: e.target.value})} className="border p-2 rounded" />
-                            <input type="email" placeholder="Email (ID)" required value={formData.email} onChange={e=>setFormData({...formData, email: e.target.value})} className="border p-2 rounded" />
-                            <input type="password" placeholder="Password" required value={formData.password} onChange={e=>setFormData({...formData, password: e.target.value})} className="border p-2 rounded" />
-                            <select required value={formData.subject} onChange={e=>setFormData({...formData, subject: e.target.value})} className="border p-2 rounded">
-                                <option value="">Select Subject</option>
-                                <option value="Physics">Physics</option>
-                                <option value="Chemistry">Chemistry</option>
-                                <option value="Biology">Biology</option>
-                                <option value="Maths">Maths</option>
-                                <option value="Computer Science">Computer Science</option>
-                                <option value="Kannada">Kannada</option>
-                                <option value="English">English</option>
-                                <option value="Hindi">Hindi</option>
-                            </select>
-                            <button type="submit" className="col-span-2 bg-green-500 text-white p-2 rounded hover:bg-green-600">Save Teacher</button>
-                        </form>
-                    </div>
-                )}
-
-                <div className="bg-white p-6 rounded shadow-md mb-8">
-                    <h2 className="text-xl font-bold mb-4">Upload Question Paper Template (DOCX/PDF)</h2>
-                    <form onSubmit={handleTemplateUpload} className="flex gap-4">
-                        <input type="file" onChange={(e) => setTemplateFile(e.target.files[0])} className="border p-2 rounded flex-1" />
-                        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Upload</button>
-                    </form>
-                </div>
-
-                <div className="bg-white p-6 rounded shadow-md">
-                    <h2 className="text-xl font-bold mb-4">Teachers List</h2>
-                    <table className="w-full border-collapse">
-                        <thead>
-                            <tr className="bg-gray-100">
-                                <th className="border p-2 text-left">Sl.No</th>
-                                <th className="border p-2 text-left">Name</th>
-                                <th className="border p-2 text-left">Subject</th>
-                                <th className="border p-2 text-left">Email ID</th>
-                                <th className="border p-2 text-center">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {teachers.map((t, index) => (
-                                <tr key={t._id} className="border-b hover:bg-gray-50">
-                                    <td className="border p-2">{index + 1}</td>
-                                    <td className="border p-2">{t.name}</td>
-                                    <td className="border p-2">{t.subject}</td>
-                                    <td className="border p-2">{t.email}</td>
-                                    <td className="border p-2 text-center space-x-2">
-                                        <button className="text-blue-500 hover:text-blue-700">Edit</button>
-                                        <button onClick={() => handleDelete(t._id)} className="text-red-500 hover:text-red-700">Delete</button>
-                                    </td>
-                                </tr>
-                            ))}
-                            {teachers.length === 0 && <tr><td colSpan="5" className="text-center p-4">No teachers found</td></tr>}
-                        </tbody>
-                    </table>
-                </div>
+            <div className="flex-1 mx-4 mb-4 border-x border-b border-gray-200 bg-[#f8fafc] rounded-b-lg p-8">
+                <Routes>
+                    <Route path="/" element={<DashboardHome />} />
+                    <Route path="/upload-template" element={<UploadTemplate />} />
+                    <Route path="/create-teacher" element={<CreateTeacher />} />
+                    <Route path="/subject/:subject" element={<SubjectDetails />} />
+                    <Route path="/preview/:paperId" element={<AdminPaperPreview />} />
+                </Routes>
             </div>
         </div>
     );
