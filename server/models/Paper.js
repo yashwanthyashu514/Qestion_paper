@@ -18,4 +18,4 @@ const PaperSchema = new mongoose.Schema({
     status: { type: String, enum: ['Pending Approval', 'Approved', 'Rejected'], default: 'Pending Approval' }
 });
 
-module.exports = mongoose.model('Paper', PaperSchema);
+module.exports = mongoose.model('Paper', PaperSchema, 'papers');
