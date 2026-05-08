@@ -15,6 +15,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Root health check
+app.get('/', (req, res) => {
+    res.json({ message: 'QPG System API is running...' });
+});
+
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
