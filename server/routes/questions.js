@@ -54,10 +54,18 @@ router.post('/', [auth, checkRole(['teacher']), upload.single('image')], async (
 // @route   GET /api/questions
 // @desc    Get questions filtered by subject
 // @access  Teacher
-router.get('/', [auth, checkRole(['teacher'])], async (req, res) => {
+router.get('/', [auth, checkRole(['admin', 'teacher'])], async (req, res) => {
     try {
         const { classes, chapter, concept, level, type } = req.query;
-        let query = { subject: req.user.subject };
+        let query = {};
+        
+        // Only filter by subject if the user is a teacher
+        if (req.user.role === 'teacher') {
+            query.subject = req.user.subject;
+        } else if (req.query.subject) {
+            // Admin can filter by subject explicitly if provided
+            query.subject = req.query.subject;
+        }
         
         if (classes) query.classes = { $in: classes.split(',') };
         if (chapter) query.chapter = chapter;
