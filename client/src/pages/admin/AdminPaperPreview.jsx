@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import API_URL from '../../config';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { exportToWord } from '../../utils/exportWord';
@@ -16,8 +17,8 @@ const AdminPaperPreview = () => {
         const fetchData = async () => {
             try {
                 const [papersRes, templatesRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/papers/admin/all'),
-                    axios.get('http://localhost:5000/api/templates')
+                    axios.get(`${API_URL}/api/papers/admin/all`),
+                    axios.get(`${API_URL}/api/templates`)
                 ]);
                 
                 const paper = papersRes.data.find(p => p._id === paperId);
@@ -82,7 +83,7 @@ const AdminPaperPreview = () => {
             <div className="bg-white p-10 shadow-xl max-w-4xl mx-auto print-area border border-gray-300 font-serif text-sm mb-10 min-h-[1000px]">
                 {activeTemplate && activeTemplate.fileUrl && activeTemplate.fileUrl.match(/\.(jpeg|jpg|gif|png)$/i) && (
                     <div className="mb-6 border-b-2 border-black pb-4 text-center flex justify-center w-full">
-                        <img src={`http://localhost:5000${activeTemplate.fileUrl}`} alt="College Template Header" className="max-w-full h-auto mx-auto max-h-40 object-contain block" style={{ margin: '0 auto' }} />
+                        <img src={`${API_URL}${activeTemplate.fileUrl}`} alt="College Template Header" className="max-w-full h-auto mx-auto max-h-40 object-contain block" style={{ margin: '0 auto' }} />
                     </div>
                 )}
                 
@@ -135,7 +136,7 @@ const AdminPaperPreview = () => {
                                                                 <p className="whitespace-pre-wrap text-justify text-base leading-relaxed">{q.questionText}</p>
                                                                 {q.imageUrl && (
                                                                     <div className="mt-4 mb-3">
-                                                                        <img src={`http://localhost:5000${q.imageUrl}`} alt="Diagram" className="max-w-full max-h-64 object-contain" />
+                                                                        <img src={`${API_URL}${q.imageUrl}`} alt="Diagram" className="max-w-full max-h-64 object-contain" />
                                                                     </div>
                                                                 )}
                                                             </div>
@@ -169,7 +170,7 @@ const AdminPaperPreview = () => {
                                         <p className="whitespace-pre-wrap text-justify text-base leading-relaxed">{q.questionText}</p>
                                         {q.imageUrl && (
                                             <div className="mt-4 mb-3">
-                                                <img src={`http://localhost:5000${q.imageUrl}`} alt="Diagram" className="max-w-full max-h-64 object-contain" />
+                                                <img src={`${API_URL}${q.imageUrl}`} alt="Diagram" className="max-w-full max-h-64 object-contain" />
                                             </div>
                                         )}
                                     </div>

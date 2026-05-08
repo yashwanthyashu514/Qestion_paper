@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_URL from '../../config';
 
 const CreatePaper = () => {
     const { user } = useContext(AuthContext);
@@ -18,7 +19,7 @@ const CreatePaper = () => {
     const [pattern, setPattern] = useState([{ sectionName: 'Section A', numQuestions: '', type: '', description: '', marks: 0 }]);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/questions').then(res => setAllQuestions(res.data)).catch(console.error);
+        axios.get(`${API_URL}/api/questions`).then(res => setAllQuestions(res.data)).catch(console.error);
     }, []);
 
     const uniqueChapters = [...new Set(allQuestions.map(q => q.chapter))].filter(Boolean);
@@ -32,7 +33,7 @@ const CreatePaper = () => {
                 delete queryData.class;
             }
             const queryParams = new URLSearchParams(queryData).toString();
-            const res = await axios.get(`http://localhost:5000/api/questions?${queryParams}`);
+            const res = await axios.get(`${API_URL}/api/questions?${queryParams}`);
             setQuestions(res.data);
         } catch (err) {
             console.error(err);
@@ -92,7 +93,7 @@ const CreatePaper = () => {
             return;
         }
         try {
-            await axios.post('http://localhost:5000/api/papers', {
+            await axios.post(`${API_URL}/api/papers`, {
                 title: paperTitle,
                 classes: filters.class ? [filters.class] : [], // simplified
                 questions: selectedQuestions.map(q => q._id),
@@ -252,7 +253,7 @@ const CreatePaper = () => {
                                 <p className="text-gray-800 font-medium whitespace-pre-wrap mb-6 text-sm leading-relaxed">{previewQuestion.questionText}</p>
                                 {previewQuestion.imageUrl && (
                                     <div className="mb-6">
-                                        <img src={`http://localhost:5000${previewQuestion.imageUrl}`} alt="Question Reference" className="max-w-full rounded border border-gray-200" />
+                                        <img src={`${API_URL}${previewQuestion.imageUrl}`} alt="Question Reference" className="max-w-full rounded border border-gray-200" />
                                     </div>
                                 )}
                                 {previewQuestion.type === 'MCQ' && previewQuestion.options && (
@@ -300,7 +301,7 @@ const CreatePaper = () => {
                                     <p className="text-sm text-gray-700 font-medium leading-relaxed pr-6">{q.questionText}</p>
                                     {q.imageUrl && (
                                         <div className="mt-2">
-                                            <img src={`http://localhost:5000${q.imageUrl}`} alt="Question Reference" className="max-w-full rounded border border-gray-200 max-h-32 object-contain" />
+                                            <img src={`${API_URL}${q.imageUrl}`} alt="Question Reference" className="max-w-full rounded border border-gray-200 max-h-32 object-contain" />
                                         </div>
                                     )}
                                 </div>
