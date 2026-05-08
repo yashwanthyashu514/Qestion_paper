@@ -159,7 +159,7 @@ const SubjectDetails = () => {
                                         <button onClick={() => handleStatusUpdate(p._id, 'Rejected')} className="bg-red-50 text-red-700 border border-red-200 px-3 py-2 rounded text-sm font-bold hover:bg-red-600 hover:text-white transition text-center">Reject</button>
                                         <button onClick={() => handleStatusUpdate(p._id, 'Approved')} className="bg-green-50 text-green-700 border border-green-200 px-3 py-2 rounded text-sm font-bold hover:bg-green-600 hover:text-white transition text-center">Approve</button>
                                         <button onClick={() => navigate(`/admin/dashboard/preview/${p._id}`)} className="bg-blue-50 text-blue-700 border border-blue-200 px-3 py-2 rounded text-sm font-bold hover:bg-blue-600 hover:text-white transition text-center">Preview/Print</button>
-                                        <button onClick={() => alert('Word Export logic pending.')} className="bg-purple-50 text-purple-700 border border-purple-200 px-3 py-2 rounded text-sm font-bold hover:bg-purple-600 hover:text-white transition text-center">Export Word</button>
+                                        <button onClick={() => navigate(`/admin/dashboard/preview/${p._id}`)} className="bg-purple-50 text-purple-700 border border-purple-200 px-3 py-2 rounded text-sm font-bold hover:bg-purple-600 hover:text-white transition text-center">Export Word</button>
                                     </div>
                                 </div>
                             );
