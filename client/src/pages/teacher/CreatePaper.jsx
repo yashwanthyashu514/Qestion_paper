@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import api, { API_URL } from '../../api';
+import api from '../../api';
 
 const CreatePaper = () => {
     const { user } = useContext(AuthContext);
@@ -253,7 +252,7 @@ const CreatePaper = () => {
                                 <p className="text-gray-800 font-medium whitespace-pre-wrap mb-6 text-sm leading-relaxed">{previewQuestion.questionText}</p>
                                 {previewQuestion.imageUrl && (
                                     <div className="mb-6">
-                                        <img src={`${API_URL}${previewQuestion.imageUrl}`} alt="Question Reference" className="max-w-full rounded border border-gray-200" />
+                                        <img src={previewQuestion.imageUrl} alt="Question Reference" className="max-w-full rounded border border-gray-200" />
                                     </div>
                                 )}
                                 {previewQuestion.type === 'MCQ' && previewQuestion.options && (
@@ -301,7 +300,7 @@ const CreatePaper = () => {
                                     <p className="text-sm text-gray-700 font-medium leading-relaxed pr-6">{q.questionText}</p>
                                     {q.imageUrl && (
                                         <div className="mt-2">
-                                            <img src={`${API_URL}${q.imageUrl}`} alt="Question Reference" className="max-w-full rounded border border-gray-200 max-h-32 object-contain" />
+                                            <img src={q.imageUrl} alt="Question Reference" className="max-w-full rounded border border-gray-200 max-h-32 object-contain" />
                                         </div>
                                     )}
                                 </div>

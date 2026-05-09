@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
-import api, { API_URL } from '../../api';
+import api from '../../api';
 
 const SubjectDetails = () => {
     const { subject } = useParams();

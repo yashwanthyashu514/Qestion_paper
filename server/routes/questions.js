@@ -2,20 +2,36 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 const Question = require('../models/Question');
 const auth = require('../middleware/auth');
 const checkRole = require('../middleware/role');
 
-// Set up multer for file upload
+// ── Absolute upload directory (works on any OS / cloud server)
+const uploadsDir = path.resolve(__dirname, '..', 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+// ── Multer disk storage config
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, '../uploads/')
+        cb(null, uploadsDir);
     },
     filename: function (req, file, cb) {
-        cb(null, 'question-' + Date.now() + path.extname(file.originalname))
+        const safeName = 'question-' + Date.now() + path.extname(file.originalname).toLowerCase();
+        cb(null, safeName);
     }
 });
-const upload = multer({ storage: storage });
+
+const upload = multer({
+    storage,
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB max
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype.startsWith('image/')) cb(null, true);
+        else cb(new Error('Only image files are allowed'), false);
+    }
+});
 
 // @route   POST /api/questions
 // @desc    Add a question
@@ -39,15 +55,17 @@ router.post('/', [auth, checkRole(['teacher']), upload.single('image')], async (
         questionData.questionId = `Q-${req.user.subject.substring(0,3).toUpperCase()}-${Date.now()}-${count+1}`;
 
         if (req.file) {
-            questionData.imageUrl = `/uploads/${req.file.filename}`;
+            // Store full URL so images display on any device
+            const backendUrl = process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`;
+            questionData.imageUrl = `${backendUrl}/uploads/${req.file.filename}`;
         }
 
         const question = new Question(questionData);
         await question.save();
         res.json(question);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('Add question error:', err.message);
+        res.status(500).json({ msg: 'Server Error', error: err.message });
     }
 });
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { exportToWord } from '../../utils/exportWord';
-import api, { API_URL } from '../../api';
+import api from '../../api';
 
 /* ─── Inline styles ─── */
 const S = {
@@ -312,7 +311,7 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
             }}>
                 {activeTemplate?.fileUrl?.match(/\.(jpeg|jpg|gif|png)$/i) && (
                     <div style={{ marginBottom: '20px', borderBottom: '2px solid #000', paddingBottom: '16px', textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
-                        <img src={`${API_URL}${activeTemplate.fileUrl}`} alt="Header" style={{ maxWidth: '100%', maxHeight: '140px', objectFit: 'contain', margin: '0 auto', display: 'block' }} />
+                        <img src={activeTemplate.fileUrl} alt="Header" style={{ maxWidth: '100%', maxHeight: '140px', objectFit: 'contain', margin: '0 auto', display: 'block' }} />
                     </div>
                 )}
 
@@ -358,7 +357,7 @@ const QuestionList = ({ questions }) => (
                             <p style={{ whiteSpace: 'pre-wrap', textAlign: 'justify', fontSize: '15px', margin: 0 }}>{q.questionText}</p>
                             {q.imageUrl && (
                                 <div style={{ marginTop: '12px', marginBottom: '8px' }}>
-                                    <img src={`${API_URL}${q.imageUrl}`} alt="Diagram" style={{ maxWidth: '100%', maxHeight: '250px', objectFit: 'contain' }} />
+                                    <img src={q.imageUrl} alt="Diagram" style={{ maxWidth: '100%', maxHeight: '250px', objectFit: 'contain' }} />
                                 </div>
                             )}
                         </div>

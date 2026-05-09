@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import api, { API_URL } from '../../api';
+import api from '../../api';
 
 const AddQuestion = () => {
     const [questions, setQuestions] = useState([]);
@@ -239,7 +238,7 @@ const AddQuestion = () => {
                             <p className="mt-2 text-base text-gray-900 font-medium whitespace-pre-wrap">{q.questionText}</p>
                             {q.imageUrl && (
                                 <div className="mt-3">
-                                    <img src={`${API_URL}${q.imageUrl}`} alt="Question Reference" className="max-h-48 rounded border border-gray-200" />
+                                    <img src={q.imageUrl} alt="Question Reference" className="max-h-48 rounded border border-gray-200" />
                                 </div>
                             )}
                             
