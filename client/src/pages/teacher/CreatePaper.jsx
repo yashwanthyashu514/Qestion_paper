@@ -3,10 +3,400 @@ import { AuthContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api';
 
+// ─── Small helper: toast notification ───────────────────────────────────────
+const Toast = ({ msg, type, onClose }) => {
+    useEffect(() => { const t = setTimeout(onClose, 3000); return () => clearTimeout(t); }, []);
+    const colors = type === 'success'
+        ? 'bg-green-50 border-green-300 text-green-800'
+        : type === 'error'
+            ? 'bg-red-50 border-red-300 text-red-800'
+            : 'bg-blue-50 border-blue-300 text-blue-800';
+    return (
+        <div className={`fixed bottom-6 right-6 z-[9999] flex items-center gap-3 px-5 py-3 rounded-2xl border shadow-lg text-sm font-semibold animate-fade-in-up ${colors}`}>
+            {type === 'success' && <span>✓</span>}
+            {type === 'error' && <span>✕</span>}
+            {type === 'info' && <span>ℹ</span>}
+            {msg}
+            <button onClick={onClose} className="ml-2 opacity-50 hover:opacity-100 text-lg leading-none">×</button>
+        </div>
+    );
+};
+
+// ─── Auto Get Questions Modal ────────────────────────────────────────────────
+const AutoGetModal = ({ onClose, onConfirm, filteredCount }) => {
+    const [qty, setQty] = useState('');
+    const [level, setLevel] = useState('random');
+    const max = filteredCount;
+
+    const handleConfirm = () => {
+        const n = parseInt(qty);
+        if (!n || n < 1) return alert('Enter a valid number.');
+        if (n > max) return alert(`Only ${max} questions available with current filters.`);
+        onConfirm(n, level);
+    };
+
+    return (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 backdrop-blur-sm">
+            <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 border border-gray-100 animate-fade-in-up">
+                {/* Header */}
+                <div className="flex justify-between items-start mb-6">
+                    <div>
+                        <h2 className="text-xl font-black text-[#1e3280] mb-1">Auto Get Questions</h2>
+                        <p className="text-sm text-gray-400 font-medium">
+                            {max} questions match your current filters
+                        </p>
+                    </div>
+                    <button onClick={onClose} className="text-gray-400 hover:text-red-500 bg-gray-50 rounded-full w-8 h-8 flex items-center justify-center text-lg font-bold border border-gray-100 hover:border-red-200 hover:bg-red-50 transition">×</button>
+                </div>
+
+                {/* Filter summary */}
+                <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 mb-6">
+                    <p className="text-xs font-bold text-blue-500 uppercase tracking-widest mb-1">Applied Filters</p>
+                    <p className="text-sm text-blue-800 font-medium">All current filter selections will be used to fetch questions automatically.</p>
+                </div>
+
+                {/* Quantity input */}
+                <div className="mb-5">
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
+                        How many questions?
+                    </label>
+                    <div className="flex items-center gap-3">
+                        <input
+                            type="number"
+                            min={1}
+                            max={max}
+                            value={qty}
+                            onChange={e => setQty(e.target.value)}
+                            placeholder={`Enter 1 – ${max}`}
+                            className="flex-1 border-2 border-gray-200 focus:border-[#1e3280] rounded-xl px-4 py-3 text-lg font-bold text-gray-800 outline-none text-center transition"
+                        />
+                        <button onClick={() => setQty(String(max))} className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold px-3 py-3 rounded-xl border border-gray-200 transition whitespace-nowrap">
+                            Max ({max})
+                        </button>
+                    </div>
+                </div>
+
+                {/* Level preference */}
+                <div className="mb-7">
+                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
+                        Pick preference
+                    </label>
+                    <div className="flex gap-2">
+                        {[
+                            { val: 'random', label: 'Random' },
+                            { val: 'easy', label: 'Easy first' },
+                            { val: 'hard', label: 'Hard first' },
+                            { val: 'balanced', label: 'Balanced' },
+                        ].map(opt => (
+                            <button
+                                key={opt.val}
+                                onClick={() => setLevel(opt.val)}
+                                className={`flex-1 py-2 rounded-xl text-xs font-bold border transition ${level === opt.val
+                                        ? 'bg-[#1e3280] text-white border-[#1e3280]'
+                                        : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'
+                                    }`}
+                            >
+                                {opt.label}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-3">
+                    <button onClick={onClose} className="flex-1 border border-gray-200 text-gray-600 py-3 rounded-xl font-bold text-sm hover:bg-gray-50 transition">
+                        Cancel
+                    </button>
+                    <button
+                        onClick={handleConfirm}
+                        disabled={!qty || parseInt(qty) < 1}
+                        className="flex-1 bg-gradient-to-r from-[#1e3280] to-blue-700 text-white py-3 rounded-xl font-bold text-sm hover:shadow-lg transition disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                        Get Questions
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// ─── Generate Paper Modal ────────────────────────────────────────────────────
+const GeneratePaperModal = ({ onClose, onGenerate, filters, allQuestions, setFilters, uniqueChapters, uniqueConcepts }) => {
+    const [localPattern, setLocalPattern] = useState([
+        { sectionName: 'Section A', numQuestions: '', type: '', description: '', marks: 0 }
+    ]);
+    const [localFilters, setLocalFilters] = useState({ ...filters });
+    const [step, setStep] = useState(1); // 1: filters+pattern, 2: confirm
+
+    const getTypeMultiplier = (type) => {
+        const map = { MCQ: 1, '1m': 1, '2m': 2, '3m': 3, '4m': 4, '5m': 5 };
+        return map[type] || 0;
+    };
+
+    const handlePatternChange = (idx, field, value) => {
+        const updated = [...localPattern];
+        updated[idx][field] = value;
+        const num = field === 'numQuestions' ? parseInt(value) || 0 : parseInt(updated[idx].numQuestions) || 0;
+        const type = field === 'type' ? value : updated[idx].type;
+        updated[idx].marks = num * getTypeMultiplier(type);
+        setLocalPattern(updated);
+    };
+
+    const addSection = () => {
+        setLocalPattern([...localPattern, {
+            sectionName: `Section ${String.fromCharCode(65 + localPattern.length)}`,
+            numQuestions: '', type: '', description: '', marks: 0
+        }]);
+    };
+
+    const removeSection = (idx) => {
+        const updated = localPattern.filter((_, i) => i !== idx)
+            .map((s, i) => ({ ...s, sectionName: `Section ${String.fromCharCode(65 + i)}` }));
+        setLocalPattern(updated);
+    };
+
+    const totalQuestionsNeeded = localPattern.reduce((sum, s) => sum + (parseInt(s.numQuestions) || 0), 0);
+    const totalMarks = localPattern.reduce((sum, s) => sum + (s.marks || 0), 0);
+
+    // Count available per section type
+    const availableForSection = (sec) => {
+        return allQuestions.filter(q => {
+            const matchClass = !localFilters.class || q.classes?.includes(localFilters.class) || q.class === localFilters.class;
+            const matchLevel = !localFilters.level || q.level === localFilters.level;
+            const matchType = !sec.type || q.type === sec.type;
+            const matchChapter = !localFilters.chapter || q.chapter === localFilters.chapter;
+            const matchConcept = !localFilters.concept || q.concept === localFilters.concept;
+            return matchClass && matchLevel && matchType && matchChapter && matchConcept;
+        }).length;
+    };
+
+    const isPatternValid = localPattern.every(s => s.numQuestions && s.type);
+
+    const handleGenerate = () => {
+        onGenerate(localPattern, localFilters);
+    };
+
+    return (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 backdrop-blur-sm">
+            <div className="bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[92vh] flex flex-col border border-gray-100 animate-fade-in-up">
+
+                {/* Modal Header */}
+                <div className="flex justify-between items-center p-7 border-b border-gray-100">
+                    <div>
+                        <h2 className="text-2xl font-black text-[#1e3280] mb-1 flex items-center gap-3">
+                            <span className="bg-yellow-100 text-yellow-700 w-9 h-9 rounded-xl flex items-center justify-center text-lg border border-yellow-200">⚡</span>
+                            Generate Question Paper
+                        </h2>
+                        <p className="text-sm text-gray-400">Set filters and define sections — we'll auto-pick matching questions.</p>
+                    </div>
+                    <button onClick={onClose} className="text-gray-400 hover:text-red-500 bg-gray-50 rounded-full w-9 h-9 flex items-center justify-center text-xl font-bold border border-gray-100 hover:bg-red-50 hover:border-red-200 transition">×</button>
+                </div>
+
+                <div className="flex-1 overflow-y-auto p-7 space-y-7">
+
+                    {/* Step 1: Filter Settings */}
+                    <div>
+                        <div className="flex items-center gap-3 mb-4">
+                            <span className="w-7 h-7 rounded-full bg-[#1e3280] text-white text-xs font-black flex items-center justify-center">1</span>
+                            <h3 className="font-black text-gray-700 text-sm uppercase tracking-wider">Configure Filters</h3>
+                        </div>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 bg-gray-50 p-5 rounded-2xl border border-gray-100">
+                            {[
+                                {
+                                    label: 'Class', key: 'class',
+                                    options: [
+                                        { value: '', label: 'All Classes' },
+                                        { value: '11', label: 'Class 11' },
+                                        { value: '12', label: 'Class 12' },
+                                        { value: 'JEE', label: 'JEE' },
+                                        { value: 'KCET', label: 'KCET' },
+                                        { value: 'NEET', label: 'NEET' },
+                                    ]
+                                },
+                                {
+                                    label: 'Level', key: 'level',
+                                    options: [
+                                        { value: '', label: 'All Levels' },
+                                        { value: 'easy', label: 'Easy' },
+                                        { value: 'medium', label: 'Medium' },
+                                        { value: 'hard', label: 'Hard' },
+                                    ]
+                                },
+                            ].map(({ label, key, options }) => (
+                                <div key={key} className="relative">
+                                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{label}</label>
+                                    <select
+                                        value={localFilters[key] || ''}
+                                        onChange={e => setLocalFilters({ ...localFilters, [key]: e.target.value })}
+                                        className="w-full border border-gray-200 p-2.5 rounded-xl text-sm text-gray-700 bg-white focus:border-[#1e3280] outline-none cursor-pointer"
+                                    >
+                                        {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                                    </select>
+                                </div>
+                            ))}
+                            <div>
+                                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Chapter</label>
+                                <select
+                                    value={localFilters.chapter || ''}
+                                    onChange={e => setLocalFilters({ ...localFilters, chapter: e.target.value, concept: '' })}
+                                    className="w-full border border-gray-200 p-2.5 rounded-xl text-sm text-gray-700 bg-white focus:border-[#1e3280] outline-none cursor-pointer"
+                                >
+                                    <option value="">All Chapters</option>
+                                    {uniqueChapters.map(ch => <option key={ch} value={ch}>{ch}</option>)}
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Concept</label>
+                                <select
+                                    value={localFilters.concept || ''}
+                                    onChange={e => setLocalFilters({ ...localFilters, concept: e.target.value })}
+                                    className="w-full border border-gray-200 p-2.5 rounded-xl text-sm text-gray-700 bg-white focus:border-[#1e3280] outline-none cursor-pointer"
+                                >
+                                    <option value="">All Concepts</option>
+                                    {uniqueConcepts.map(c => <option key={c} value={c}>{c}</option>)}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Step 2: Pattern */}
+                    <div>
+                        <div className="flex items-center gap-3 mb-4">
+                            <span className="w-7 h-7 rounded-full bg-[#1e3280] text-white text-xs font-black flex items-center justify-center">2</span>
+                            <h3 className="font-black text-gray-700 text-sm uppercase tracking-wider">Define Paper Pattern</h3>
+                            {/* Totals */}
+                            <div className="ml-auto flex gap-3">
+                                <span className="bg-blue-50 text-blue-700 border border-blue-100 px-3 py-1 rounded-full text-xs font-bold">
+                                    {totalQuestionsNeeded} Questions
+                                </span>
+                                <span className="bg-green-50 text-green-700 border border-green-100 px-3 py-1 rounded-full text-xs font-bold">
+                                    {totalMarks} Total Marks
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className="space-y-4">
+                            {localPattern.map((sec, idx) => {
+                                const avail = availableForSection(sec);
+                                const needed = parseInt(sec.numQuestions) || 0;
+                                const isShort = needed > 0 && avail < needed;
+                                return (
+                                    <div key={idx} className={`relative flex flex-col md:flex-row gap-4 items-start md:items-center p-5 rounded-2xl border-l-4 group transition ${isShort ? 'bg-red-50 border-l-red-400 border border-red-100' : 'bg-gray-50 border-l-[#1e3280] border border-gray-100'}`}>
+
+                                        {/* Section Name */}
+                                        <div className="font-black text-sm text-[#1e3280] bg-white px-4 py-2.5 rounded-xl border border-blue-100 uppercase tracking-widest min-w-[120px] text-center shadow-sm">
+                                            {sec.sectionName}
+                                        </div>
+
+                                        {/* Qty */}
+                                        <div className="relative flex-shrink-0">
+                                            <label className="absolute -top-2 left-3 bg-gray-50 px-1 text-[9px] font-bold text-gray-400 uppercase tracking-wider">Questions</label>
+                                            <input
+                                                type="number" min="1" placeholder="Qty"
+                                                value={sec.numQuestions}
+                                                onChange={e => handlePatternChange(idx, 'numQuestions', e.target.value)}
+                                                className="border border-gray-200 p-3 rounded-xl w-20 text-sm font-bold text-gray-700 outline-none text-center focus:border-[#1e3280] bg-white"
+                                            />
+                                        </div>
+
+                                        {/* Type */}
+                                        <div className="relative flex-shrink-0">
+                                            <label className="absolute -top-2 left-3 bg-gray-50 px-1 text-[9px] font-bold text-gray-400 uppercase tracking-wider">Type</label>
+                                            <select
+                                                value={sec.type}
+                                                onChange={e => handlePatternChange(idx, 'type', e.target.value)}
+                                                className="border border-gray-200 p-3 rounded-xl w-36 text-sm font-bold text-gray-700 outline-none focus:border-[#1e3280] bg-white appearance-none cursor-pointer"
+                                            >
+                                                <option value="">Select Type</option>
+                                                <option value="MCQ">MCQ</option>
+                                                <option value="1m">1 Mark</option>
+                                                <option value="2m">2 Marks</option>
+                                                <option value="3m">3 Marks</option>
+                                                <option value="4m">4 Marks</option>
+                                                <option value="5m">5 Marks</option>
+                                            </select>
+                                        </div>
+
+                                        {/* Instructions */}
+                                        <div className="relative flex-1">
+                                            <label className="absolute -top-2 left-3 bg-gray-50 px-1 text-[9px] font-bold text-gray-400 uppercase tracking-wider">Instructions</label>
+                                            <input
+                                                type="text"
+                                                placeholder="e.g. Answer any 5 of the following..."
+                                                value={sec.description}
+                                                onChange={e => handlePatternChange(idx, 'description', e.target.value)}
+                                                className="border border-gray-200 p-3 rounded-xl w-full text-sm font-medium text-gray-700 outline-none focus:border-[#1e3280] bg-white"
+                                            />
+                                        </div>
+
+                                        {/* Marks */}
+                                        <div className={`flex items-center justify-center px-4 py-2.5 rounded-xl shadow-inner min-w-[90px] flex-shrink-0 ${isShort ? 'bg-red-100 border border-red-200' : 'bg-green-50 border border-green-200'}`}>
+                                            <span className={`font-bold text-[11px] uppercase tracking-widest flex flex-col items-center leading-tight ${isShort ? 'text-red-700' : 'text-green-700'}`}>
+                                                Marks
+                                                <span className="text-xl mt-0.5">{sec.marks}</span>
+                                            </span>
+                                        </div>
+
+                                        {/* Available count */}
+                                        {sec.type && (
+                                            <div className={`text-[10px] font-bold px-3 py-1 rounded-full border flex-shrink-0 ${isShort ? 'bg-red-100 text-red-600 border-red-200' : 'bg-blue-50 text-blue-600 border-blue-100'}`}>
+                                                {isShort ? `⚠ Only ${avail} available` : `${avail} available`}
+                                            </div>
+                                        )}
+
+                                        {/* Remove */}
+                                        {localPattern.length > 1 && (
+                                            <button
+                                                onClick={() => removeSection(idx)}
+                                                className="absolute -top-3 -right-3 bg-white border border-gray-200 text-red-500 hover:text-white w-7 h-7 rounded-full font-bold shadow hover:bg-red-500 hover:border-red-500 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all text-xs z-10"
+                                            >✕</button>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        <button
+                            onClick={addSection}
+                            className="mt-4 flex items-center gap-2 text-[#1e3280] bg-blue-50 hover:bg-[#1e3280] hover:text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all border border-blue-100"
+                        >
+                            <span className="text-lg leading-none">+</span> Add Section
+                        </button>
+                    </div>
+                </div>
+
+                {/* Footer */}
+                <div className="flex justify-between items-center p-7 border-t border-gray-100 bg-gray-50 rounded-b-3xl">
+                    <div className="flex gap-4 text-sm text-gray-500 font-medium">
+                        <span>📋 <b className="text-gray-700">{localPattern.length}</b> sections</span>
+                        <span>❓ <b className="text-gray-700">{totalQuestionsNeeded}</b> questions</span>
+                        <span>🏅 <b className="text-gray-700">{totalMarks}</b> marks</span>
+                    </div>
+                    <div className="flex gap-3">
+                        <button onClick={onClose} className="border border-gray-200 text-gray-600 px-6 py-3 rounded-xl font-bold text-sm hover:bg-gray-100 transition">
+                            Cancel
+                        </button>
+                        <button
+                            onClick={handleGenerate}
+                            disabled={!isPatternValid || totalQuestionsNeeded === 0}
+                            className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-yellow-900 px-8 py-3 rounded-xl font-bold text-sm hover:shadow-lg hover:from-yellow-300 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+                        >
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                            Generate Paper
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// ─── Main Component ──────────────────────────────────────────────────────────
 const CreatePaper = () => {
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
-    
+
     const [filters, setFilters] = useState({ class: '', level: '', type: '', chapter: '', concept: '' });
     const [questions, setQuestions] = useState([]);
     const [selectedQuestions, setSelectedQuestions] = useState([]);
@@ -16,6 +406,13 @@ const CreatePaper = () => {
     const [allQuestions, setAllQuestions] = useState([]);
     const [showPatternModal, setShowPatternModal] = useState(false);
     const [pattern, setPattern] = useState([{ sectionName: 'Section A', numQuestions: '', type: '', description: '', marks: 0 }]);
+
+    // New state
+    const [showAutoGetModal, setShowAutoGetModal] = useState(false);
+    const [showGenerateModal, setShowGenerateModal] = useState(false);
+    const [toast, setToast] = useState(null);
+
+    const showToast = (msg, type = 'info') => setToast({ msg, type });
 
     useEffect(() => {
         api.get('/api/questions').then(res => setAllQuestions(res.data)).catch(console.error);
@@ -27,87 +424,134 @@ const CreatePaper = () => {
     const fetchFilteredQuestions = async () => {
         try {
             const queryData = { ...filters };
-            if (queryData.class) {
-                queryData.classes = queryData.class;
-                delete queryData.class;
-            }
-            const queryParams = new URLSearchParams(queryData).toString();
-            const res = await api.get(`/api/questions?${queryParams}`);
+            if (queryData.class) { queryData.classes = queryData.class; delete queryData.class; }
+            const res = await api.get(`/api/questions?${new URLSearchParams(queryData).toString()}`);
             setQuestions(res.data);
-        } catch (err) {
-            console.error(err);
-        }
+        } catch (err) { console.error(err); }
     };
 
-    useEffect(() => {
-        fetchFilteredQuestions();
-    }, [filters]);
+    useEffect(() => { fetchFilteredQuestions(); }, [filters]);
 
     const handleSelect = (q) => {
-        if (!selectedQuestions.find(sq => sq._id === q._id)) {
-            setSelectedQuestions([...selectedQuestions, q]);
+        if (!selectedQuestions.find(sq => sq._id === q._id))
+            setSelectedQuestions(prev => [...prev, q]);
+    };
+
+    const handleDeselect = (id) => setSelectedQuestions(prev => prev.filter(q => q._id !== id));
+
+    // ── Auto Get Questions handler ──
+    const handleAutoGet = (qty, level) => {
+        let pool = [...questions.filter(q => !selectedQuestions.find(sq => sq._id === q._id))];
+
+        if (level === 'easy') pool.sort((a, b) => { const o = ['easy', 'medium', 'hard']; return o.indexOf(a.level) - o.indexOf(b.level); });
+        else if (level === 'hard') pool.sort((a, b) => { const o = ['hard', 'medium', 'easy']; return o.indexOf(a.level) - o.indexOf(b.level); });
+        else if (level === 'balanced') {
+            const easy = pool.filter(q => q.level === 'easy');
+            const medium = pool.filter(q => q.level === 'medium');
+            const hard = pool.filter(q => q.level === 'hard');
+            const third = Math.ceil(qty / 3);
+            pool = [...easy.slice(0, third), ...medium.slice(0, third), ...hard.slice(0, third)];
+        } else {
+            // random shuffle
+            pool.sort(() => Math.random() - 0.5);
         }
+
+        const picked = pool.slice(0, qty);
+        setSelectedQuestions(prev => {
+            const newOnes = picked.filter(p => !prev.find(s => s._id === p._id));
+            return [...prev, ...newOnes];
+        });
+        setShowAutoGetModal(false);
+        showToast(`✓ Added ${picked.length} question${picked.length !== 1 ? 's' : ''} to Selected`, 'success');
     };
 
-    const handleDeselect = (id) => {
-        setSelectedQuestions(selectedQuestions.filter(q => q._id !== id));
+    // ── Generate Question Paper handler ──
+    const handleGeneratePaper = (genPattern, genFilters) => {
+        // For each section, pick matching questions
+        const alreadyPicked = new Set();
+        const newSelected = [];
+
+        for (const sec of genPattern) {
+            const needed = parseInt(sec.numQuestions) || 0;
+            if (!needed || !sec.type) continue;
+
+            let pool = allQuestions.filter(q => {
+                if (alreadyPicked.has(q._id)) return false;
+                const matchClass = !genFilters.class || q.classes?.includes(genFilters.class) || q.class === genFilters.class;
+                const matchLevel = !genFilters.level || q.level === genFilters.level;
+                const matchType = q.type === sec.type;
+                const matchChapter = !genFilters.chapter || q.chapter === genFilters.chapter;
+                const matchConcept = !genFilters.concept || q.concept === genFilters.concept;
+                return matchClass && matchLevel && matchType && matchChapter && matchConcept;
+            });
+
+            // shuffle pool
+            pool.sort(() => Math.random() - 0.5);
+            const picked = pool.slice(0, needed);
+            picked.forEach(q => { alreadyPicked.add(q._id); newSelected.push(q); });
+        }
+
+        if (newSelected.length === 0) {
+            showToast('No questions found matching your pattern + filters.', 'error');
+            setShowGenerateModal(false);
+            return;
+        }
+
+        setSelectedQuestions(newSelected);
+        setPattern(genPattern);
+        setFilters(genFilters);
+        setShowGenerateModal(false);
+
+        const total = genPattern.reduce((s, p) => s + (parseInt(p.numQuestions) || 0), 0);
+        showToast(`✓ Generated paper: ${newSelected.length}/${total} questions selected`, newSelected.length < total ? 'info' : 'success');
     };
 
+    // Pattern modal helpers (original)
     const handleAddSection = () => {
-        const nextSectionName = `Section ${String.fromCharCode(65 + pattern.length)}`; // A, B, C...
-        setPattern([...pattern, { sectionName: nextSectionName, numQuestions: '', type: '', description: '', marks: 0 }]);
+        setPattern([...pattern, { sectionName: `Section ${String.fromCharCode(65 + pattern.length)}`, numQuestions: '', type: '', description: '', marks: 0 }]);
     };
-
     const handleRemoveSection = (index) => {
-        const newPattern = pattern.filter((_, i) => i !== index);
-        const renamedPattern = newPattern.map((sec, i) => ({
-            ...sec,
-            sectionName: `Section ${String.fromCharCode(65 + i)}`
-        }));
-        setPattern(renamedPattern);
+        const renamed = pattern.filter((_, i) => i !== index).map((s, i) => ({ ...s, sectionName: `Section ${String.fromCharCode(65 + i)}` }));
+        setPattern(renamed);
     };
-
     const handlePatternChange = (index, field, value) => {
-        const newPattern = [...pattern];
-        newPattern[index][field] = value;
-        
-        if (field === 'numQuestions' || field === 'type') {
-            const num = field === 'numQuestions' ? parseInt(value) || 0 : parseInt(newPattern[index].numQuestions) || 0;
-            const typeStr = field === 'type' ? value : newPattern[index].type;
-            let multiplier = 0;
-            if (typeStr === 'MCQ' || typeStr === '1m') multiplier = 1;
-            else if (typeStr === '2m') multiplier = 2;
-            else if (typeStr === '3m') multiplier = 3;
-            else if (typeStr === '4m') multiplier = 4;
-            else if (typeStr === '5m') multiplier = 5;
-            
-            newPattern[index].marks = num * multiplier;
-        }
-        setPattern(newPattern);
+        const newP = [...pattern];
+        newP[index][field] = value;
+        const num = field === 'numQuestions' ? parseInt(value) || 0 : parseInt(newP[index].numQuestions) || 0;
+        const typeStr = field === 'type' ? value : newP[index].type;
+        const mult = { MCQ: 1, '1m': 1, '2m': 2, '3m': 3, '4m': 4, '5m': 5 }[typeStr] || 0;
+        newP[index].marks = num * mult;
+        setPattern(newP);
     };
 
     const handleSavePaper = async () => {
-        if (!paperTitle || selectedQuestions.length === 0) {
-            alert('Please provide a title and select at least one question.');
-            return;
-        }
+        if (!paperTitle || selectedQuestions.length === 0) { alert('Please provide a title and select at least one question.'); return; }
         try {
             await api.post('/api/papers', {
                 title: paperTitle,
-                classes: filters.class ? [filters.class] : [], // simplified
+                classes: filters.class ? [filters.class] : [],
                 questions: selectedQuestions.map(q => q._id),
                 pattern: (filters.class === '11' || filters.class === '12') ? pattern : []
             });
-            alert('Paper saved successfully!');
-            navigate('/teacher/dashboard/saved-papers');
+            showToast('Paper saved successfully!', 'success');
+            setTimeout(() => navigate('/teacher/dashboard/saved-papers'), 1500);
         } catch (err) {
-            alert('Failed to save paper');
+            showToast('Failed to save paper', 'error');
         }
     };
 
+    const filteredDisplayQuestions = questions.filter(q =>
+        q.questionText.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (q.questionId && q.questionId.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+
     return (
         <div className="h-screen bg-gray-50 flex flex-col font-sans animate-fade-in-up">
-            {/* Top Navigation Bar - Dark Blue */}
+
+            {/* Toast */}
+            {toast && <Toast msg={toast.msg} type={toast.type} onClose={() => setToast(null)} />}
+
+            {/* Top Navigation Bar */}
             <nav className="bg-[#1e3280] p-4 text-white flex justify-between items-center z-10 rounded-t-lg mx-4 mt-4">
                 <div className="flex items-center gap-4">
                     <h1 className="text-xl font-bold tracking-wide">Paper Builder</h1>
@@ -115,10 +559,35 @@ const CreatePaper = () => {
                         {user?.subject || 'PHYSICS'}
                     </div>
                 </div>
-                <div className="space-x-3 flex items-center">
+                <div className="flex items-center gap-2">
                     {(filters.class === '11' || filters.class === '12') && (
-                        <button onClick={() => setShowPatternModal(true)} className="bg-transparent border border-blue-400 text-blue-100 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-white/10 transition">Pattern</button>
+                        <button onClick={() => setShowPatternModal(true)} className="bg-transparent border border-blue-400 text-blue-100 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-white/10 transition">
+                            Pattern
+                        </button>
                     )}
+
+                    {/* ── Auto Get Questions button ── */}
+                    <button
+                        onClick={() => setShowAutoGetModal(true)}
+                        className="flex items-center gap-2 bg-white/15 border border-blue-300 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-white/25 transition"
+                    >
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Auto Get Questions
+                    </button>
+
+                    {/* ── Generate Question Paper button ── */}
+                    <button
+                        onClick={() => setShowGenerateModal(true)}
+                        className="flex items-center gap-2 bg-yellow-400 border border-yellow-300 text-yellow-900 px-4 py-2 rounded-lg text-sm font-bold hover:bg-yellow-300 transition shadow-sm"
+                    >
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        Generate Paper
+                    </button>
+
                     <button onClick={() => navigate(-1)} className="bg-transparent border border-blue-400 text-blue-100 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-white/10 transition flex items-center gap-1">
                         <span>←</span> Back
                     </button>
@@ -130,50 +599,33 @@ const CreatePaper = () => {
 
             {/* Filter Bar */}
             <div className="px-6 py-4 bg-white border-b border-gray-200 flex flex-wrap gap-4 items-center z-0 mx-4 border-x">
-                <input type="text" placeholder="Paper Title" value={paperTitle} onChange={e=>setPaperTitle(e.target.value)} className="border border-gray-300 p-2 rounded-lg font-medium w-48 text-sm focus:border-blue-500 outline-none" />
-                
+                <input type="text" placeholder="Paper Title" value={paperTitle} onChange={e => setPaperTitle(e.target.value)} className="border border-gray-300 p-2 rounded-lg font-medium w-48 text-sm focus:border-blue-500 outline-none" />
                 <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mx-2">Filter</div>
-                
-                <select 
-                    value={filters.class}
-                    onChange={e => {
-                        const val = e.target.value;
-                        const newFilters = { ...filters, class: val };
-                        if (['JEE', 'KCET', 'NEET'].includes(val)) {
-                            newFilters.type = 'MCQ';
-                        }
-                        setFilters(newFilters);
-                    }} 
-                    className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer"
-                >
+                <select value={filters.class} onChange={e => {
+                    const val = e.target.value;
+                    const nf = { ...filters, class: val };
+                    if (['JEE', 'KCET', 'NEET'].includes(val)) nf.type = 'MCQ';
+                    setFilters(nf);
+                }} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer">
                     <option value="">All Classes</option>
                     <option value="11">Class 11</option><option value="12">Class 12</option>
                     <option value="JEE">JEE</option><option value="KCET">KCET</option><option value="NEET">NEET</option>
                 </select>
-                <select 
-                    value={filters.level}
-                    onChange={e=>setFilters({...filters, level: e.target.value})} 
-                    className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer"
-                >
+                <select value={filters.level} onChange={e => setFilters({ ...filters, level: e.target.value })} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer">
                     <option value="">All Levels</option>
                     <option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option>
                 </select>
-                <select 
-                    value={filters.type}
-                    onChange={e=>setFilters({...filters, type: e.target.value})} 
-                    className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer"
-                    disabled={['JEE', 'KCET', 'NEET'].includes(filters.class)}
-                >
+                <select value={filters.type} onChange={e => setFilters({ ...filters, type: e.target.value })} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer" disabled={['JEE', 'KCET', 'NEET'].includes(filters.class)}>
                     <option value="">All Types</option>
                     <option value="MCQ">MCQ</option><option value="1m">1 Mark</option>
                     <option value="2m">2 Marks</option><option value="3m">3 Marks</option>
                     <option value="4m">4 Marks</option><option value="5m">5 Marks</option>
                 </select>
-                <select value={filters.chapter} onChange={e=>setFilters({...filters, chapter: e.target.value, concept: ''})} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer w-40">
+                <select value={filters.chapter} onChange={e => setFilters({ ...filters, chapter: e.target.value, concept: '' })} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer w-40">
                     <option value="">All Chapters</option>
                     {uniqueChapters.map(ch => <option key={ch} value={ch}>{ch}</option>)}
                 </select>
-                <select value={filters.concept} onChange={e=>setFilters({...filters, concept: e.target.value})} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer w-40">
+                <select value={filters.concept} onChange={e => setFilters({ ...filters, concept: e.target.value })} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer w-40">
                     <option value="">All Concepts</option>
                     {uniqueConcepts.map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
@@ -181,39 +633,26 @@ const CreatePaper = () => {
 
             {/* Three Columns Workspace */}
             <div className="flex-1 flex gap-6 overflow-hidden p-6 mx-4 mb-4 border-x border-b border-gray-200 bg-[#f8fafc] rounded-b-lg">
-                
-                {/* Left Panel: Available Questions */}
+
+                {/* Left: Available Questions */}
                 <div className="w-1/3 bg-white border border-gray-200 rounded-2xl flex flex-col overflow-hidden shadow-sm">
                     <div className="flex justify-between items-center p-5 border-b border-gray-100">
                         <h3 className="font-bold text-gray-400 text-xs tracking-widest uppercase">Available Questions</h3>
-                        <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-bold">
-                            {questions.filter(q => q.questionText.toLowerCase().includes(searchQuery.toLowerCase()) || (q.questionId && q.questionId.toLowerCase().includes(searchQuery.toLowerCase()))).length}
-                        </span>
+                        <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-bold">{filteredDisplayQuestions.length}</span>
                     </div>
                     <div className="px-4 py-3 border-b border-gray-100 bg-gray-50/50">
                         <div className="relative">
                             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">🔍</span>
-                            <input
-                                type="text"
-                                placeholder="Search questions..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full border border-gray-200 pl-9 pr-3 py-2 rounded-lg text-sm outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 bg-white"
-                            />
+                            <input type="text" placeholder="Search questions..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full border border-gray-200 pl-9 pr-3 py-2 rounded-lg text-sm outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 bg-white" />
                         </div>
                     </div>
                     <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                        {questions.filter(q => q.questionText.toLowerCase().includes(searchQuery.toLowerCase()) || (q.questionId && q.questionId.toLowerCase().includes(searchQuery.toLowerCase()))).map(q => (
-                            <div key={q._id} className={`border p-4 rounded-xl cursor-pointer transition flex items-start gap-3 ${selectedQuestions.some(sq => sq._id === q._id) ? 'border-blue-300 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'}`}
-                                 onClick={() => setPreviewQuestion(q)}>
+                        {filteredDisplayQuestions.map(q => (
+                            <div key={q._id} className={`border p-4 rounded-xl cursor-pointer transition flex items-start gap-3 ${selectedQuestions.some(sq => sq._id === q._id) ? 'border-blue-300 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'}`} onClick={() => setPreviewQuestion(q)}>
                                 <div className="mt-0.5">
                                     <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                                         checked={selectedQuestions.some(sq => sq._id === q._id)}
-                                        onChange={(e) => {
-                                            e.stopPropagation();
-                                            if (e.target.checked) handleSelect(q);
-                                            else handleDeselect(q._id);
-                                        }} 
+                                        onChange={e => { e.stopPropagation(); if (e.target.checked) handleSelect(q); else handleDeselect(q._id); }}
                                     />
                                 </div>
                                 <div className="flex-1">
@@ -222,21 +661,17 @@ const CreatePaper = () => {
                                         <span className="font-semibold text-[10px] bg-green-50 text-green-700 px-2 py-1 rounded-md border border-green-100">{q.type}</span>
                                         <span className={`font-semibold text-[10px] px-2 py-1 rounded-md border ${q.level === 'hard' ? 'bg-orange-50 text-orange-700 border-orange-100' : q.level === 'medium' ? 'bg-yellow-50 text-yellow-700 border-yellow-100' : 'bg-emerald-50 text-emerald-700 border-emerald-100'}`}>{q.level}</span>
                                     </div>
-                                    <div className="text-sm text-gray-700 line-clamp-3 font-medium">
-                                        {q.questionText}
-                                    </div>
+                                    <div className="text-sm text-gray-700 line-clamp-3 font-medium">{q.questionText}</div>
                                 </div>
                             </div>
                         ))}
-                        {questions.filter(q => q.questionText.toLowerCase().includes(searchQuery.toLowerCase()) || (q.questionId && q.questionId.toLowerCase().includes(searchQuery.toLowerCase()))).length === 0 && (
-                            <div className="text-center p-8">
-                                <p className="text-gray-400 text-sm">No matching questions found.</p>
-                            </div>
+                        {filteredDisplayQuestions.length === 0 && (
+                            <div className="text-center p-8"><p className="text-gray-400 text-sm">No matching questions found.</p></div>
                         )}
                     </div>
                 </div>
 
-                {/* Middle Panel: Preview */}
+                {/* Middle: Preview */}
                 <div className="w-1/3 bg-white border border-gray-200 rounded-2xl flex flex-col overflow-hidden shadow-sm">
                     <div className="p-5 border-b border-gray-100">
                         <h3 className="font-bold text-gray-400 text-xs tracking-widest uppercase">Preview</h3>
@@ -246,20 +681,16 @@ const CreatePaper = () => {
                             <div className="animate-fade-in-up">
                                 <div className="flex gap-2 mb-4">
                                     <span className="font-semibold text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-md border border-blue-100">{previewQuestion.questionId}</span>
-                                    <span className="font-semibold text-xs bg-gray-50 text-gray-600 px-2 py-1 rounded-md border border-gray-200">Class: {previewQuestion.classes.join(',')}</span>
+                                    <span className="font-semibold text-xs bg-gray-50 text-gray-600 px-2 py-1 rounded-md border border-gray-200">Class: {previewQuestion.classes?.join(',')}</span>
                                     <span className="font-semibold text-xs bg-green-50 text-green-700 px-2 py-1 rounded-md border border-green-100">{previewQuestion.type}</span>
                                 </div>
                                 <p className="text-gray-800 font-medium whitespace-pre-wrap mb-6 text-sm leading-relaxed">{previewQuestion.questionText}</p>
-                                {previewQuestion.imageUrl && (
-                                    <div className="mb-6">
-                                        <img src={previewQuestion.imageUrl} alt="Question Reference" className="max-w-full rounded border border-gray-200" />
-                                    </div>
-                                )}
+                                {previewQuestion.imageUrl && <div className="mb-6"><img src={previewQuestion.imageUrl} alt="Question Reference" className="max-w-full rounded border border-gray-200" /></div>}
                                 {previewQuestion.type === 'MCQ' && previewQuestion.options && (
                                     <ul className="space-y-3 text-sm text-gray-600 mb-6">
                                         {previewQuestion.options.map((opt, i) => (
                                             <li key={i} className="flex items-center gap-3 font-medium">
-                                                <span className="bg-gray-100 w-6 h-6 flex items-center justify-center rounded-full text-gray-500 font-bold text-xs">{String.fromCharCode(65+i)}</span> 
+                                                <span className="bg-gray-100 w-6 h-6 flex items-center justify-center rounded-full text-gray-500 font-bold text-xs">{String.fromCharCode(65 + i)}</span>
                                                 {opt}
                                             </li>
                                         ))}
@@ -267,7 +698,7 @@ const CreatePaper = () => {
                                 )}
                                 {previewQuestion.answer && (
                                     <div className="mt-auto pt-4 border-t border-gray-100 text-sm bg-gray-50 p-4 rounded-xl">
-                                        <span className="font-bold text-gray-700 block mb-1">Answer / Marking Scheme:</span> 
+                                        <span className="font-bold text-gray-700 block mb-1">Answer / Marking Scheme:</span>
                                         <span className="text-gray-600">{previewQuestion.answer}</span>
                                     </div>
                                 )}
@@ -276,8 +707,8 @@ const CreatePaper = () => {
                             <div className="flex-1 flex flex-col items-center justify-center text-gray-300">
                                 <div className="w-16 h-16 rounded-full border-2 border-gray-200 flex items-center justify-center mb-4 bg-gray-50">
                                     <svg className="w-8 h-8 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                     </svg>
                                 </div>
                                 <p className="text-gray-400 font-medium text-sm">Select a question to preview</p>
@@ -286,44 +717,46 @@ const CreatePaper = () => {
                     </div>
                 </div>
 
-                {/* Right Panel: Selected */}
+                {/* Right: Selected */}
                 <div className="w-1/3 bg-white border border-gray-200 rounded-2xl flex flex-col overflow-hidden shadow-sm">
                     <div className="flex justify-between items-center p-5 border-b border-gray-100">
                         <h3 className="font-bold text-gray-400 text-xs tracking-widest uppercase">Selected</h3>
-                        <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-bold">{selectedQuestions.length}</span>
+                        <div className="flex items-center gap-2">
+                            {selectedQuestions.length > 0 && (
+                                <button onClick={() => { setSelectedQuestions([]); showToast('Cleared all selected questions', 'info'); }} className="text-[10px] font-bold text-red-400 hover:text-red-600 border border-red-100 hover:border-red-300 px-2 py-1 rounded-lg transition">
+                                    Clear all
+                                </button>
+                            )}
+                            <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-bold">{selectedQuestions.length}</span>
+                        </div>
                     </div>
                     <div className="flex-1 overflow-y-auto p-4 space-y-3">
                         {selectedQuestions.map((q, idx) => (
                             <div key={q._id} className="border border-gray-100 p-4 rounded-xl bg-gray-50 relative group flex gap-3">
-                                <div className="font-bold text-gray-400 text-xs mt-0.5">{idx+1}.</div>
+                                <div className="font-bold text-gray-400 text-xs mt-0.5">{idx + 1}.</div>
                                 <div className="flex-1">
                                     <p className="text-sm text-gray-700 font-medium leading-relaxed pr-6">{q.questionText}</p>
-                                    {q.imageUrl && (
-                                        <div className="mt-2">
-                                            <img src={q.imageUrl} alt="Question Reference" className="max-w-full rounded border border-gray-200 max-h-32 object-contain" />
-                                        </div>
-                                    )}
+                                    {q.imageUrl && <div className="mt-2"><img src={q.imageUrl} alt="Question Reference" className="max-w-full rounded border border-gray-200 max-h-32 object-contain" /></div>}
                                 </div>
-                                <button className="absolute top-3 right-3 text-red-400 hover:text-red-600 cursor-pointer hidden group-hover:block transition"
-                                      onClick={() => handleDeselect(q._id)}>
-                                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                                <button className="absolute top-3 right-3 text-red-400 hover:text-red-600 cursor-pointer hidden group-hover:block transition" onClick={() => handleDeselect(q._id)}>
+                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                                 </button>
                             </div>
                         ))}
                         {selectedQuestions.length === 0 && (
                             <div className="flex-1 h-full flex flex-col items-center justify-center text-gray-300 min-h-[300px]">
-                                <div className="mb-4 text-4xl text-gray-200">
-                                    <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                                    </svg>
-                                </div>
+                                <svg className="w-12 h-12 mb-4 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                                </svg>
                                 <p className="text-gray-400 font-medium text-sm">No questions selected</p>
+                                <p className="text-gray-300 text-xs mt-1">Use Auto Get or Generate Paper</p>
                             </div>
                         )}
                     </div>
                 </div>
             </div>
 
+            {/* ── Original Pattern Modal ── */}
             {showPatternModal && (
                 <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 backdrop-blur-md animate-fade-in-up">
                     <div className="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col transform transition-all border border-gray-100">
@@ -334,67 +767,72 @@ const CreatePaper = () => {
                             </div>
                             <button onClick={() => setShowPatternModal(false)} className="text-gray-400 hover:text-red-500 bg-gray-50 hover:bg-red-50 rounded-full w-9 h-9 flex items-center justify-center text-xl transition-colors font-bold shadow-sm border border-gray-100 hover:border-red-200">×</button>
                         </div>
-
-                        <div className="flex-1 overflow-y-auto space-y-5 mb-6 pr-2 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+                        <div className="flex-1 overflow-y-auto space-y-5 mb-6 pr-2">
                             {pattern.map((sec, idx) => (
                                 <div key={idx} className="flex flex-col md:flex-row gap-5 items-start md:items-center border border-gray-100 p-5 rounded-2xl bg-[#f8fafc] shadow-sm relative group hover:shadow-md transition-shadow border-l-4 border-l-[#1e3280]">
-                                    
                                     <div className="flex items-center gap-3 w-full md:w-auto">
-                                        <div className="font-black text-sm text-[#1e3280] bg-white px-5 py-3 rounded-xl border border-blue-100 text-center tracking-widest uppercase shadow-sm whitespace-nowrap min-w-[120px]">
-                                            {sec.sectionName}
-                                        </div>
+                                        <div className="font-black text-sm text-[#1e3280] bg-white px-5 py-3 rounded-xl border border-blue-100 text-center tracking-widest uppercase shadow-sm whitespace-nowrap min-w-[120px]">{sec.sectionName}</div>
                                     </div>
-
                                     <div className="flex flex-wrap md:flex-nowrap gap-4 w-full items-center">
                                         <div className="relative group/input">
-                                            <label className="absolute -top-2 left-3 bg-[#f8fafc] px-1 text-[10px] font-bold text-gray-400 uppercase tracking-wider group-focus-within/input:text-[#1e3280] transition-colors">Questions</label>
-                                            <input type="number" placeholder="Qty" value={sec.numQuestions} onChange={(e) => handlePatternChange(idx, 'numQuestions', e.target.value)} className="border border-gray-200 p-3 rounded-xl w-24 text-sm font-bold text-gray-700 outline-none text-center focus:border-[#1e3280] focus:ring-2 focus:ring-blue-100 transition bg-white shadow-sm placeholder-gray-300" min="1" />
+                                            <label className="absolute -top-2 left-3 bg-[#f8fafc] px-1 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Questions</label>
+                                            <input type="number" placeholder="Qty" value={sec.numQuestions} onChange={e => handlePatternChange(idx, 'numQuestions', e.target.value)} className="border border-gray-200 p-3 rounded-xl w-24 text-sm font-bold text-gray-700 outline-none text-center focus:border-[#1e3280] bg-white shadow-sm" min="1" />
                                         </div>
-                                        
                                         <div className="relative group/input">
-                                            <label className="absolute -top-2 left-3 bg-[#f8fafc] px-1 text-[10px] font-bold text-gray-400 uppercase tracking-wider group-focus-within/input:text-[#1e3280] transition-colors">Type</label>
-                                            <select value={sec.type} onChange={(e) => handlePatternChange(idx, 'type', e.target.value)} className="border border-gray-200 p-3 rounded-xl w-36 text-sm font-bold text-gray-700 outline-none focus:border-[#1e3280] focus:ring-2 focus:ring-blue-100 transition bg-white shadow-sm appearance-none cursor-pointer">
+                                            <label className="absolute -top-2 left-3 bg-[#f8fafc] px-1 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Type</label>
+                                            <select value={sec.type} onChange={e => handlePatternChange(idx, 'type', e.target.value)} className="border border-gray-200 p-3 rounded-xl w-36 text-sm font-bold text-gray-700 outline-none focus:border-[#1e3280] bg-white shadow-sm appearance-none cursor-pointer">
                                                 <option value="" disabled>Select Type</option>
                                                 <option value="MCQ">MCQ</option>
-                                                <option value="1m">1 Mark</option>
-                                                <option value="2m">2 Marks</option>
-                                                <option value="3m">3 Marks</option>
-                                                <option value="4m">4 Marks</option>
-                                                <option value="5m">5 Marks</option>
+                                                <option value="1m">1 Mark</option><option value="2m">2 Marks</option><option value="3m">3 Marks</option><option value="4m">4 Marks</option><option value="5m">5 Marks</option>
                                             </select>
                                         </div>
-
                                         <div className="relative flex-1 group/input">
-                                            <label className="absolute -top-2 left-3 bg-[#f8fafc] px-1 text-[10px] font-bold text-gray-400 uppercase tracking-wider group-focus-within/input:text-[#1e3280] transition-colors">Instructions</label>
-                                            <input type="text" placeholder="e.g. Answer any 5 of the following..." value={sec.description} onChange={(e) => handlePatternChange(idx, 'description', e.target.value)} className="border border-gray-200 p-3 rounded-xl w-full text-sm font-medium text-gray-700 outline-none focus:border-[#1e3280] focus:ring-2 focus:ring-blue-100 transition bg-white shadow-sm placeholder-gray-300" />
+                                            <label className="absolute -top-2 left-3 bg-[#f8fafc] px-1 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Instructions</label>
+                                            <input type="text" placeholder="e.g. Answer any 5 of the following..." value={sec.description} onChange={e => handlePatternChange(idx, 'description', e.target.value)} className="border border-gray-200 p-3 rounded-xl w-full text-sm font-medium text-gray-700 outline-none focus:border-[#1e3280] bg-white shadow-sm" />
                                         </div>
-
                                         <div className="flex items-center justify-center bg-green-50 border border-green-200 px-5 py-2.5 rounded-xl shadow-inner min-w-[110px]">
-                                            <span className="font-bold text-[11px] text-green-700 uppercase tracking-widest flex flex-col items-center leading-tight">
-                                                Total Marks
-                                                <span className="text-xl mt-0.5">{sec.marks}</span>
-                                            </span>
+                                            <span className="font-bold text-[11px] text-green-700 uppercase tracking-widest flex flex-col items-center leading-tight">Total Marks<span className="text-xl mt-0.5">{sec.marks}</span></span>
                                         </div>
                                     </div>
-
                                     {pattern.length > 1 && (
-                                        <button onClick={() => handleRemoveSection(idx)} className="absolute -top-3 -right-3 bg-white border border-gray-200 text-red-500 hover:text-white w-8 h-8 rounded-full font-bold shadow-md hover:bg-red-500 hover:border-red-500 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all text-sm z-10" title="Remove Section">✕</button>
+                                        <button onClick={() => handleRemoveSection(idx)} className="absolute -top-3 -right-3 bg-white border border-gray-200 text-red-500 hover:text-white w-8 h-8 rounded-full font-bold shadow-md hover:bg-red-500 hover:border-red-500 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all text-sm z-10">✕</button>
                                     )}
                                 </div>
                             ))}
                         </div>
-                        
                         <div className="flex justify-between items-center mt-2 pt-6 border-t border-gray-100 bg-white">
                             <button onClick={handleAddSection} className="flex items-center gap-2 text-[#1e3280] bg-blue-50 hover:bg-[#1e3280] hover:text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all shadow-sm">
                                 <span className="text-lg leading-none">+</span> Add New Section
                             </button>
-                            <button onClick={() => setShowPatternModal(false)} className="bg-gradient-to-r from-[#1e3280] to-blue-700 text-white px-8 py-3.5 rounded-xl font-bold hover:shadow-lg hover:from-blue-900 hover:to-blue-800 transition-all text-sm tracking-wide flex items-center gap-2">
+                            <button onClick={() => setShowPatternModal(false)} className="bg-gradient-to-r from-[#1e3280] to-blue-700 text-white px-8 py-3.5 rounded-xl font-bold hover:shadow-lg transition-all text-sm tracking-wide flex items-center gap-2">
                                 Confirm & Save Pattern
                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                             </button>
                         </div>
                     </div>
                 </div>
+            )}
+
+            {/* ── Auto Get Modal ── */}
+            {showAutoGetModal && (
+                <AutoGetModal
+                    onClose={() => setShowAutoGetModal(false)}
+                    onConfirm={handleAutoGet}
+                    filteredCount={questions.filter(q => !selectedQuestions.find(sq => sq._id === q._id)).length}
+                />
+            )}
+
+            {/* ── Generate Paper Modal ── */}
+            {showGenerateModal && (
+                <GeneratePaperModal
+                    onClose={() => setShowGenerateModal(false)}
+                    onGenerate={handleGeneratePaper}
+                    filters={filters}
+                    allQuestions={allQuestions}
+                    setFilters={setFilters}
+                    uniqueChapters={uniqueChapters}
+                    uniqueConcepts={uniqueConcepts}
+                />
             )}
         </div>
     );
