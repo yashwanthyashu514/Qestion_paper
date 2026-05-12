@@ -1,0 +1,246 @@
+[
+    {
+        "questionId": "Q-PHY-MIP-01",
+        "questionText": "A person can throw a stone to a maximum height of h metre. The maximum distance to which he can throw the stone is",
+        "options": ["h", "h/2", "2h", "3h"],
+        "answer": "2h",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-02",
+        "questionText": "If the velocity of projection of a particle is increased by 1% by remaining other factors unchanged. Then, the percentage change in the time of flight is",
+        "options": ["1%", "2%", "0.5%", "4%"],
+        "answer": "1%",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-03",
+        "questionText": "Two stones are projected with the same speed but making different angles with the horizontal. Their ranges are equal. If the angle of projection of one is π/3 and its maximum height is h₁ then the maximum height of the other will be",
+        "options": ["3h₁", "2h₁", "h₁ /2", "h₁ /3"],
+        "answer": "h₁ /3",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-04",
+        "questionText": "A projectile is given an initial velocity of î + 2ĵ. The cartesian equation of its path is (g = 10m/s²)",
+        "options": ["y = 2x - 5x²", "y = x - 5x²", "4y = 2x - 5x²", "y = 2x - 25x²"],
+        "answer": "y = 2x - 5x²",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-05",
+        "questionText": "Three particles A, B and C are projected from the same point with the same initial speeds making angles 30°, 45° and 60° respectively with the horizontal. Which of the following statements is correct?",
+        "options": ["A, B and C have unequal ranges", "Ranges of A and C are equal and less than that of B", "Ranges of A and C are equal and greater than that of B", "A, B and C have equal ranges"],
+        "answer": "Ranges of A and C are equal and less than that of B",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-06",
+        "questionText": "The range of particle when launched at an angle of 15° with the horizontal is 1.5 km . What is the range of the projectile when launched at an angle of 45° to the horizontal?",
+        "options": ["3.0 km", "1.5 km", "6.0 km", "0.75 km"],
+        "answer": "3.0 km",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-07",
+        "questionText": "A particle is thrown with a speed u at an angle θ to the horizontal. When the particle makes an angle ϕ with the horizontal, its speed changes to v. Then",
+        "options": ["v = u cosθ", "v = u cosθ cosϕ", "v = u cosθ secϕ", "v = u secθ cosϕ"],
+        "answer": "v = u cosθ secϕ",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-08",
+        "questionText": "The speed of a projectile at its maximum height is √3/2 times its initial speed. If the range of the projectile is P times the maximum height attained by it, then P equals",
+        "options": ["4/3", "2√3", "4√3", "3/4"],
+        "answer": "4√3",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-09",
+        "questionText": "From the top of a tower of height 40 m , a ball is projected with a speed of 20ms⁻¹ at an angle of elevation 30°. The ratio of the time taken by the ball to come back to the same height and time taken to hit the ground is (Take g = 10ms⁻² )",
+        "options": ["2 : 1", "1 : 2", "4 : 1", "1 : 4"],
+        "answer": "1 : 2",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-10",
+        "questionText": "A particle is projected with a velocity v, so that its range on a horizontal plane is twice the greatest height attained. If g is acceleration due to gravity, then its range is",
+        "options": ["4v²/5g", "4g/5v²", "4v³/5g²", "4v/5g²"],
+        "answer": "4v²/5g",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-11",
+        "questionText": "A bomb is dropped from an aeroplane moving horizontally at constant speed. If air resistance is taken into consideration, then the bomb:",
+        "options": ["falls on earth exactly below the aeroplane", "falls on the earth exactly behind the aeroplane", "falls on the earth ahead of the aeroplane", "flies with the aeroplane"],
+        "answer": "falls on the earth exactly behind the aeroplane",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-12",
+        "questionText": "Two tall buildings 30 m apart. The speed with which a ball must be thrown horizontally from a window 150 m above the ground in one building so that it enters a window 27.5 m from the ground in the other building is",
+        "options": ["2ms⁻¹", "6ms⁻¹", "4ms⁻¹", "8ms⁻¹"],
+        "answer": "6ms⁻¹",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-13",
+        "questionText": "A helicopter is flying horizontally at 8 m/s at an altitude 180 m when a package of emergency medical supplies is ejected horizontally backward with a speed of 12m/s relative to the helicopter. Ignoring air resistance what is horizontal distance between the package and the helicopter when the package hits the ground?",
+        "options": ["120 m", "24 m", "36 m", "72 m"],
+        "answer": "72 m",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-14",
+        "questionText": "An airplane moving horizontally with a speed of 180 km/h drops a food packet while flying at a height of 500 m . The horizontal range is",
+        "options": ["180 m", "980 m", "500 m", "670 m"],
+        "answer": "500 m",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-15",
+        "questionText": "Two paper screens A and B are separated by a distance of 200 m . A bullet pierces A and then B. The hole in B is 40 cm below the hole in A. If the bullet is travelling horizontally at the time of hitting A, then the velocity of the bullet at A is",
+        "options": ["200 ms⁻¹", "400 ms⁻¹", "600 ms⁻¹", "700 ms⁻¹"],
+        "answer": "700 ms⁻¹",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-16",
+        "questionText": "A bomber moving horizontally with 500 m/s drops a bomb which strikes ground in 10 s. The angle of strike with horizontal is",
+        "options": ["sin⁻¹ 1/5", "tan⁻¹ 1", "tan⁻¹ 1/5", "tan⁻¹ 5"],
+        "answer": "tan⁻¹ 1/5",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-17",
+        "questionText": "Two bodies of masses m₁ and m₂ , respectively are moving in circles of radii r₁ and r₂ , respectively. Their speeds are such that they make complete circles in the same time t. The ratio of their centripetal accelerations is",
+        "options": ["m₁r₁ : m₂r₂", "m₁ : m₂", "r₁ : r₂", "1 : 1"],
+        "answer": "r₁ : r₂",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-18",
+        "questionText": "Two particles A and B are moving in uniform circular motion in concentric circles of radii rₐ and r_b (with speed vₐ and v_b respectively. Their time period of rotation is the same. The ratio of angular speed of A to that of B will be :",
+        "options": ["r_b : rₐ", "1:1", "rₐ : r_b", "vₐ : v_b"],
+        "answer": "1:1",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-19",
+        "questionText": "A ball of mass 0.25 kg attached to the ends of a string of length 1.96 m is rotating in a horizontal circle. The string will break, if tension is more than 25 N. What is the maximum velocity with which the ball can be rotated?",
+        "options": ["3ms⁻¹", "5ms⁻¹", "9ms⁻¹", "14ms⁻¹"],
+        "answer": "14ms⁻¹",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-20",
+        "questionText": "A particle moves in a circle of radius 25 cm at two revolutions per s. The acceleration of the particle in m/s² is:",
+        "options": ["π²", "8π", "4π²", "2π²"],
+        "answer": "4π²",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-21",
+        "questionText": "A river is flowing from west to east with a speed 5 ms⁻¹. A swimmer can swim in still water at a speed of 10 ms⁻¹. If he wants to start from point A on south bank and reach opposite point B on north bank, in what direction should he swim?",
+        "options": ["30° east of north", "60° east of north", "30° west of north", "60° west of north"],
+        "answer": "30° west of north",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778626328872.png",
+        "diagramCrop": [580, 20, 950, 150]
+    },
+    {
+        "questionId": "Q-PHY-MIP-22",
+        "questionText": "A car is moving towards east with a speed of 25 km h⁻¹. To the driver of the car, a bus appears to move towards north with a speed of 25√3 km h⁻¹. What is the actual velocity of the bus?",
+        "options": ["50 km h⁻¹, 30° E of N", "50 km h⁻¹, 30° N of E", "25 km h⁻¹, 30° E of N", "25 km h⁻¹, 30° N of E"],
+        "answer": "50 km h⁻¹, 30° E of N",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-23",
+        "questionText": "A girl riding a bicycle with a speed of 5 ms⁻¹ towards east direction sees raindrops falling vertically downwards. On increasing the speed to 15 ms⁻¹ , rain appears to fall making an angle of 45° of the vertical. Find the magnitude of velocity of rain.",
+        "options": ["5 ms⁻¹", "5√5ms⁻¹", "25 ms⁻¹", "10ms⁻¹"],
+        "answer": "10ms⁻¹",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-24",
+        "questionText": "A girl can swim with speed 5 kmh⁻¹ in still water. She crosses a river 2 km wide, where the river flows steadily at 2 kmh⁻¹ and she makes strokes normal to the river current. Find how far down the river she go when she reaches the other bank.",
+        "options": ["1 km", "2 km", "800 m", "750 m"],
+        "answer": "800 m",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-25",
+        "questionText": "A river flows with a speed more than the maximum speed with which a person can swim in still water. He intends to cross the river by the shortest possible path (i.e., he wants to reach the point on the opposite bank which directly opposite to the starting point). Which of the following is correct?",
+        "options": ["He should start normal to the river bank.", "He should start in such a way that he moves normal to the bank, relative to the bank.", "He should start in a particular (calculated) direction making an obtuse angle with the direction of water current.", "The man cannot cross the river in that way."],
+        "answer": "The man cannot cross the river in that way.",
+        "level": "hard",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-26",
+        "questionText": "A car is going in south with a speed of 5 m/s. To a man sitting in car a bus appears to move towards west with a speed of 2√6 m/s. What is the actual speed of the bus?",
+        "options": ["4 ms⁻¹", "3 ms⁻¹", "7 ms⁻¹", "none of these"],
+        "answer": "7 ms⁻¹",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-27",
+        "questionText": "A man crosses a 320 m wide river perpendicular to the current in 4 min. If in still water he can swim with a speed 5/3 times that of the current, then the speed of the current, in mm⁻¹ is",
+        "options": ["30", "40", "50", "60"],
+        "answer": "40",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-28",
+        "questionText": "Wind is blowing in the north direction at speed of 2 m/s which causes the rain to fall at some angle with the vertical. With what velocity should a cyclist drive so that the rain appears vertical to him?",
+        "options": ["2 m/s south", "2 m/s north", "4 m/s west", "4 m/s south"],
+        "answer": "2 m/s north",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-29",
+        "questionText": "A car 'A' moves due north at a speed of 40 km/hr, while another car 'B' moves due east at a speed of 30 km/hr. Find the velocity of car B relative to car A (both in magnitude and direction).",
+        "options": ["40 km/hr, at an angle tan⁻¹ (3/5) east of south", "50 km/hr, at an angle tan⁻¹ (3/5) east of south", "40 km/hr, at an angle tan⁻¹ (3/4) east of south", "50 km/hr, at an angle tan⁻¹ (3/4) east of south"],
+        "answer": "50 km/hr, at an angle tan⁻¹ (3/4) east of south",
+        "level": "hard",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-MIP-30",
+        "questionText": "A man is crossing a river flowing with velocity of 5m/s. He reaches a point directly across at a distance of 60 m in 5 s. His velocity in still water should be",
+        "options": ["12 m/s", "13 m/s", "5 m/s", "10 m/s"],
+        "answer": "13 m/s",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778626328872.png",
+        "diagramCrop": [740, 900, 950, 980]
+    }
+]

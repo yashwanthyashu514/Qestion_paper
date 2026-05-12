@@ -8,6 +8,16 @@ import AdminPaperPreview from './AdminPaperPreview';
 
 const DashboardHome = () => {
     const subjects = ['Physics', 'Chemistry', 'Biology', 'Maths', 'Computer Science', 'Kannada', 'English', 'Hindi'];
+    const logoMap = {
+        'Physics': '/physicslogo.jpeg',
+        'Chemistry': '/chemistrylogo.jpeg',
+        'Biology': '/biologylogo.jpeg',
+        'Maths': '/mathslogo.jpeg',
+        'Computer Science': '/computersciencelogo.png',
+        'Kannada': '/kannadalogo.jpg',
+        'English': '/englishlogo.jpg',
+        'Hindi': '/hindilogo.jpg'
+    };
     return (
         <div className="animate-fade-in-up">
             <div className="mb-8 bg-surface p-8 rounded-3xl shadow-sm border-l-8 border-navy relative overflow-hidden">
@@ -30,8 +40,16 @@ const DashboardHome = () => {
                         key={sub}
                         className="bg-surface p-8 rounded-3xl shadow-sm text-center font-black text-lg transition border border-gray-100 text-slate hover:shadow-xl hover:border-gold hover:text-navy transform hover:-translate-y-2 flex flex-col items-center justify-center gap-4 group"
                     >
-                        <div className="bg-gray-50 text-gold w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black shadow-inner group-hover:bg-navy group-hover:text-gold transition-colors duration-300">
-                            {sub.charAt(0)}
+                        <div className="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden shadow-inner group-hover:scale-110 transition-transform duration-300">
+                            <img 
+                                src={logoMap[sub]} 
+                                alt={sub} 
+                                className="w-full h-full object-contain"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.parentNode.innerHTML = `<div class="bg-gray-50 text-gold w-full h-full flex items-center justify-center text-2xl font-black">${sub.charAt(0)}</div>`;
+                                }}
+                            />
                         </div>
                         {sub}
                     </Link>
@@ -54,7 +72,9 @@ const AdminDashboard = () => {
                     className="flex items-center cursor-pointer hover:opacity-80 transition gap-4 ml-4"
                     onClick={() => navigate('/admin/dashboard')}
                 >
-                    <div className="bg-gold text-navy font-black rounded-xl w-10 h-10 flex items-center justify-center text-xl shadow-lg rotate-3">M</div>
+                    <div className="w-12 h-12 flex items-center justify-center shadow-lg transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+                        <img src="/ManchesterLogo.jpeg" alt="Logo" className="w-full h-full object-contain rounded-lg border-2 border-gold/30" />
+                    </div>
                     <h1 className="text-xl font-black tracking-tight uppercase">
                         Admin Portal
                     </h1>

@@ -13,6 +13,17 @@ const SubjectDetails = () => {
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('teachers');
 
+    const logoMap = {
+        'Physics': '/physicslogo.jpeg',
+        'Chemistry': '/chemistrylogo.jpeg',
+        'Biology': '/biologylogo.jpeg',
+        'Maths': '/mathslogo.jpeg',
+        'Computer Science': '/computersciencelogo.png',
+        'Kannada': '/kannadalogo.jpg',
+        'English': '/englishlogo.jpg',
+        'Hindi': '/hindilogo.jpg'
+    };
+
     const fetchData = async () => {
         try {
             const [teachersRes, papersRes] = await Promise.all([
@@ -61,9 +72,16 @@ const SubjectDetails = () => {
     return (
         <div className="space-y-8 animate-fade-in-up px-4 py-8">
             <div className="bg-surface p-10 rounded-[2.5rem] shadow-sm border border-gray-100 border-l-8 border-navy flex justify-between items-center">
-                <div>
-                    <h3 className="font-black text-3xl text-navy mb-2 uppercase tracking-tight">{subject} Division</h3>
-                    <p className="text-[10px] font-black text-slate/40 uppercase tracking-[0.2em] ml-1">Departmental Asset & Faculty Control</p>
+                <div className="flex items-center gap-6">
+                    {logoMap[subject] && (
+                        <div className="w-20 h-20 bg-white p-3 rounded-3xl shadow-xl border border-gray-50 flex items-center justify-center transform -rotate-3 hover:rotate-0 transition-transform duration-300">
+                            <img src={logoMap[subject]} alt={subject} className="w-full h-full object-contain" />
+                        </div>
+                    )}
+                    <div>
+                        <h3 className="font-black text-3xl text-navy mb-2 uppercase tracking-tight">{subject} Division</h3>
+                        <p className="text-[10px] font-black text-slate/40 uppercase tracking-[0.2em] ml-1">Departmental Asset & Faculty Control</p>
+                    </div>
                 </div>
                 <button onClick={() => navigate('/admin/dashboard')} className="bg-white border-2 border-gray-100 text-slate/40 px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:border-navy hover:text-navy transition shadow-sm">← Back</button>
             </div>

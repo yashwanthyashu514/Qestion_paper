@@ -1,0 +1,166 @@
+[
+    {
+        "questionId": "Q-PHY-AC-01",
+        "questionText": "Instantaneous values of current and e.m.f. in an AC circuit are I = 1/√2 sin(314t) A and E = √2 sin(314t - π/6) V respectively. The phase difference between E and I relative to current will be",
+        "options": ["-π/6 rad", "-π/3 rad", "π/6 rad", "π/3 rad"],
+        "answer": "-π/6 rad",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-02",
+        "questionText": "A generator produces a voltage that is given by V = 240 sin 120t, where t is in seconds. The frequency and r.m.s. voltage are",
+        "options": ["60 Hz and 240 V", "19 Hz and 120 V", "19 Hz and 170 V", "754 Hz and 70 V"],
+        "answer": "19 Hz and 170 V",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-03",
+        "questionText": "The rms value of current in a 50 Hz AC circuit is 6 A. The average value of AC current over a cycle is",
+        "options": ["6√2", "3/π√2", "Zero", "6√2/π"],
+        "answer": "6√2/π",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-04",
+        "questionText": "An inductor of 30 mH is connected to a 220 V, 100 Hz ac source. The inductive reactance is",
+        "options": ["10.58 Ω", "12.64 Ω", "18.85 Ω", "22.67 Ω"],
+        "answer": "18.85 Ω",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-05",
+        "questionText": "A 60 μF capacitor is connected to a 110 V, 60 Hz AC supply. The rms value of the current in the circuit is",
+        "options": ["2 A", "2.49 A", "1.85 A", "2.05 A"],
+        "answer": "2.49 A",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-06",
+        "questionText": "An electric bulb has a rated power of 50 W at 100 V. If it is used on an AC source of 200 V, 50 Hz, a choke has to be used in series with it. This choke should have an inductance of",
+        "options": ["1 mH", "0.1 mH", "0.1 H", "1.1 H"],
+        "answer": "1.1 H",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-07",
+        "questionText": "A circuit consists of a resistance of 10 Ω and a capacitance of 0.1 μF . If an alternating emf of 100 V, 50 Hz is applied, the current in the circuit is",
+        "options": ["3.14 mA", "6.28 mA", "1.51 mA", "7.36 mA"],
+        "answer": "3.14 mA",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-08",
+        "questionText": "The power factor of the circuit as shown in figure is",
+        "options": ["0.2", "0.4", "0.8", "0.6"],
+        "answer": "0.6",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778626988260.png",
+        "diagramCrop": [630, 650, 950, 750]
+    },
+    {
+        "questionId": "Q-PHY-AC-09",
+        "questionText": "In a series LCR circuit R = 200 Ω and the voltage and the frequency of the main supply is 220 V and 50 Hz respectively. On taking but the capacitance from the circuit the current lags behind the voltage by 30°. On taking out the inductor from the circuit the current leads the voltage by 30°. The power dissipated in the LCR circuit is",
+        "options": ["305 W", "210 W", "zero", "242 W"],
+        "answer": "242 W",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-10",
+        "questionText": "In a circuit, the current lags behind the voltage by a phase difference of π/2 , the circuit will contain which of the following ?",
+        "options": ["Only R", "Only C", "R and C", "Only L"],
+        "answer": "Only L",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-11",
+        "questionText": "A step-up transformer operates on a 230 V line and a load current of 2 A. The ratio of primary and secondary windings is 1 : 25. Then the current in the primary is",
+        "options": ["25 A", "50 A", "100 A", "12.5 A"],
+        "answer": "50 A",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-12",
+        "questionText": "The current drawn by the primary of a transformer, which steps down 200 V to 20 V to operate a device of resistance 20 Ω. is (Assume the efficiency of the transformer to be 80 %)",
+        "options": ["0.125 A", "0.225 A", "0.325 A", "0.425 A"],
+        "answer": "0.125 A",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-13",
+        "questionText": "In a transformer number of turns in primary circuit is 500 and in secondary circuit number of turns is 10 and load resistance is 10 Ω and voltage of secondary coil is 50 V then find the current in primary circuit.",
+        "options": ["0.2 A", "0.3 A", "0.4 A", "0.1 A"],
+        "answer": "0.1 A",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-14",
+        "questionText": "The primary of a transformer when connected to a dc battery of 10 volt draws a current of 1 mA. The number of turns of the primary and secondary windings are 50 and 100 respectively. The voltage in the secondary and the current drawn by the circuit in the secondary are respectively :",
+        "options": ["20 V and 2.0 mA", "10 V and 0.5 mA", "Zero volt and therefore no current", "20 V and 0.5 mA"],
+        "answer": "Zero volt and therefore no current",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-15",
+        "questionText": "A 50 Hz alternating current of peak value 1 A flows through the primary coil of a transformer. If the mutual inductance between the primary and secondary be 1.5 H, then the mean value of the induced voltage is",
+        "options": ["75 V", "150 V", "225 V", "300 V"],
+        "answer": "300 V",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-16",
+        "questionText": "If maximum energy is stored in capacitor at t = 0 then find the time after which current in the circuit will be maximum.",
+        "options": ["π/2 ms", "π/4 ms", "π ms", "2 ms"],
+        "answer": "π/4 ms",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778627004193.png",
+        "diagramCrop": [430, 740, 950, 830]
+    },
+    {
+        "questionId": "Q-PHY-AC-17",
+        "questionText": "Alternating current of peak value (2/π) ampere flows through the primary coil of the transformer. The coefficient of mutual inductance between primary and secondary coil is 1 henry. The peak e.m.f. induced in secondary coil is (Frequency of AC = 50 Hz)",
+        "options": ["100 V", "200 V", "300 V", "400 V"],
+        "answer": "200 V",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-18",
+        "questionText": "In an oscillating system, a restoring force is a must. In an L - C circuit, restoring force is provide by",
+        "options": ["capacitor", "inductance", "resistance", "both (a) and (b)"],
+        "answer": "capacitor",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-19",
+        "questionText": "A series resonant circuit contains L = 5/π mH, C = 200/π μF and R = 100 Ω. If a source of emf e = 200 sin 1000π t is applied, then the rms current is",
+        "options": ["2 A", "200√2 A", "100√2 A", "1.41 A"],
+        "answer": "1.41 A",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-AC-20",
+        "questionText": "A DC circuit contains 10 Ω of resistance in series with 10 H coil. The impedance of the circuit is",
+        "options": ["10 Ω", "20 Ω", "1 Ω", "zero"],
+        "answer": "10 Ω",
+        "level": "easy",
+        "type": "MCQ"
+    }
+]

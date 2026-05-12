@@ -72,6 +72,17 @@ const TeacherDashboard = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const logoMap = {
+        'Physics': '/physicslogo.jpeg',
+        'Chemistry': '/chemistrylogo.jpeg',
+        'Biology': '/biologylogo.jpeg',
+        'Maths': '/mathslogo.jpeg',
+        'Computer Science': '/computersciencelogo.png',
+        'Kannada': '/kannadalogo.jpg',
+        'English': '/englishlogo.jpg',
+        'Hindi': '/hindilogo.jpg'
+    };
+
     return (
         <div className="min-h-screen bg-background flex flex-col font-sans">
             {/* Top Navigation Bar - Manchester Navy */}
@@ -80,10 +91,22 @@ const TeacherDashboard = () => {
                     className="flex items-center cursor-pointer hover:opacity-80 transition gap-4 ml-4"
                     onClick={() => navigate('/teacher/dashboard')}
                 >
-                    <div className="bg-gold text-navy font-black rounded-xl w-10 h-10 flex items-center justify-center text-xl shadow-lg rotate-3">T</div>
-                    <h1 className="text-xl font-black tracking-tight uppercase">
-                        {user?.subject || 'Science'} Department
-                    </h1>
+                    <div className="w-12 h-12 flex items-center justify-center shadow-lg transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+                        <img src="/ManchesterLogo.jpeg" alt="Logo" className="w-full h-full object-contain rounded-lg border-2 border-gold/30" />
+                    </div>
+                    <div className="flex flex-col">
+                        <h1 className="text-xl font-black tracking-tight uppercase leading-none">
+                            Teacher Portal
+                        </h1>
+                        <div className="flex items-center gap-2 mt-1">
+                            {user?.subject && logoMap[user.subject] && (
+                                <img src={logoMap[user.subject]} alt={user.subject} className="w-5 h-5 object-contain rounded-sm" />
+                            )}
+                            <span className="text-[10px] font-black text-gold uppercase tracking-[0.2em]">
+                                {user?.subject || 'Science'} Department
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="space-x-4 flex items-center mr-4">

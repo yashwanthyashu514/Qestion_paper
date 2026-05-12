@@ -1,0 +1,122 @@
+[
+    {
+        "questionId": "Q-PHY-EMI-01",
+        "questionText": "The current flowing in two coaxial coils are in the same direction. On increasing the distance between the two, the electric current in both the cables will",
+        "options": ["increase", "decrease", "remain unchanged", "the information is incomplete"],
+        "answer": "increase",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMI-02",
+        "questionText": "A flat circular coil of 10 cm radius has 200 turns of wire. The coil is connected to a capacitor of 20 μF placed in a uniform magnetic field whose induction decreases at a rate of 0.01 T s⁻¹ . Find the charge on capacitor.",
+        "options": ["0.51 μC", "0.75 μC", "0.92 μC", "1.25 μC"],
+        "answer": "0.92 μC",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMI-03",
+        "questionText": "A flexible wire bent in the form of a circle is placed in a uniform magnetic field perpendicular to the plane of the coil. The radius of the coil changes as shown in figure. The graph of induced emf in the coil is represented by",
+        "options": ["Graph 1", "Graph 2", "Graph 3", "Graph 4"],
+        "answer": "Graph 2",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778626346493.png",
+        "diagramCrop": [50, 280, 950, 520]
+    },
+    {
+        "questionId": "Q-PHY-EMI-04",
+        "questionText": "A circular disc of radius 0.2 m is placed in a uniform magnetic field of induction (1/π)Wb m⁻² in such a way that its axis makes an angle of 60° with B. The magnetic flux linked with the disc is",
+        "options": ["0.02 Wb", "0.06 Wb", "0.08 Wb", "0.01 Wb"],
+        "answer": "0.02 Wb",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMI-05",
+        "questionText": "A jet plane is travelling west at the speed of 1600 km h⁻¹ . The voltage difference developed between the ends of the wing having a span of 20 m, if the earth’s magnetic field at the location has a magnitude of 5 x 10⁻⁴ T and the dip angle is 30° is",
+        "options": ["4.1 V", "2.2 V", "3.2 V", "3.8 V"],
+        "answer": "2.2 V",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMI-06",
+        "questionText": "As shown in the figure, a metal rod makes contact with a partial circuit and completes the circuit. The circuit area is perpendicular to a magnetic field with B = 0.15 T. If the resistance of the total circuit is 3 Ω, the force needed to move the rod as indicated with a constant speed of 2 m will be equal to",
+        "options": ["3.75 x 10⁻³ N", "2.75 x 10⁻³ N", "6.57 x 10⁻⁴ N", "4.36 x 10⁻⁴ N"],
+        "answer": "3.75 x 10⁻³ N",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778626346493.png",
+        "diagramCrop": [250, 750, 750, 900]
+    },
+    {
+        "questionId": "Q-PHY-EMI-07",
+        "questionText": "A conducting metal circular-wire-loop of radius r is placed perpendicular to a magnetic field which varies with time as B = B₀e⁻ᵗ/τ, where B₀ and τ are constants, at time t = 0. If the resistance of the loop is R then the heat generated in the loop after a long time (t → ∞) is",
+        "options": ["π²r⁴B₀² / 2τR", "π²r⁴B₀² / 2Rτ", "π²r⁴B₀²R / τ", "π²r⁴B₀² / τR"],
+        "answer": "π²r⁴B₀² / 2Rτ",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMI-08",
+        "questionText": "A circular coil of radius 6 cm and 20 turns rotates about its vertical diameter with an angular speed of 40 rad s⁻¹ in a uniform horizontal magnetic field of magnitude 2 x 10⁻² T. If the coil form a closed loop of resistance 8 Ω, then the average power loss due to joule heating is",
+        "options": ["2.07 x 10⁻³ W", "1.23 x 10⁻³ W", "3.14 x 10⁻³ W", "1.80 x 10⁻³ W"],
+        "answer": "1.23 x 10⁻³ W",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMI-09",
+        "questionText": "A horizontal telegraph wire 2.5 km long running east and west is a part of a circuit whose resistance is 35 Ω. The wire falls to the ground from a height of 10m. If g = 9.8 ms⁻² and Bₕ = 2 x 10⁻⁵ T, then the current induced in the circuit is",
+        "options": ["0.7 A", "0.02 A", "0.01 A", "0.04 A"],
+        "answer": "0.02 A",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMI-10",
+        "questionText": "A wire of length l, mass m, and resistance R slides without any friction down the parallel conducting rails of negligible resistance (figure). The rails are connected to each other at the bottom by a resistanceless rail parallel to the wire so that the wire and the rails form a closed rectangular conducting loop. The plane of the rails makes an angle θ with the horizontal and a uniform vertical magnetic field of induction B exists throughout the region. Find the steadystate velocity of the wire.",
+        "options": ["mgR sinθ / (B²l² cos²θ)", "mgR sin²θ / (B²l² cos²θ)", "mgR sinθ / (B²l² cosθ)", "mgR sin²θ / (B²l² cosθ)"],
+        "answer": "mgR sinθ / (B²l² cos²θ)",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778626364844.png",
+        "diagramCrop": [450, 440, 650, 630]
+    },
+    {
+        "questionId": "Q-PHY-EMI-11",
+        "questionText": "When the number of turns in a coil is doubled without any change in the length of the coil, its self-inductance becomes",
+        "options": ["four times", "doubled", "halved", "squared"],
+        "answer": "four times",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMI-12",
+        "questionText": "What should be the current in a 50 mH coil in order that it contains 0.004 J of energy ?",
+        "options": ["0.4 A", "0.2 A", "0.8 A", "0.1 A"],
+        "answer": "0.4 A",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMI-13",
+        "questionText": "A solenoid has a mean radius of 0.12 m and a cross-sectional area 20 x 10⁻⁴ m². It is found that when the current is 20 A, the energy stored is 0.1 J. The number of turns in the solenoid is",
+        "options": ["287", "387", "423", "523"],
+        "answer": "387",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMI-14",
+        "questionText": "If I = 5 A and decreasing at a rate of 10³ (A/sec), then V_B - V_A",
+        "options": ["5 V", "10 V", "15 V", "20 V"],
+        "answer": "15 V",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778626364844.png",
+        "diagramCrop": [580, 880, 950, 950]
+    }
+]

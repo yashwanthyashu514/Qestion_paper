@@ -1,0 +1,83 @@
+SIR M.V EDUCATION TRUST(R)
+SIR M.V GROUP OF INSTITUTIONS
+Near Government ITI College, Hadadi Road, Davangere
+LT-PHY-MODULE-02
+1. A block of mass 
+ is released from a height of 
+ on a curved smooth surface. On the
+horizontal surface, path 
+ is smooth and path 
+ is rough with a coefficient of friction 
+ . If the
+impact of the block with the vertical wall at 
+ is perfectly elastic, the total distance covered by the block on
+the horizontal surface before coming to rest will be (take 
+ )
+(1)
+(2)
+(3)
+(4)
+2. The sign of work done by a force on a body is important to understand. For
+(i) work done by a man in lifting a bucket out of a well by means of a rope tied to the bucket
+(ii) work done by friction on a body sliding down an inclined plane
+(iii) work done by a applied force on a body moving on a rough horizontal plane with uniform velocity
+(iv) work done by the resistive force of air on a vibrating pendulum in bringing it to rest
+Choose the sign of work done
+(1) +, - +, -
+(2) +, +, -, -
+(3) +, -,+, +
+(4) -, + - ,+
+3. A vertical spring of force constant 
+ is attached to the ceiling, with a block of mass 
+suspended from it. Now an external force 
+ is applied on the block so that the spring is stretched by an
+additional length of 
+ . The work done by the force 
+ is [Take 
+ ]
+(1)
+(2)
+(3)
+(4)
+4. The bob of a pendulum is released from a horizontal position 
+ as shown in the figure. If the length of the
+pendulum is 
+ , what is the speed with which the bob arrives at the lowermost point 
+ , given that it
+dissipated 
+ of its initial energy against air resistance?
+(1)
+(2)
+(3)
+(4)
+m = 0.1 kg
+4 m
+AB
+BC
+μ = 0.1
+C
+g = 10 m s−2
+29 m
+49 m
+59 m
+109 m
+100 Nm−1
+10 kg
+F
+2 m
+F
+g = 10 m s−2
+200J
+400J
+100J
+600J
+A
+1.5 m
+B
+5%
+5ms−1
+5.5 m s−1
+5.3 m s−1
+4.4 m s−1
+CLASS WORK- WORK POWER ENERGY
+DAY-1 (WORK DONE BY CONSTANT AND VARIABLE FORCE)
