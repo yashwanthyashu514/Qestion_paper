@@ -49,7 +49,7 @@ const AddQuestion = () => {
             }
 
             if (editId) {
-                await api.put(`/api/questions/${editId}`, submitData, {
+                await api.post(`/api/questions/update/${editId}`, submitData, {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 });
                 alert('Question updated successfully!');

@@ -109,10 +109,10 @@ router.delete('/:id', [auth, checkRole(['admin', 'teacher'])], async (req, res) 
     }
 });
 
-// @route   PUT /api/questions/:id
+// @route   POST /api/questions/update/:id
 // @desc    Update a question
 // @access  Teacher / Admin
-router.put('/:id', [auth, checkRole(['admin', 'teacher']), upload.single('image')], async (req, res) => {
+router.post('/update/:id', [auth, checkRole(['admin', 'teacher']), upload.single('image')], async (req, res) => {
     try {
         let question = await Question.findById(req.params.id);
         if (!question) return res.status(404).json({ msg: 'Question not found' });
