@@ -294,12 +294,12 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
                             <div style={{ fontWeight: 700, fontSize: '17px', textDecoration: 'underline' }}>{sec.sectionName}</div>
                             {sec.description && <div style={{ fontSize: '13px', color: '#555', fontStyle: 'italic', marginTop: '4px' }}>{sec.description}</div>}
                         </div>
-                        <QuestionList questions={secQs} fontSize={settings.fontSize} showMarks={settings.showMarks} />
+                        <QuestionList questions={secQs} fontSize={settings.fontSize} showMarks={settings.showMarks} classes={paper.classes} />
                     </div>
                 );
             });
         }
-        return <QuestionList questions={paper.questions} fontSize={settings.fontSize} showMarks={settings.showMarks} />;
+        return <QuestionList questions={paper.questions} fontSize={settings.fontSize} showMarks={settings.showMarks} classes={paper.classes} />;
     };
 
     return (
@@ -447,7 +447,7 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
     );
 };
 
-const QuestionList = ({ questions, fontSize, showMarks }) => (
+const QuestionList = ({ questions, fontSize, showMarks, classes }) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         {questions.map((q, idx) => (
             <div key={q._id} style={{ color: '#111', breakInside: 'avoid-column' }}>
@@ -463,7 +463,7 @@ const QuestionList = ({ questions, fontSize, showMarks }) => (
                             )}
                         </div>
                     </div>
-                    {showMarks && <span style={{ fontWeight: 700, whiteSpace: 'nowrap', fontSize: '0.9em' }}>[{formatMarks(q.type, paper.classes)}]</span>}
+                    {showMarks && <span style={{ fontWeight: 700, whiteSpace: 'nowrap', fontSize: '0.9em' }}>[{formatMarks(q.type, classes)}]</span>}
                 </div>
                 {q.type === 'MCQ' && q.options && (
                     <div style={{ 
