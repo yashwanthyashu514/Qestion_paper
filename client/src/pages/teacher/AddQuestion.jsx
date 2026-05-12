@@ -275,7 +275,7 @@ const AddQuestion = () => {
                                 <span className="text-xs font-semibold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">Type: {q.type}</span>
                                 <span className="text-xs font-semibold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">Level: {q.level}</span>
                             </div>
-                            <p className="mt-2 text-base text-gray-900 font-medium whitespace-pre-wrap">{q.questionText}</p>
+                            <p className="mt-2 text-base text-gray-900 font-medium whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: q.questionText }}></p>
                             {q.imageUrl && (
                                 <div className="mt-3">
                                     <img src={q.imageUrl} alt="Question Reference" className="max-h-48 rounded border border-gray-200" />
@@ -285,7 +285,7 @@ const AddQuestion = () => {
                             {q.type === 'MCQ' && q.options && (
                                 <div className="mt-4 grid grid-cols-2 gap-2 text-sm text-gray-700 bg-gray-50 p-3 rounded border border-gray-100">
                                     {q.options.map((opt, idx) => (
-                                        <div key={idx}><strong className="mr-1">{String.fromCharCode(65+idx)})</strong> {opt}</div>
+                                        <div key={idx} className="flex"><strong className="mr-1">{String.fromCharCode(65+idx)})</strong> <span dangerouslySetInnerHTML={{ __html: opt }}></span></div>
                                     ))}
                                 </div>
                             )}

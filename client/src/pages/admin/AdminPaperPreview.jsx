@@ -132,7 +132,7 @@ const AdminPaperPreview = () => {
                                                         <div className="flex items-start flex-1 pr-4">
                                                             <span className="font-bold mr-3 whitespace-nowrap text-base">{idx + 1}.</span>
                                                             <div className="flex-1">
-                                                                <p className="whitespace-pre-wrap text-justify text-base leading-relaxed">{q.questionText}</p>
+                                                                <p className="whitespace-pre-wrap text-justify text-base leading-relaxed" dangerouslySetInnerHTML={{ __html: q.questionText }}></p>
                                                                 {q.imageUrl && (
                                                                     <div className="mt-4 mb-3">
                                                                         <img src={q.imageUrl} alt="Diagram" className="max-w-full max-h-64 object-contain" />
@@ -147,7 +147,7 @@ const AdminPaperPreview = () => {
                                                             {q.options.map((opt, i) => (
                                                                 <div key={i} className="flex">
                                                                     <span className="mr-3 font-semibold">{String.fromCharCode(65+i)})</span>
-                                                                    <span>{opt}</span>
+                                                                    <span dangerouslySetInnerHTML={{ __html: opt }}></span>
                                                                 </div>
                                                             ))}
                                                         </div>
@@ -166,7 +166,7 @@ const AdminPaperPreview = () => {
                                     <div className="flex items-start flex-1 pr-4">
                                     <span className="font-bold mr-3 whitespace-nowrap text-base">{idx + 1}.</span>
                                     <div className="flex-1">
-                                        <p className="whitespace-pre-wrap text-justify text-base leading-relaxed">{q.questionText}</p>
+                                        <p className="whitespace-pre-wrap text-justify text-base leading-relaxed" dangerouslySetInnerHTML={{ __html: q.questionText }}></p>
                                         {q.imageUrl && (
                                             <div className="mt-4 mb-3">
                                                 <img src={q.imageUrl} alt="Diagram" className="max-w-full max-h-64 object-contain" />
@@ -181,7 +181,7 @@ const AdminPaperPreview = () => {
                                         {q.options.map((opt, i) => (
                                             <div key={i} className="flex">
                                                 <span className="mr-3 font-semibold">{String.fromCharCode(65+i)})</span>
-                                                <span>{opt}</span>
+                                                <span dangerouslySetInnerHTML={{ __html: opt }}></span>
                                             </div>
                                         ))}
                                     </div>

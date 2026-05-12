@@ -455,7 +455,7 @@ const QuestionList = ({ questions, fontSize, showMarks, classes }) => (
                     <div style={{ display: 'flex', alignItems: 'flex-start', flex: 1, paddingRight: '16px' }}>
                         <span style={{ fontWeight: 700, marginRight: '8px', whiteSpace: 'nowrap', fontSize: '1.1em' }}>{idx + 1}.</span>
                         <div style={{ flex: 1 }}>
-                            <p style={{ whiteSpace: 'pre-wrap', textAlign: 'justify', fontSize: '1em', margin: 0 }}>{q.questionText}</p>
+                            <p style={{ whiteSpace: 'pre-wrap', textAlign: 'justify', fontSize: '1em', margin: 0 }} dangerouslySetInnerHTML={{ __html: q.questionText }}></p>
                             {q.imageUrl && (
                                 <div style={{ marginTop: '12px', marginBottom: '8px' }}>
                                     <img src={q.imageUrl} alt="Diagram" style={{ maxWidth: '100%', maxHeight: '250px', objectFit: 'contain' }} />
@@ -477,7 +477,7 @@ const QuestionList = ({ questions, fontSize, showMarks, classes }) => (
                         {q.options.map((opt, i) => (
                             <div key={i} style={{ display: 'flex' }}>
                                 <span style={{ marginRight: '6px', fontWeight: 600 }}>{String.fromCharCode(65 + i)})</span>
-                                <span>{opt}</span>
+                                <span dangerouslySetInnerHTML={{ __html: opt }}></span>
                             </div>
                         ))}
                     </div>
