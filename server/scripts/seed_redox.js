@@ -38,6 +38,9 @@ function toUnicode(text, map) {
 }
 
 function processChemicals(text) {
+    // 0. Handle LaTeX fractions first (common in balancing questions)
+    text = text.replace(/\\frac{(.*?)}{(.*?)}/g, '$1/$2');
+
     // 1. Handle explicit superscripts like ^{2-} or ^+
     text = text.replace(/\^{([^}]*)}/g, (m, p1) => toUnicode(p1, supMap));
     text = text.replace(/\^([0-9+\-])/g, (m, p1) => toUnicode(p1, supMap));
@@ -55,7 +58,6 @@ function processChemicals(text) {
         content = content.replace(/([A-Za-z\)])(\d+)/g, (m, char, num) => char + toUnicode(num, subMap));
         
         // Handle charges - ONLY if prefixed with ^ or following a formula without space
-        // e.g. Na^+ or SO4^2-
         content = content.replace(/\^(\d?\+|\d?-)/g, (m, charge) => toUnicode(charge, supMap));
         
         return content;
@@ -70,34 +72,46 @@ function cleanText(text) {
     // Clean LaTeX comments
     text = text.split('\n').map(l => l.split('%')[0]).join('\n');
 
-    // Handle tables (tabular) - Make them boxed and easy to read
-    const tabularRegex = /\\begin{tabular}.*?([\s\S]*?)\\end{tabular}/g;
+    // Handle tables (tabular) - Generate a clean "Correct Box" format
+    const tabularRegex = /\\begin{tabular}{?.*?}([\s\S]*?)\\end{tabular}/g;
     text = text.replace(tabularRegex, (match, tableBody) => {
-        let rows = tableBody.split('\\\\');
+        let rows = tableBody.split('\\\\').map(r => r.trim()).filter(r => r.length > 0);
         
         let cellsMatrix = rows.map(row => {
             let cleanRow = row
                 .replace(/\\hline|\\toprule|\\midrule|\\bottomrule/g, '')
                 .replace(/\\multicolumn{\d+}{.*?}{(.*?)}/g, '$1')
+                .replace(/{[lcr| ]+}/g, '') // Remove column definitions if they leaked in
                 .trim();
             if (!cleanRow) return null;
-            return cleanRow.split('&').map(c => c.trim()).filter(c => c.length > 0);
+            return cleanRow.split('&').map(c => c.trim().replace(/^\{|\}$/g, '')); // Strip outer braces from cells
         }).filter(r => r !== null);
 
         if (cellsMatrix.length === 0) return "";
 
-        let result = "\n" + "=".repeat(60) + "\n";
-        cellsMatrix.forEach((cells, idx) => {
-            if (cells.length >= 4) {
-                result += `  ${cells[0]}   │   ${cells[1].padEnd(30)}   │   ${cells[2]}   │   ${cells[3]}\n`;
-            } else if (cells.length === 2) {
-                result += `      ${cells[0].padEnd(32)}   │   ${cells[1]}\n`;
-                if (idx === 0) result += "-".repeat(60) + "\n";
-            } else {
-                result += "  " + cells.join("   │   ") + "\n";
+        // Calculate column widths
+        let colWidths = [];
+        cellsMatrix.forEach(row => {
+            row.forEach((cell, i) => {
+                colWidths[i] = Math.max(colWidths[i] || 0, cell.length);
+            });
+        });
+
+        // Build the box
+        let topBorder = "┌" + colWidths.map(w => "─".repeat(w + 2)).join("┬") + "┐";
+        let midBorder = "├" + colWidths.map(w => "─".repeat(w + 2)).join("┼") + "┤";
+        let bottomBorder = "└" + colWidths.map(w => "─".repeat(w + 2)).join("┴") + "┘";
+
+        let result = "\n" + topBorder + "\n";
+        cellsMatrix.forEach((row, i) => {
+            let line = "│ " + row.map((cell, j) => cell.padEnd(colWidths[j])).join(" │ ") + " │";
+            result += line + "\n";
+            if (i < cellsMatrix.length - 1) {
+                // For headers, use a double line effect if possible or just the mid border
+                result += midBorder + "\n";
             }
         });
-        result += "=".repeat(60) + "\n";
+        result += bottomBorder + "\n";
         return result;
     });
 
@@ -115,8 +129,10 @@ function cleanText(text) {
         })
         .replace(/\\quad/g, ' ')
         .replace(/\\qquad/g, '  ')
-        .replace(/\\rightarrow|\\to/g, '→')
+        .replace(/\\rightarrow|\\to/g, ' --> ')
         .replace(/\\Delta/g, 'Δ')
+        .replace(/\\hfill/g, '')
+        .replace(/\\([a-zA-Z]+)\{([^}]*)\}/g, '$2') // Handle remaining commands with content
         .replace(/\\([a-zA-Z]+)/g, ' ')
         .replace(/\$(.*?)\$/g, '$1')
         .replace(/\\\\/g, '\n')
@@ -124,7 +140,7 @@ function cleanText(text) {
 
     // Final pass to clean up extra spaces but PRESERVE NEWLINES
     cleaned = cleaned.split('\n').map(line => {
-        if (line.includes('│') || line.includes('═') || line.includes('=') || line.includes('-')) {
+        if (line.includes('│') || line.includes('┌') || line.includes('─') || line.includes('┬') || line.includes('┐') || line.includes('├') || line.includes('┼') || line.includes('┤') || line.includes('└') || line.includes('┴') || line.includes('┘')) {
             return line; 
         }
         return line.replace(/\s+/g, ' ').trim();
