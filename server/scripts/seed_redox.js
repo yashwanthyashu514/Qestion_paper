@@ -54,15 +54,15 @@ function processChemicals(text) {
         // Handle arrows first to create space around them
         let content = p1.replace(/->|-->/g, ' --> ');
         
-        // Handle numbers as subscripts (only when following a letter or closing bracket)
-        content = content.replace(/([A-Za-z\)])(\d+)/g, (m, char, num) => char + toUnicode(num, subMap));
-        
         // Handle explicit charges with ^ (e.g., Na^+, SO4^2-)
         content = content.replace(/\^(\d?[\+\-])/g, (m, charge) => toUnicode(charge, supMap));
 
         // Handle trailing charges without ^ (e.g., MnO4-, Na+, Ca2+, SO42-)
-        // We look for a sign (+ or -) that is NOT followed by a letter/digit (ignoring the arrow we added)
+        // DO THIS BEFORE SUBSCRIPTS so we match standard digits
         content = content.replace(/([A-Za-z\d\)])(\d?[\+\-])(?![A-Za-z\d\)])/g, (m, char, charge) => char + toUnicode(charge, supMap));
+
+        // Handle numbers as subscripts (only when following a letter or closing bracket)
+        content = content.replace(/([A-Za-z\)])(\d+)/g, (m, char, num) => char + toUnicode(num, subMap));
         
         return content;
     });

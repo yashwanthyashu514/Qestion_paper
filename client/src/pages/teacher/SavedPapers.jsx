@@ -271,6 +271,7 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
         fontSize: '14px',
         lineHeight: '1.5',
         columns: 1,
+        showMarks: true,
         showSettings: false
     });
 
@@ -291,12 +292,12 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
                             <div style={{ fontWeight: 700, fontSize: '17px', textDecoration: 'underline' }}>{sec.sectionName}</div>
                             {sec.description && <div style={{ fontSize: '13px', color: '#555', fontStyle: 'italic', marginTop: '4px' }}>{sec.description}</div>}
                         </div>
-                        <QuestionList questions={secQs} fontSize={settings.fontSize} />
+                        <QuestionList questions={secQs} fontSize={settings.fontSize} showMarks={settings.showMarks} />
                     </div>
                 );
             });
         }
-        return <QuestionList questions={paper.questions} fontSize={settings.fontSize} />;
+        return <QuestionList questions={paper.questions} fontSize={settings.fontSize} showMarks={settings.showMarks} />;
     };
 
     return (
@@ -314,7 +315,7 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
                         {paper.status?.toLowerCase() === 'approved' ? (
                             <>
                                 <button style={S.btnPrint} onClick={() => window.print()}>🖨 Print Paper</button>
-                                <button style={S.btnPdf} onClick={() => exportToWord('.print-area', `${paper.title.replace(/\s+/g, '_')}.doc`)}>⬇ Export Word</button>
+                                <button style={S.btnPdf} onClick={() => exportToWord('.print-area', `${paper.title.replace(/\s+/g, '_')}.doc`, settings)}>⬇ Export Word</button>
                             </>
                         ) : (
                             <span style={{ color: '#dc2626', fontSize: '13px', fontWeight: 600, display: 'flex', alignItems: 'center', padding: '0 10px' }}>
@@ -374,6 +375,17 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
                                 <option value={2}>Two Columns (1x2)</option>
                             </select>
                         </div>
+                        <div>
+                            <label style={{ ...S.filterLabel, display: 'block', marginBottom: '8px' }}>Show Marks</label>
+                            <select 
+                                style={S.filterSelect} 
+                                value={settings.showMarks ? 'yes' : 'no'}
+                                onChange={e => setSettings(s => ({ ...s, showMarks: e.target.value === 'yes' }))}
+                            >
+                                <option value="yes">Yes (Show)</option>
+                                <option value="no">No (Hide)</option>
+                            </select>
+                        </div>
                     </div>
                 )}
             </div>
@@ -429,7 +441,7 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
     );
 };
 
-const QuestionList = ({ questions, fontSize }) => (
+const QuestionList = ({ questions, fontSize, showMarks }) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         {questions.map((q, idx) => (
             <div key={q._id} style={{ color: '#111', breakInside: 'avoid-column' }}>
@@ -445,7 +457,7 @@ const QuestionList = ({ questions, fontSize }) => (
                             )}
                         </div>
                     </div>
-                    <span style={{ fontWeight: 700, whiteSpace: 'nowrap', fontSize: '0.9em' }}>[{formatMarks(q.type)}]</span>
+                    {showMarks && <span style={{ fontWeight: 700, whiteSpace: 'nowrap', fontSize: '0.9em' }}>[{formatMarks(q.type)}]</span>}
                 </div>
                 {q.type === 'MCQ' && q.options && (
                     <div style={{ 

@@ -1,16 +1,25 @@
-export const exportToWord = (elementSelector, filename = 'document.doc') => {
+export const exportToWord = (elementSelector, filename = 'document.doc', settings = {}) => {
     const element = document.querySelector(elementSelector);
     if (!element) {
         console.error('Element not found');
         return;
     }
 
+    const docFont = settings.fontFamily || "'Georgia', 'Times New Roman', serif";
+    const docSize = settings.fontSize || "11pt";
+    const docLineHeight = settings.lineHeight || "1.5";
+
     const preHtml = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
     <head>
         <meta charset='utf-8'>
         <title>Export HTML To Doc</title>
         <style>
-            body { font-family: 'Georgia', 'Times New Roman', serif; font-size: 11pt; color: #000; }
+            body { 
+                font-family: ${docFont}; 
+                font-size: ${docSize}; 
+                line-height: ${docLineHeight};
+                color: #000; 
+            }
             .text-center, [style*="text-align: center"] { text-align: center; }
             .font-bold, [style*="font-weight: 700"] { font-weight: bold; }
             .uppercase, [style*="text-transform: uppercase"] { text-transform: uppercase; }
