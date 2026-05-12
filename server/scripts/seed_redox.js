@@ -38,18 +38,27 @@ function toUnicode(text, map) {
 }
 
 function processChemicals(text) {
-    // 1. Handle nested or complex superscripts like ^{2-}
+    // 1. Handle explicit superscripts like ^{2-} or ^+
     text = text.replace(/\^{([^}]*)}/g, (m, p1) => toUnicode(p1, supMap));
     text = text.replace(/\^([0-9+\-])/g, (m, p1) => toUnicode(p1, supMap));
 
-    // 2. Handle subscripts
+    // 2. Handle explicit subscripts like _{2} or _3
     text = text.replace(/\_{([^}]*)}/g, (m, p1) => toUnicode(p1, subMap));
     text = text.replace(/\_([0-9])/g, (m, p1) => toUnicode(p1, subMap));
 
-    // 3. Handle \ce{...}
+    // 3. Handle \ce{...} (mhchem)
     text = text.replace(/\\ce{(.*?)}/g, (m, p1) => {
-        return p1.replace(/([A-Za-z])(\d+)/g, (m, char, num) => char + toUnicode(num, subMap))
-                 .replace(/(\^)?(\d?\+|\d?-)/g, (m, hat, charge) => toUnicode(charge, supMap));
+        // Handle arrows first
+        let content = p1.replace(/->|-->/g, ' --> ');
+        
+        // Handle numbers as subscripts (only when following a letter or closing bracket)
+        content = content.replace(/([A-Za-z\)])(\d+)/g, (m, char, num) => char + toUnicode(num, subMap));
+        
+        // Handle charges - ONLY if prefixed with ^ or following a formula without space
+        // e.g. Na^+ or SO4^2-
+        content = content.replace(/\^(\d?\+|\d?-)/g, (m, charge) => toUnicode(charge, supMap));
+        
+        return content;
     });
 
     return text;
