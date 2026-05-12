@@ -129,7 +129,8 @@ const GeneratePaperModal = ({ onClose, onGenerate, filters, allQuestions, setFil
     const [step, setStep] = useState(1); // 1: filters+pattern, 2: confirm
 
     const getTypeMultiplier = (type) => {
-        const map = { MCQ: 1, '1m': 1, '2m': 2, '3m': 3, '4m': 4, '5m': 5 };
+        const isNeet = localFilters.class === 'NEET';
+        const map = { MCQ: isNeet ? 4 : 1, '1m': 1, '2m': 2, '3m': 3, '4m': 4, '5m': 5 };
         return map[type] || 0;
     };
 

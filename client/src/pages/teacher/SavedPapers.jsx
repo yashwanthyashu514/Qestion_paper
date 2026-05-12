@@ -232,8 +232,9 @@ const S = {
 };
 
 /* ─── Helpers ─── */
-const formatMarks = (type) => {
-    if (type === 'MCQ' || type === '1m') return '1 Mark';
+const formatMarks = (type, classes = []) => {
+    const isNeet = classes.includes('NEET');
+    if (type === 'MCQ' || type === '1m') return isNeet ? '4 Marks' : '1 Mark';
     if (type === '2m') return '2 Marks';
     if (type === '3m') return '3 Marks';
     if (type === '4m') return '4 Marks';
@@ -243,8 +244,9 @@ const formatMarks = (type) => {
 
 const calcTotal = (paper) => {
     if (paper.pattern?.length) return paper.pattern.reduce((s, sec) => s + (sec.marks || 0), 0);
+    const isNeet = paper.classes?.includes('NEET');
     return paper.questions.reduce((s, q) => {
-        if (q.type === 'MCQ' || q.type === '1m') return s + 1;
+        if (q.type === 'MCQ' || q.type === '1m') return s + (isNeet ? 4 : 1);
         if (q.type === '2m') return s + 2;
         if (q.type === '3m') return s + 3;
         if (q.type === '4m') return s + 4;
@@ -334,8 +336,12 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
                                 value={settings.fontFamily}
                                 onChange={e => setSettings(s => ({ ...s, fontFamily: e.target.value }))}
                             >
-                                <option value='Georgia, "Times New Roman", serif'>Classic Serif</option>
-                                <option value="'Inter', sans-serif">Modern Sans</option>
+                                <option value='Georgia, serif'>Classic Serif (Georgia)</option>
+                                <option value='"Times New Roman", Times, serif'>Times New Roman</option>
+                                <option value='Cambria, Georgia, serif'>Cambria</option>
+                                <option value='Calibri, Candara, Segoe, sans-serif'>Calibri</option>
+                                <option value='Arial, Helvetica, sans-serif'>Arial</option>
+                                <option value="'Inter', sans-serif">Modern Sans (Inter)</option>
                                 <option value="'JetBrains Mono', monospace">Technical Mono</option>
                             </select>
                         </div>
@@ -457,7 +463,7 @@ const QuestionList = ({ questions, fontSize, showMarks }) => (
                             )}
                         </div>
                     </div>
-                    {showMarks && <span style={{ fontWeight: 700, whiteSpace: 'nowrap', fontSize: '0.9em' }}>[{formatMarks(q.type)}]</span>}
+                    {showMarks && <span style={{ fontWeight: 700, whiteSpace: 'nowrap', fontSize: '0.9em' }}>[{formatMarks(q.type, paper.classes)}]</span>}
                 </div>
                 {q.type === 'MCQ' && q.options && (
                     <div style={{ 
