@@ -74,13 +74,13 @@ const SubjectDetails = () => {
                     onClick={() => setActiveTab('teachers')}
                     className={`px-10 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'teachers' ? 'bg-navy text-gold shadow-lg' : 'text-slate/40 hover:text-navy'}`}
                 >
-                    Faculty Roster
+                    Faculty List
                 </button>
                 <button 
                     onClick={() => setActiveTab('papers')}
                     className={`px-10 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'papers' ? 'bg-navy text-gold shadow-lg' : 'text-slate/40 hover:text-navy'}`}
                 >
-                    Academic Archives
+                    Question Papers
                 </button>
             </div>
 
