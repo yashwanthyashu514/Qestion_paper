@@ -51,17 +51,18 @@ function processChemicals(text) {
 
     // 3. Handle \ce{...} (mhchem)
     text = text.replace(/\\ce{(.*?)}/g, (m, p1) => {
-        // Handle arrows first
+        // Handle arrows first to create space around them
         let content = p1.replace(/->|-->/g, ' --> ');
         
         // Handle numbers as subscripts (only when following a letter or closing bracket)
         content = content.replace(/([A-Za-z\)])(\d+)/g, (m, char, num) => char + toUnicode(num, subMap));
         
-        // Handle explicit charges like Na^+ or SO4^2-
-        content = content.replace(/\^(\d?\+|\d?-)/g, (m, charge) => toUnicode(charge, supMap));
+        // Handle explicit charges with ^ (e.g., Na^+, SO4^2-)
+        content = content.replace(/\^(\d?[\+\-])/g, (m, charge) => toUnicode(charge, supMap));
 
-        // Handle trailing charges like MnO4- or Na+ (where sign follows formula directly)
-        content = content.replace(/([A-Za-z\d\)])([\+\-])(?=\s|$)/g, (m, char, sign) => char + toUnicode(sign, supMap));
+        // Handle trailing charges without ^ (e.g., MnO4-, Na+, Ca2+, SO42-)
+        // We look for a sign (+ or -) that is NOT followed by a letter/digit (ignoring the arrow we added)
+        content = content.replace(/([A-Za-z\d\)])(\d?[\+\-])(?![A-Za-z\d\)])/g, (m, char, charge) => char + toUnicode(charge, supMap));
         
         return content;
     });
