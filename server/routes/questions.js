@@ -20,11 +20,12 @@ const upload = multer({
 
 // @route   POST /api/questions
 // @desc    Add a question
-// @access  Teacher
-router.post('/', [auth, checkRole(['teacher']), upload.single('image')], async (req, res) => {
+// @access  Teacher / Admin
+router.post('/', [auth, checkRole(['admin', 'teacher']), upload.single('image')], async (req, res) => {
     try {
-        // Teacher can only add question for their assigned subject
-        const questionData = { ...req.body, subject: req.user.subject, createdBy: req.user.id };
+        // Teacher can only add question for their assigned subject. Admin sets subject from request or defaults.
+        const subject = req.user.role === 'admin' ? (req.body.subject || 'Chemistry') : req.user.subject;
+        const questionData = { ...req.body, subject, createdBy: req.user.id };
         
         // Handle options array parsing since it comes as a stringified JSON in FormData
         if (req.body.options && typeof req.body.options === 'string') {
@@ -37,7 +38,7 @@ router.post('/', [auth, checkRole(['teacher']), upload.single('image')], async (
         
         // Auto-generate Question ID
         const count = await Question.countDocuments();
-        questionData.questionId = `Q-${req.user.subject.substring(0,3).toUpperCase()}-${Date.now()}-${count+1}`;
+        questionData.questionId = `Q-${subject.substring(0,3).toUpperCase()}-${Date.now()}-${count+1}`;
 
         // Ensure classes is an array (frontend sends a string for single select)
         if (req.body.classes && typeof req.body.classes === 'string') {
@@ -90,13 +91,13 @@ router.get('/', [auth, checkRole(['admin', 'teacher'])], async (req, res) => {
 
 // @route   DELETE /api/questions/:id
 // @desc    Delete a question
-// @access  Teacher
-router.delete('/:id', [auth, checkRole(['teacher'])], async (req, res) => {
+// @access  Teacher / Admin
+router.delete('/:id', [auth, checkRole(['admin', 'teacher'])], async (req, res) => {
     try {
         const question = await Question.findById(req.params.id);
         if (!question) return res.status(404).json({ msg: 'Question not found' });
         
-        if (question.subject !== req.user.subject) {
+        if (req.user.role !== 'admin' && question.subject !== req.user.subject) {
              return res.status(401).json({ msg: 'Not authorized to delete this subject question' });
         }
         
@@ -110,13 +111,13 @@ router.delete('/:id', [auth, checkRole(['teacher'])], async (req, res) => {
 
 // @route   PUT /api/questions/:id
 // @desc    Update a question
-// @access  Teacher
-router.put('/:id', [auth, checkRole(['teacher']), upload.single('image')], async (req, res) => {
+// @access  Teacher / Admin
+router.put('/:id', [auth, checkRole(['admin', 'teacher']), upload.single('image')], async (req, res) => {
     try {
         let question = await Question.findById(req.params.id);
         if (!question) return res.status(404).json({ msg: 'Question not found' });
         
-        if (question.subject !== req.user.subject) {
+        if (req.user.role !== 'admin' && question.subject !== req.user.subject) {
              return res.status(401).json({ msg: 'Not authorized to edit this subject question' });
         }
         
