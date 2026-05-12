@@ -57,8 +57,11 @@ function processChemicals(text) {
         // Handle numbers as subscripts (only when following a letter or closing bracket)
         content = content.replace(/([A-Za-z\)])(\d+)/g, (m, char, num) => char + toUnicode(num, subMap));
         
-        // Handle charges - ONLY if prefixed with ^ or following a formula without space
+        // Handle explicit charges like Na^+ or SO4^2-
         content = content.replace(/\^(\d?\+|\d?-)/g, (m, charge) => toUnicode(charge, supMap));
+
+        // Handle trailing charges like MnO4- or Na+ (where sign follows formula directly)
+        content = content.replace(/([A-Za-z\d\)])([\+\-])(?=\s|$)/g, (m, char, sign) => char + toUnicode(sign, supMap));
         
         return content;
     });
