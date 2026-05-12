@@ -9,31 +9,34 @@ const S = {
     summaryGrid: {
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',
-        gap: '14px',
-        marginBottom: '24px',
+        gap: '20px',
+        marginBottom: '32px',
     },
     summaryCard: {
         background: '#fff',
-        border: '1px solid #e2e8f0',
-        borderRadius: '10px',
-        padding: '16px 20px',
+        border: '1px solid #f1f5f9',
+        borderRadius: '24px',
+        padding: '24px 30px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.02)',
+        borderLeft: '8px solid #001f6d',
     },
     summaryLabel: {
-        fontSize: '11px',
-        fontWeight: 600,
+        fontSize: '10px',
+        fontWeight: 800,
         textTransform: 'uppercase',
-        letterSpacing: '0.07em',
-        color: '#94a3b8',
-        marginBottom: '4px',
+        letterSpacing: '0.15em',
+        color: '#001f6d',
+        opacity: 0.5,
+        marginBottom: '8px',
     },
     summaryValue: {
-        fontSize: '26px',
-        fontWeight: 700,
-        color: '#0f172a',
-        fontFamily: "'JetBrains Mono','Courier New',monospace",
+        fontSize: '32px',
+        fontWeight: 900,
+        color: '#001f6d',
+        fontFamily: "'Inter', sans-serif",
         lineHeight: 1.1,
     },
-    summarySub: { fontSize: '12px', color: '#94a3b8', marginTop: '3px' },
+    summarySub: { fontSize: '12px', fontWeight: 600, color: '#94a3b8', marginTop: '6px' },
 
     sectionLabel: {
         fontSize: '11px',
@@ -104,9 +107,10 @@ const S = {
 
     tableWrap: {
         background: '#fff',
-        border: '1px solid #e2e8f0',
-        borderRadius: '10px',
+        border: '1px solid #f1f5f9',
+        borderRadius: '24px',
         overflow: 'hidden',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
     },
     table: { width: '100%', borderCollapse: 'collapse' },
     th: {
@@ -141,10 +145,10 @@ const S = {
 
     tagClass: {
         display: 'inline-flex', alignItems: 'center',
-        fontSize: '11.5px', fontWeight: 600,
-        padding: '3px 10px', borderRadius: '5px',
-        background: '#eff6ff', color: '#1d4ed8', border: '1px solid #bfdbfe',
-        fontFamily: "'JetBrains Mono','Courier New',monospace",
+        fontSize: '11px', fontWeight: 800,
+        padding: '4px 12px', borderRadius: '8px',
+        background: '#f8fafc', color: '#001f6d', border: '1px solid #f1f5f9',
+        textTransform: 'uppercase', letterSpacing: '0.05em',
     },
     tagQ: {
         display: 'inline-flex', alignItems: 'center',
@@ -158,16 +162,17 @@ const S = {
         fontFamily: "'JetBrains Mono','Courier New',monospace",
     },
 
-    actionCell: { display: 'flex', gap: '6px', justifyContent: 'flex-end' },
+    actionCell: { display: 'flex', gap: '8px', justifyContent: 'flex-end' },
     btnView: {
-        height: '30px', padding: '0 14px',
-        fontSize: '12px', fontWeight: 500,
-        borderRadius: '6px', cursor: 'pointer',
-        background: '#fff', color: '#2563eb',
-        border: '1px solid #bfdbfe',
-        fontFamily: 'inherit',
-        transition: 'all 0.14s',
-        display: 'inline-flex', alignItems: 'center', gap: '4px',
+        height: '34px', padding: '0 18px',
+        fontSize: '11px', fontWeight: 800,
+        borderRadius: '10px', cursor: 'pointer',
+        background: '#001f6d', color: '#c5a059',
+        border: 'none',
+        textTransform: 'uppercase', letterSpacing: '0.1em',
+        transition: 'all 0.2s',
+        display: 'inline-flex', alignItems: 'center', gap: '6px',
+        boxShadow: '0 4px 10px rgba(0,31,109,0.15)',
     },
     btnDel: {
         height: '30px', padding: '0 14px',
@@ -198,31 +203,32 @@ const S = {
         borderRadius: '10px',
     },
     btnBack: {
-        height: '34px', padding: '0 16px',
-        fontSize: '13px', fontWeight: 500,
-        borderRadius: '7px', cursor: 'pointer',
-        background: '#f1f5f9', color: '#475569',
-        border: '1px solid #e2e8f0',
-        fontFamily: 'inherit',
-        display: 'inline-flex', alignItems: 'center', gap: '6px',
+        height: '38px', padding: '0 20px',
+        fontSize: '11px', fontWeight: 800,
+        borderRadius: '12px', cursor: 'pointer',
+        background: '#f1f5f9', color: '#001f6d',
+        border: 'none', textTransform: 'uppercase', letterSpacing: '0.1em',
+        display: 'inline-flex', alignItems: 'center', gap: '8px',
     },
     btnPrint: {
-        height: '34px', padding: '0 16px',
-        fontSize: '13px', fontWeight: 500,
-        borderRadius: '7px', cursor: 'pointer',
-        background: '#2563eb', color: '#fff',
-        border: 'none', fontFamily: 'inherit',
-        display: 'inline-flex', alignItems: 'center', gap: '6px',
+        height: '38px', padding: '0 20px',
+        fontSize: '11px', fontWeight: 800,
+        borderRadius: '12px', cursor: 'pointer',
+        background: '#001f6d', color: '#c5a059',
+        border: 'none', textTransform: 'uppercase', letterSpacing: '0.1em',
+        display: 'inline-flex', alignItems: 'center', gap: '8px',
+        boxShadow: '0 8px 20px rgba(0,31,109,0.2)',
     },
     btnPdf: {
-        height: '34px', padding: '0 16px',
-        fontSize: '13px', fontWeight: 500,
-        borderRadius: '7px', cursor: 'pointer',
-        background: '#7c3aed', color: '#fff',
-        border: 'none', fontFamily: 'inherit',
-        display: 'inline-flex', alignItems: 'center', gap: '6px',
+        height: '38px', padding: '0 20px',
+        fontSize: '11px', fontWeight: 800,
+        borderRadius: '12px', cursor: 'pointer',
+        background: '#c5a059', color: '#001f6d',
+        border: 'none', textTransform: 'uppercase', letterSpacing: '0.1em',
+        display: 'inline-flex', alignItems: 'center', gap: '8px',
+        boxShadow: '0 8px 20px rgba(197,160,89,0.2)',
     },
-    viewBtns: { display: 'flex', gap: '8px' },
+    viewBtns: { display: 'flex', gap: '10px' },
 };
 
 /* ─── Helpers ─── */
@@ -463,19 +469,19 @@ const SavedPapers = () => {
         <div style={S.page}>
 
             {/* Header */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
                 <div>
-                    <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#1e3a8a', letterSpacing: '-0.02em', margin: 0 }}>Saved Question Papers</h3>
-                    <p style={{ fontSize: '13px', color: '#94a3b8', marginTop: '3px' }}>Manage and print your question papers</p>
+                    <h3 style={{ fontSize: '24px', fontWeight: 900, color: '#001f6d', letterSpacing: '-0.03em', margin: 0, textTransform: 'uppercase' }}>Department Archives</h3>
+                    <p style={{ fontSize: '11px', fontWeight: 700, color: '#94a3b8', marginTop: '4px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Managed Institutional Paper Repository</p>
                 </div>
                 <div style={{
-                    fontSize: '12px', color: '#64748b',
-                    background: '#fff', border: '1px solid #e2e8f0',
-                    borderRadius: '6px', padding: '5px 14px',
-                    fontFamily: "'JetBrains Mono','Courier New',monospace",
-                    fontWeight: 500,
+                    fontSize: '11px', color: '#c5a059',
+                    background: '#001f6d', border: 'none',
+                    borderRadius: '10px', padding: '8px 18px',
+                    fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em',
+                    boxShadow: '0 4px 12px rgba(0,31,109,0.2)',
                 }}>
-                    {papers.length} paper{papers.length !== 1 ? 's' : ''}
+                    {papers.length} RECORD{papers.length !== 1 ? 'S' : ''}
                 </div>
             </div>
 

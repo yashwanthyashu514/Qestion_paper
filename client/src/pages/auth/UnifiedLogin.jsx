@@ -30,51 +30,59 @@ const UnifiedLogin = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-background">
-            <div className="bg-surface p-10 rounded-2xl shadow-xl w-full max-w-md border-t-8 border-primary animate-fade-in-up">
-                <div className="text-center mb-8">
-                    <div className="bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg text-2xl font-bold">
-                        C P
+        <div className="min-h-screen flex items-center justify-center bg-background p-4">
+            <div className="bg-surface p-10 rounded-3xl shadow-2xl w-full max-w-md border-b-8 border-gold animate-fade-in-up">
+                <div className="text-center mb-10">
+                    <div className="w-24 h-24 rounded-3xl overflow-hidden mx-auto mb-6 shadow-xl hover:scale-110 transition-transform duration-300">
+                        <img src="/ManchesterLogo.jpeg" alt="Manchester College" className="w-full h-full object-cover" />
                     </div>
-                    <h1 className="text-3xl font-bold text-gray-800">College Portal</h1>
-                    <p className="text-gray-500 mt-2 text-sm">Secure Authentication Gateway</p>
+                    <h1 className="text-3xl font-black text-navy tracking-tight">Manchester College</h1>
+                    <p className="text-slate/60 mt-1 font-bold uppercase tracking-widest text-[10px]">Institutional Assessment Portal</p>
                 </div>
                 
-                {error && <div className="bg-red-50 text-red-600 p-3 rounded mb-6 text-sm font-semibold border border-red-200 text-center">{error}</div>}
+                {error && <div className="bg-red-50 text-red-600 p-4 rounded-xl mb-6 text-sm font-bold border border-red-100 text-center animate-pulse">{error}</div>}
                 
                 <form onSubmit={onSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-2">Email Address / ID</label>
-                        <input 
-                            type="email" 
-                            required 
-                            placeholder="user@college.edu"
-                            value={formData.email} 
-                            onChange={e => setFormData({...formData, email: e.target.value})} 
-                            className="w-full border border-gray-300 p-3 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition" 
-                        />
+                        <label className="block text-[10px] font-black text-navy uppercase tracking-widest mb-2 ml-1">Official Email / ID</label>
+                        <div className="relative">
+                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate/30">@</span>
+                            <input 
+                                type="email" 
+                                required 
+                                placeholder="name@manchester.edu"
+                                value={formData.email} 
+                                onChange={e => setFormData({...formData, email: e.target.value})} 
+                                className="w-full border-2 border-gray-100 p-4 pl-10 rounded-2xl bg-gray-50/50 focus:outline-none focus:border-navy focus:bg-white transition-all font-medium" 
+                            />
+                        </div>
                     </div>
                     <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-2">Password</label>
-                        <input 
-                            type="password" 
-                            required 
-                            placeholder="••••••••"
-                            value={formData.password} 
-                            onChange={e => setFormData({...formData, password: e.target.value})} 
-                            className="w-full border border-gray-300 p-3 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition" 
-                        />
+                        <label className="block text-[10px] font-black text-navy uppercase tracking-widest mb-2 ml-1">Access Key</label>
+                        <div className="relative">
+                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate/30">🔒</span>
+                            <input 
+                                type="password" 
+                                required 
+                                placeholder="••••••••"
+                                value={formData.password} 
+                                onChange={e => setFormData({...formData, password: e.target.value})} 
+                                className="w-full border-2 border-gray-100 p-4 pl-10 rounded-2xl bg-gray-50/50 focus:outline-none focus:border-navy focus:bg-white transition-all font-medium" 
+                            />
+                        </div>
                     </div>
                     <button 
                         type="submit" 
-                        className="w-full bg-primary text-white p-4 rounded-lg font-bold text-lg hover:bg-primary-hover shadow-lg transition transform hover:-translate-y-0.5 active:translate-y-0"
+                        className="w-full bg-navy text-gold p-4 rounded-2xl font-black text-lg hover:bg-primary-hover shadow-xl transition-all transform hover:-translate-y-1 active:translate-y-0 active:shadow-inner"
                     >
-                        Secure Login
+                        Sign In
                     </button>
                 </form>
 
-                <div className="mt-8 text-center text-xs text-gray-400">
-                    <p>Protected by College Administration</p>
+                <div className="mt-10 pt-6 border-t border-gray-100 text-center">
+                    <p className="text-[10px] font-bold text-slate/40 uppercase tracking-widest">
+                        The Land of Opportunity
+                    </p>
                 </div>
             </div>
         </div>

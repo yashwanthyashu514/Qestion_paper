@@ -7,22 +7,7 @@ const Template = require('../models/Template');
 const auth = require('../middleware/auth');
 const checkRole = require('../middleware/role');
 
-// ── Absolute upload directory (works on any OS / cloud server)
-const uploadsDir = path.resolve(__dirname, '..', 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-    fs.mkdirSync(uploadsDir, { recursive: true });
-}
-
-// ── Multer disk storage config
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, uploadsDir);
-    },
-    filename: function (req, file, cb) {
-        const safeName = 'template-' + Date.now() + path.extname(file.originalname).toLowerCase();
-        cb(null, safeName);
-    }
-});
+const { storage } = require('../config/cloudinary');
 
 const upload = multer({
     storage,
@@ -40,9 +25,8 @@ router.post('/', [auth, checkRole(['admin']), upload.single('template')], async 
     try {
         if (!req.file) return res.status(400).json({ msg: 'No file uploaded' });
 
-        // Build the full public URL so any device can access it
-        const backendUrl = process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`;
-        const fileUrl = `${backendUrl}/uploads/${req.file.filename}`;
+        // Cloudinary returns the full URL in req.file.path
+        const fileUrl = req.file.path;
 
         const template = new Template({
             filename: req.file.filename,

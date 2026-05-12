@@ -7,62 +7,60 @@ import SavedPapers from './SavedPapers';
 const TeacherDashboardHome = () => {
     return (
         <div className="animate-fade-in-up">
-            <div className="mb-8 bg-white p-6 rounded-xl shadow-sm border-l-4 border-[#1e3280]">
-                <h3 className="font-bold text-xl text-[#1e3280] mb-2">Welcome to your Workspace</h3>
-                <p className="text-gray-600 font-sans text-sm">
-                    Use the modules below to manage your subject's question bank or generate standardized college question papers.
+            <div className="mb-8 bg-surface p-8 rounded-3xl shadow-sm border-l-8 border-navy relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full -mr-16 -mt-16"></div>
+                <h3 className="font-black text-2xl text-navy mb-2">Welcome to your Workspace</h3>
+                <p className="text-slate/70 font-medium text-sm max-w-2xl leading-relaxed">
+                    Access your subject's question bank, generate standardized institutional papers, and review previous assessments for your department.
                 </p>
             </div>
 
-            <h2 className="text-xl font-bold mb-6 text-[#1e3280] border-b-4 border-green-500 pb-2 inline-block tracking-wide">TEACHER PORTAL</h2>
+            <div className="flex items-center gap-4 mb-8">
+                <h2 className="text-sm font-black text-navy uppercase tracking-[0.2em]">Academic Modules</h2>
+                <div className="h-px flex-1 bg-gray-100"></div>
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Question Bank */}
                 <Link
                     to="/teacher/dashboard/add-question"
-                    className="bg-white p-8 rounded-xl shadow-sm text-center hover:shadow-md transition border-t-4 border-green-500 block transform hover:-translate-y-1"
+                    className="bg-surface p-10 rounded-3xl shadow-sm text-center border border-gray-100 hover:shadow-xl hover:border-gold hover:text-navy transform hover:-translate-y-2 transition-all flex flex-col items-center justify-center gap-4 group"
                 >
-                    <div className="bg-green-50 text-green-600 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 text-2xl font-bold">
+                    <div className="bg-gray-50 text-gold w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black shadow-inner group-hover:bg-navy group-hover:text-gold transition-colors duration-300">
                         Q
                     </div>
-                    <h2 className="text-lg font-bold text-gray-800">
-                        Question Bank
-                    </h2>
-                    <p className="text-xs text-gray-500 mt-2 font-sans">
-                        Manage and add questions to your subject bank
-                    </p>
+                    <div>
+                        <h2 className="text-lg font-black text-navy">Question Bank</h2>
+                        <p className="text-xs text-slate/50 mt-2 font-bold uppercase tracking-widest">Repository Management</p>
+                    </div>
                 </Link>
 
                 {/* Create Paper */}
                 <Link
                     to="/teacher/create-paper"
-                    className="bg-white p-8 rounded-xl shadow-sm text-center hover:shadow-md transition border-t-4 border-blue-500 block transform hover:-translate-y-1"
+                    className="bg-navy p-10 rounded-3xl shadow-2xl text-center border-4 border-gold hover:scale-[1.02] transition-all flex flex-col items-center justify-center gap-4 group"
                 >
-                    <div className="bg-blue-50 text-blue-600 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 text-2xl font-bold">
+                    <div className="bg-gold text-navy w-16 h-16 rounded-2xl flex items-center justify-center text-3xl font-black shadow-lg group-hover:rotate-12 transition-transform duration-300">
                         +
                     </div>
-                    <h2 className="text-lg font-bold text-gray-800">
-                        Create Question Paper
-                    </h2>
-                    <p className="text-xs text-gray-500 mt-2 font-sans">
-                        Filter and assemble a new paper
-                    </p>
+                    <div>
+                        <h2 className="text-lg font-black text-white">Create Paper</h2>
+                        <p className="text-xs text-gold/60 mt-2 font-bold uppercase tracking-widest">Generation Engine</p>
+                    </div>
                 </Link>
 
                 {/* Saved Papers */}
                 <Link
                     to="/teacher/dashboard/saved-papers"
-                    className="bg-white p-8 rounded-xl shadow-sm text-center hover:shadow-md transition border-t-4 border-purple-500 block transform hover:-translate-y-1"
+                    className="bg-surface p-10 rounded-3xl shadow-sm text-center border border-gray-100 hover:shadow-xl hover:border-gold hover:text-navy transform hover:-translate-y-2 transition-all flex flex-col items-center justify-center gap-4 group"
                 >
-                    <div className="bg-purple-50 text-purple-600 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 text-2xl font-bold">
+                    <div className="bg-gray-50 text-gold w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black shadow-inner group-hover:bg-navy group-hover:text-gold transition-colors duration-300">
                         P
                     </div>
-                    <h2 className="text-lg font-bold text-gray-800">
-                        Saved Question Papers
-                    </h2>
-                    <p className="text-xs text-gray-500 mt-2 font-sans">
-                        View, export to PDF, and print papers
-                    </p>
+                    <div>
+                        <h2 className="text-lg font-black text-navy">Saved Papers</h2>
+                        <p className="text-xs text-slate/50 mt-2 font-bold uppercase tracking-widest">Document Archives</p>
+                    </div>
                 </Link>
             </div>
         </div>
@@ -75,38 +73,38 @@ const TeacherDashboard = () => {
     const location = useLocation();
 
     return (
-        <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans">
-            {/* Top Navigation Bar - Dark Blue */}
-            <nav className="bg-[#1e3280] p-4 text-white flex justify-between items-center z-10 rounded-t-lg mx-4 mt-4 shadow-md">
+        <div className="min-h-screen bg-background flex flex-col font-sans">
+            {/* Top Navigation Bar - Manchester Navy */}
+            <nav className="bg-navy p-4 text-white flex justify-between items-center z-10 shadow-2xl border-b-4 border-gold">
                 <div
-                    className="flex items-center cursor-pointer hover:opacity-80 transition gap-4"
+                    className="flex items-center cursor-pointer hover:opacity-80 transition gap-4 ml-4"
                     onClick={() => navigate('/teacher/dashboard')}
                 >
-                    <div className="bg-white text-[#1e3280] font-black rounded-lg w-10 h-10 flex items-center justify-center text-xl shadow-sm">T</div>
-                    <h1 className="text-xl font-bold tracking-wide">
-                        {user?.subject || 'Physics'} Department
+                    <div className="bg-gold text-navy font-black rounded-xl w-10 h-10 flex items-center justify-center text-xl shadow-lg rotate-3">T</div>
+                    <h1 className="text-xl font-black tracking-tight uppercase">
+                        {user?.subject || 'Science'} Department
                     </h1>
                 </div>
 
-                <div className="space-x-3 flex items-center">
+                <div className="space-x-4 flex items-center mr-4">
                     {location.pathname !== '/teacher/dashboard' && (
                         <button
                             onClick={() => navigate('/teacher/dashboard')}
-                            className="bg-transparent border border-blue-400 text-blue-100 px-5 py-2 rounded-lg text-sm font-semibold hover:bg-white/10 transition flex items-center gap-1"
+                            className="bg-white/5 border border-gold/30 text-gold px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-white/10 transition flex items-center gap-2"
                         >
                             <span>←</span> Back
                         </button>
                     )}
                     <button
                         onClick={() => { logout(); navigate('/'); }}
-                        className="bg-transparent border border-blue-400 text-blue-100 px-5 py-2 rounded-lg text-sm font-semibold hover:bg-white/10 transition"
+                        className="bg-red-500/10 border border-red-500/30 text-red-500 px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all shadow-sm"
                     >
                         Logout
                     </button>
                 </div>
             </nav>
 
-            <div className="flex-1 mx-4 mb-4 border-x border-b border-gray-200 bg-[#f8fafc] rounded-b-lg p-8">
+            <div className="flex-1 p-10 max-w-7xl mx-auto w-full">
                 <Routes>
                     <Route path="/" element={<TeacherDashboardHome />} />
                     <Route path="add-question" element={<AddQuestion />} />

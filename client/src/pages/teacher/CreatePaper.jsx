@@ -37,63 +37,63 @@ const AutoGetModal = ({ onClose, onConfirm, filteredCount }) => {
 
     return (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 backdrop-blur-sm">
-            <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 border border-gray-100 animate-fade-in-up">
+            <div className="bg-surface rounded-[2rem] shadow-2xl w-full max-w-md p-10 border-b-8 border-gold animate-fade-in-up">
                 {/* Header */}
-                <div className="flex justify-between items-start mb-6">
+                <div className="flex justify-between items-start mb-8">
                     <div>
-                        <h2 className="text-xl font-black text-[#1e3280] mb-1">Auto Get Questions</h2>
-                        <p className="text-sm text-gray-400 font-medium">
-                            {max} questions match your current filters
+                        <h2 className="text-2xl font-black text-navy mb-1 tracking-tight">Auto Fetch</h2>
+                        <p className="text-xs text-slate/40 font-bold uppercase tracking-widest">
+                            {max} Questions Available
                         </p>
                     </div>
-                    <button onClick={onClose} className="text-gray-400 hover:text-red-500 bg-gray-50 rounded-full w-8 h-8 flex items-center justify-center text-lg font-bold border border-gray-100 hover:border-red-200 hover:bg-red-50 transition">×</button>
+                    <button onClick={onClose} className="text-slate/30 hover:text-red-500 bg-gray-50 rounded-full w-10 h-10 flex items-center justify-center text-xl font-bold border border-gray-100 transition">×</button>
                 </div>
 
                 {/* Filter summary */}
-                <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 mb-6">
-                    <p className="text-xs font-bold text-blue-500 uppercase tracking-widest mb-1">Applied Filters</p>
-                    <p className="text-sm text-blue-800 font-medium">All current filter selections will be used to fetch questions automatically.</p>
+                <div className="bg-navy/5 border border-navy/10 rounded-2xl p-5 mb-8">
+                    <p className="text-[10px] font-black text-navy uppercase tracking-[0.2em] mb-2 opacity-50">Active Context</p>
+                    <p className="text-sm text-navy font-medium leading-relaxed">The system will select the best matches based on your currently active filters.</p>
                 </div>
 
                 {/* Quantity input */}
-                <div className="mb-5">
-                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
-                        How many questions?
+                <div className="mb-8">
+                    <label className="block text-[10px] font-black text-navy uppercase tracking-[0.2em] mb-3 ml-1">
+                        Question Quantity
                     </label>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-4">
                         <input
                             type="number"
                             min={1}
                             max={max}
                             value={qty}
                             onChange={e => setQty(e.target.value)}
-                            placeholder={`Enter 1 – ${max}`}
-                            className="flex-1 border-2 border-gray-200 focus:border-[#1e3280] rounded-xl px-4 py-3 text-lg font-bold text-gray-800 outline-none text-center transition"
+                            placeholder={`1 – ${max}`}
+                            className="flex-1 border-2 border-gray-100 focus:border-navy rounded-2xl px-5 py-4 text-2xl font-black text-navy outline-none text-center transition bg-gray-50/50"
                         />
-                        <button onClick={() => setQty(String(max))} className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold px-3 py-3 rounded-xl border border-gray-200 transition whitespace-nowrap">
-                            Max ({max})
+                        <button onClick={() => setQty(String(max))} className="text-[10px] bg-navy text-gold font-black px-4 py-5 rounded-2xl shadow-lg hover:scale-105 transition active:scale-95 uppercase tracking-widest">
+                            Max
                         </button>
                     </div>
                 </div>
 
                 {/* Level preference */}
-                <div className="mb-7">
-                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
-                        Pick preference
+                <div className="mb-10">
+                    <label className="block text-[10px] font-black text-navy uppercase tracking-[0.2em] mb-3 ml-1">
+                        Selection Strategy
                     </label>
-                    <div className="flex gap-2">
+                    <div className="grid grid-cols-2 gap-2">
                         {[
                             { val: 'random', label: 'Random' },
-                            { val: 'easy', label: 'Easy first' },
-                            { val: 'hard', label: 'Hard first' },
+                            { val: 'easy', label: 'Easy First' },
+                            { val: 'hard', label: 'Hard First' },
                             { val: 'balanced', label: 'Balanced' },
                         ].map(opt => (
                             <button
                                 key={opt.val}
                                 onClick={() => setLevel(opt.val)}
-                                className={`flex-1 py-2 rounded-xl text-xs font-bold border transition ${level === opt.val
-                                        ? 'bg-[#1e3280] text-white border-[#1e3280]'
-                                        : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'
+                                className={`py-3 rounded-xl text-xs font-black uppercase tracking-widest border transition-all ${level === opt.val
+                                        ? 'bg-navy text-gold border-navy shadow-lg'
+                                        : 'bg-white text-slate/50 border-gray-100 hover:border-navy/30'
                                     }`}
                             >
                                 {opt.label}
@@ -103,17 +103,16 @@ const AutoGetModal = ({ onClose, onConfirm, filteredCount }) => {
                 </div>
 
                 {/* Actions */}
-                <div className="flex gap-3">
-                    <button onClick={onClose} className="flex-1 border border-gray-200 text-gray-600 py-3 rounded-xl font-bold text-sm hover:bg-gray-50 transition">
+                <div className="flex gap-4">
+                    <button onClick={onClose} className="flex-1 bg-gray-50 text-slate/60 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-gray-100 transition">
                         Cancel
                     </button>
                     <button
                         onClick={handleConfirm}
                         disabled={!qty || parseInt(qty) < 1}
-                        className="flex-1 bg-gradient-to-r from-[#1e3280] to-blue-700 text-white py-3 rounded-xl font-bold text-sm hover:shadow-lg transition disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        className="flex-[2] bg-gold text-navy py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:shadow-xl transition-all disabled:opacity-30 disabled:grayscale flex items-center justify-center gap-3 shadow-lg"
                     >
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                        Get Questions
+                        Confirm Fetch
                     </button>
                 </div>
             </div>
@@ -178,33 +177,33 @@ const GeneratePaperModal = ({ onClose, onGenerate, filters, allQuestions, setFil
     };
 
     return (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 backdrop-blur-sm">
-            <div className="bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[92vh] flex flex-col border border-gray-100 animate-fade-in-up">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 backdrop-blur-sm p-4">
+            <div className="bg-surface rounded-[2.5rem] shadow-2xl w-full max-w-5xl max-h-[92vh] flex flex-col border-b-8 border-gold animate-fade-in-up overflow-hidden">
 
                 {/* Modal Header */}
-                <div className="flex justify-between items-center p-7 border-b border-gray-100">
+                <div className="flex justify-between items-center p-10 border-b border-gray-100 bg-gray-50/50">
                     <div>
-                        <h2 className="text-2xl font-black text-[#1e3280] mb-1 flex items-center gap-3">
-                            <span className="bg-yellow-100 text-yellow-700 w-9 h-9 rounded-xl flex items-center justify-center text-lg border border-yellow-200">⚡</span>
-                            Generate Question Paper
+                        <h2 className="text-3xl font-black text-navy mb-2 flex items-center gap-4">
+                            <span className="bg-gold text-navy w-10 h-10 rounded-2xl flex items-center justify-center text-xl shadow-lg rotate-3">⚡</span>
+                            Generation Engine
                         </h2>
-                        <p className="text-sm text-gray-400">Set filters and define sections — we'll auto-pick matching questions.</p>
+                        <p className="text-xs text-slate/40 font-bold uppercase tracking-widest">Automatic assessment assembly based on your parameters</p>
                     </div>
-                    <button onClick={onClose} className="text-gray-400 hover:text-red-500 bg-gray-50 rounded-full w-9 h-9 flex items-center justify-center text-xl font-bold border border-gray-100 hover:bg-red-50 hover:border-red-200 transition">×</button>
+                    <button onClick={onClose} className="text-slate/30 hover:text-red-500 bg-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold border border-gray-100 shadow-sm transition">×</button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-7 space-y-7">
+                <div className="flex-1 overflow-y-auto p-10 space-y-10">
 
                     {/* Step 1: Filter Settings */}
                     <div>
-                        <div className="flex items-center gap-3 mb-4">
-                            <span className="w-7 h-7 rounded-full bg-[#1e3280] text-white text-xs font-black flex items-center justify-center">1</span>
-                            <h3 className="font-black text-gray-700 text-sm uppercase tracking-wider">Configure Filters</h3>
+                        <div className="flex items-center gap-4 mb-6">
+                            <span className="w-8 h-8 rounded-xl bg-navy text-gold text-xs font-black flex items-center justify-center shadow-lg">01</span>
+                            <h3 className="font-black text-navy text-sm uppercase tracking-[0.2em]">Domain Context</h3>
                         </div>
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 bg-gray-50 p-5 rounded-2xl border border-gray-100">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 bg-gray-50 p-8 rounded-[2rem] border border-gray-100">
                             {[
                                 {
-                                    label: 'Class', key: 'class',
+                                    label: 'Academic Class', key: 'class',
                                     options: [
                                         { value: '', label: 'All Classes' },
                                         { value: '11', label: 'Class 11' },
@@ -215,7 +214,7 @@ const GeneratePaperModal = ({ onClose, onGenerate, filters, allQuestions, setFil
                                     ]
                                 },
                                 {
-                                    label: 'Level', key: 'level',
+                                    label: 'Difficulty Level', key: 'level',
                                     options: [
                                         { value: '', label: 'All Levels' },
                                         { value: 'easy', label: 'Easy' },
@@ -225,33 +224,33 @@ const GeneratePaperModal = ({ onClose, onGenerate, filters, allQuestions, setFil
                                 },
                             ].map(({ label, key, options }) => (
                                 <div key={key} className="relative">
-                                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{label}</label>
+                                    <label className="block text-[10px] font-black text-navy/40 uppercase tracking-widest mb-2 ml-1">{label}</label>
                                     <select
                                         value={localFilters[key] || ''}
                                         onChange={e => setLocalFilters({ ...localFilters, [key]: e.target.value })}
-                                        className="w-full border border-gray-200 p-2.5 rounded-xl text-sm text-gray-700 bg-white focus:border-[#1e3280] outline-none cursor-pointer"
+                                        className="w-full border-2 border-gray-100 p-3.5 rounded-2xl text-sm font-bold text-navy bg-white focus:border-navy outline-none cursor-pointer transition-all shadow-sm"
                                     >
                                         {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
                                     </select>
                                 </div>
                             ))}
                             <div>
-                                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Chapter</label>
+                                <label className="block text-[10px] font-black text-navy/40 uppercase tracking-widest mb-2 ml-1">Curriculum Chapter</label>
                                 <select
                                     value={localFilters.chapter || ''}
                                     onChange={e => setLocalFilters({ ...localFilters, chapter: e.target.value, concept: '' })}
-                                    className="w-full border border-gray-200 p-2.5 rounded-xl text-sm text-gray-700 bg-white focus:border-[#1e3280] outline-none cursor-pointer"
+                                    className="w-full border-2 border-gray-100 p-3.5 rounded-2xl text-sm font-bold text-navy bg-white focus:border-navy outline-none cursor-pointer transition-all shadow-sm"
                                 >
                                     <option value="">All Chapters</option>
                                     {uniqueChapters.map(ch => <option key={ch} value={ch}>{ch}</option>)}
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Concept</label>
+                                <label className="block text-[10px] font-black text-navy/40 uppercase tracking-widest mb-2 ml-1">Specific Concept</label>
                                 <select
                                     value={localFilters.concept || ''}
                                     onChange={e => setLocalFilters({ ...localFilters, concept: e.target.value })}
-                                    className="w-full border border-gray-200 p-2.5 rounded-xl text-sm text-gray-700 bg-white focus:border-[#1e3280] outline-none cursor-pointer"
+                                    className="w-full border-2 border-gray-100 p-3.5 rounded-2xl text-sm font-bold text-navy bg-white focus:border-navy outline-none cursor-pointer transition-all shadow-sm"
                                 >
                                     <option value="">All Concepts</option>
                                     {uniqueConcepts.map(c => <option key={c} value={c}>{c}</option>)}
@@ -367,23 +366,28 @@ const GeneratePaperModal = ({ onClose, onGenerate, filters, allQuestions, setFil
                 </div>
 
                 {/* Footer */}
-                <div className="flex justify-between items-center p-7 border-t border-gray-100 bg-gray-50 rounded-b-3xl">
-                    <div className="flex gap-4 text-sm text-gray-500 font-medium">
-                        <span>📋 <b className="text-gray-700">{localPattern.length}</b> sections</span>
-                        <span>❓ <b className="text-gray-700">{totalQuestionsNeeded}</b> questions</span>
-                        <span>🏅 <b className="text-gray-700">{totalMarks}</b> marks</span>
+                <div className="flex justify-between items-center p-10 border-t border-gray-100 bg-gray-50/50">
+                    <div className="flex gap-6">
+                        <div className="flex flex-col">
+                            <span className="text-[10px] font-black text-navy/40 uppercase tracking-widest">Total Volume</span>
+                            <span className="text-xl font-black text-navy">{totalQuestionsNeeded} <small className="text-xs opacity-50 uppercase tracking-widest">Questions</small></span>
+                        </div>
+                        <div className="w-px h-10 bg-gray-200"></div>
+                        <div className="flex flex-col">
+                            <span className="text-[10px] font-black text-navy/40 uppercase tracking-widest">Assessment Score</span>
+                            <span className="text-xl font-black text-navy">{totalMarks} <small className="text-xs opacity-50 uppercase tracking-widest">Marks</small></span>
+                        </div>
                     </div>
-                    <div className="flex gap-3">
-                        <button onClick={onClose} className="border border-gray-200 text-gray-600 px-6 py-3 rounded-xl font-bold text-sm hover:bg-gray-100 transition">
+                    <div className="flex gap-4">
+                        <button onClick={onClose} className="bg-white border-2 border-gray-100 text-slate/50 px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:border-navy/20 hover:text-navy transition-all shadow-sm">
                             Cancel
                         </button>
                         <button
                             onClick={handleGenerate}
                             disabled={!isPatternValid || totalQuestionsNeeded === 0}
-                            className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-yellow-900 px-8 py-3 rounded-xl font-bold text-sm hover:shadow-lg hover:from-yellow-300 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+                            className="bg-gold text-navy px-12 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:shadow-2xl hover:scale-105 transition-all disabled:opacity-30 disabled:grayscale shadow-xl active:scale-95"
                         >
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                            Generate Paper
+                            Execute Generation
                         </button>
                     </div>
                 </div>
@@ -552,47 +556,44 @@ const CreatePaper = () => {
             {toast && <Toast msg={toast.msg} type={toast.type} onClose={() => setToast(null)} />}
 
             {/* Top Navigation Bar */}
-            <nav className="bg-[#1e3280] p-4 text-white flex justify-between items-center z-10 rounded-t-lg mx-4 mt-4">
-                <div className="flex items-center gap-4">
-                    <h1 className="text-xl font-bold tracking-wide">Paper Builder</h1>
-                    <div className="border border-blue-400 bg-white/10 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">
+            <nav className="bg-navy p-4 text-white flex justify-between items-center z-10 border-b-4 border-gold mx-4 mt-4 shadow-2xl rounded-t-3xl">
+                <div className="flex items-center gap-6 ml-4">
+                    <div className="bg-gold text-navy font-black rounded-xl w-10 h-10 flex items-center justify-center text-xl shadow-lg rotate-3">P</div>
+                    <h1 className="text-xl font-black tracking-tight uppercase">Paper Builder</h1>
+                    <div className="bg-white/10 text-gold text-[10px] font-black px-4 py-1 rounded-full uppercase tracking-[0.2em] border border-gold/20">
                         {user?.subject || 'PHYSICS'}
                     </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3 mr-4">
                     {(filters.class === '11' || filters.class === '12') && (
-                        <button onClick={() => setShowPatternModal(true)} className="bg-transparent border border-blue-400 text-blue-100 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-white/10 transition">
-                            Pattern
+                        <button onClick={() => setShowPatternModal(true)} className="bg-white/5 border border-gold/30 text-gold px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition">
+                            Config Pattern
                         </button>
                     )}
 
                     {/* ── Auto Get Questions button ── */}
                     <button
                         onClick={() => setShowAutoGetModal(true)}
-                        className="flex items-center gap-2 bg-white/15 border border-blue-300 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-white/25 transition"
+                        className="flex items-center gap-2 bg-white/5 border border-gold/30 text-gold px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition"
                     >
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                        </svg>
-                        Auto Get Questions
+                        Auto Fetch
                     </button>
 
                     {/* ── Generate Question Paper button ── */}
                     <button
                         onClick={() => setShowGenerateModal(true)}
-                        className="flex items-center gap-2 bg-yellow-400 border border-yellow-300 text-yellow-900 px-4 py-2 rounded-lg text-sm font-bold hover:bg-yellow-300 transition shadow-sm"
+                        className="flex items-center gap-2 bg-gold text-navy px-8 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all shadow-lg active:scale-95"
                     >
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                        Generate Paper
+                        Generate Engine
                     </button>
 
-                    <button onClick={() => navigate(-1)} className="bg-transparent border border-blue-400 text-blue-100 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-white/10 transition flex items-center gap-1">
-                        <span>←</span> Back
+                    <div className="w-px h-8 bg-gold/20 mx-2"></div>
+
+                    <button onClick={() => navigate(-1)} className="bg-white/5 border border-gold/30 text-gold px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition">
+                        Back
                     </button>
-                    <button onClick={handleSavePaper} className="bg-transparent border border-blue-400 text-blue-100 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-white/10 transition">
-                        Save Paper
+                    <button onClick={handleSavePaper} className="bg-navy text-gold border border-gold px-8 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gold hover:text-navy transition-all shadow-lg">
+                        Finalize & Save
                     </button>
                 </div>
             </nav>

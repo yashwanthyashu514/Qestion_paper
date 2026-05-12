@@ -75,28 +75,31 @@ const AddQuestion = () => {
     const [showForm, setShowForm] = useState(false);
 
     return (
-        <div className="bg-white p-8 rounded-lg shadow-md border-t-4 border-green-500 animate-fade-in-up">
-            <div className="flex justify-between items-center mb-6 pb-4 border-b">
+        <div className="bg-surface p-10 rounded-[2.5rem] shadow-sm border border-gray-100 animate-fade-in-up">
+            <div className="flex justify-between items-center mb-10 pb-8 border-b border-gray-100">
                 <div>
-                    <h2 className="text-2xl font-bold text-gray-800">Question Bank</h2>
-                    <p className="text-gray-500 text-sm mt-1">Manage and organize your subject questions</p>
+                    <h2 className="text-3xl font-black text-navy tracking-tight mb-2 uppercase">Institutional Repository</h2>
+                    <p className="text-[10px] font-black text-slate/40 uppercase tracking-[0.2em] ml-1">Academic Question Bank Management</p>
                 </div>
                 <button 
                     onClick={() => setShowForm(!showForm)} 
-                    className={`px-5 py-2 rounded-lg font-bold shadow transition ${showForm ? 'bg-gray-500 hover:bg-gray-600 text-white' : 'bg-green-600 hover:bg-green-700 text-white'}`}
+                    className={`px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg ${showForm ? 'bg-gray-100 text-slate/60 hover:bg-gray-200' : 'bg-navy text-gold hover:scale-105 active:scale-95'}`}
                 >
-                    {showForm ? '← Back to Questions' : '+ Add Question'}
+                    {showForm ? '← View Repository' : '+ New Question'}
                 </button>
             </div>
 
             {showForm ? (
-                <div className="max-w-2xl mx-auto bg-gray-50 p-8 rounded-xl shadow-inner border border-gray-200">
-                    <h3 className="text-xl font-bold mb-6 text-green-800 border-l-4 border-green-500 pl-3">Add New Question</h3>
-                    <form onSubmit={handleSubmit} className="space-y-5">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="max-w-3xl mx-auto bg-gray-50/50 p-10 rounded-[2.5rem] border border-gray-100 shadow-inner">
+                    <h3 className="text-xl font-black mb-8 text-navy flex items-center gap-4">
+                        <span className="bg-gold text-navy w-10 h-10 rounded-2xl flex items-center justify-center text-xl shadow-lg rotate-3">+</span>
+                        Create Entry
+                    </h3>
+                    <form onSubmit={handleSubmit} className="space-y-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-1">Target Class</label>
-                                <select className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-green-500 bg-white" value={formData.classes} onChange={e => {
+                                <label className="block text-[10px] font-black text-navy/40 uppercase tracking-widest mb-3 ml-1">Target Academic Class</label>
+                                <select className="w-full border-2 border-gray-100 p-4 rounded-2xl focus:border-navy bg-white font-bold text-navy outline-none transition-all shadow-sm" value={formData.classes} onChange={e => {
                                     const val = e.target.value;
                                     const newFormData = { ...formData, classes: val };
                                     if (['JEE', 'KCET', 'NEET'].includes(val)) {
@@ -106,15 +109,15 @@ const AddQuestion = () => {
                                 }}>
                                     <option value="11">Class 11</option>
                                     <option value="12">Class 12</option>
-                                    <option value="JEE">JEE</option>
-                                    <option value="KCET">KCET</option>
-                                    <option value="NEET">NEET</option>
+                                    <option value="JEE">JEE (Entrance)</option>
+                                    <option value="KCET">KCET (Entrance)</option>
+                                    <option value="NEET">NEET (Entrance)</option>
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-1">Question Type</label>
+                                <label className="block text-[10px] font-black text-navy/40 uppercase tracking-widest mb-3 ml-1">Assessment Type</label>
                                 <select 
-                                    className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-green-500 bg-white" 
+                                    className="w-full border-2 border-gray-100 p-4 rounded-2xl focus:border-navy bg-white font-bold text-navy outline-none transition-all shadow-sm" 
                                     value={formData.type} 
                                     onChange={e=>setFormData({...formData, type: e.target.value})}
                                     disabled={['JEE', 'KCET', 'NEET'].includes(formData.classes)}
@@ -128,11 +131,11 @@ const AddQuestion = () => {
                                 </select>
                             </div>
                             <div className="md:col-span-2">
-                                <label className="block text-sm font-bold text-gray-700 mb-1">Difficulty Level</label>
-                                <select className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-green-500 bg-white" value={formData.level} onChange={e=>setFormData({...formData, level: e.target.value})}>
-                                    <option value="easy">Easy</option>
-                                    <option value="medium">Medium</option>
-                                    <option value="hard">Hard</option>
+                                <label className="block text-[10px] font-black text-navy/40 uppercase tracking-widest mb-3 ml-1">Difficulty Complexity</label>
+                                <select className="w-full border-2 border-gray-100 p-4 rounded-2xl focus:border-navy bg-white font-bold text-navy outline-none transition-all shadow-sm" value={formData.level} onChange={e=>setFormData({...formData, level: e.target.value})}>
+                                    <option value="easy">Easy (Foundational)</option>
+                                    <option value="medium">Medium (Standard)</option>
+                                    <option value="hard">Hard (Advanced)</option>
                                 </select>
                             </div>
                         </div>
@@ -215,7 +218,7 @@ const AddQuestion = () => {
                             <input type="text" placeholder="Enter answer or hints..." className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-green-500" value={formData.answer} onChange={e=>setFormData({...formData, answer: e.target.value})} />
                         </div>
                         
-                        <button type="submit" className="w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 shadow-md transition transform hover:-translate-y-0.5 mt-4">Save Question to Bank</button>
+                        <button type="submit" className="w-full bg-navy text-gold font-black py-5 rounded-2xl hover:scale-[1.01] shadow-2xl transition-all transform active:scale-95 mt-6 uppercase tracking-[0.2em] text-xs">Finalize Repository Entry</button>
                     </form>
                 </div>
             ) : (

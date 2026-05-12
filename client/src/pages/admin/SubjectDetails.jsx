@@ -59,64 +59,60 @@ const SubjectDetails = () => {
     if (loading) return <div className="text-center p-10 text-lg">Loading Directory Data...</div>;
 
     return (
-        <div className="space-y-6 animate-fade-in-up font-sans" style={{ fontFamily: "'Inter', sans-serif" }}>
-            <div className="mb-6">
-                <div className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-[#1e3280] flex justify-between items-center">
-                    <div>
-                        <h3 className="font-bold text-xl text-[#1e3280] mb-2">{subject} Department</h3>
-                        <p className="text-gray-600 font-sans text-sm">
-                            Manage teachers and question papers for {subject}
-                        </p>
-                    </div>
-                    <button onClick={() => navigate('/admin/dashboard')} className="bg-white border border-[#1e3280] text-[#1e3280] px-5 py-2 rounded-lg font-bold hover:bg-[#1e3280] hover:text-white shadow-sm transition whitespace-nowrap">← Back</button>
+        <div className="space-y-8 animate-fade-in-up px-4 py-8">
+            <div className="bg-surface p-10 rounded-[2.5rem] shadow-sm border border-gray-100 border-l-8 border-navy flex justify-between items-center">
+                <div>
+                    <h3 className="font-black text-3xl text-navy mb-2 uppercase tracking-tight">{subject} Division</h3>
+                    <p className="text-[10px] font-black text-slate/40 uppercase tracking-[0.2em] ml-1">Departmental Asset & Faculty Control</p>
                 </div>
+                <button onClick={() => navigate('/admin/dashboard')} className="bg-white border-2 border-gray-100 text-slate/40 px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:border-navy hover:text-navy transition shadow-sm">← Back</button>
             </div>
             
             {/* Tabs for switching views */}
-            <div className="flex gap-4 border-b border-gray-200 pb-0">
+            <div className="flex gap-4 p-2 bg-gray-100 rounded-3xl w-fit">
                 <button 
                     onClick={() => setActiveTab('teachers')}
-                    className={`px-6 py-3 rounded-t-xl font-bold text-lg transition ${activeTab === 'teachers' ? 'bg-[#1e3280] text-white shadow-md transform -translate-y-1' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}
+                    className={`px-10 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'teachers' ? 'bg-navy text-gold shadow-lg' : 'text-slate/40 hover:text-navy'}`}
                 >
-                    {subject} Teachers List
+                    Faculty Roster
                 </button>
                 <button 
                     onClick={() => setActiveTab('papers')}
-                    className={`px-6 py-3 rounded-t-xl font-bold text-lg transition ${activeTab === 'papers' ? 'bg-[#1e3280] text-white shadow-md transform -translate-y-1' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}
+                    className={`px-10 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === 'papers' ? 'bg-navy text-gold shadow-lg' : 'text-slate/40 hover:text-navy'}`}
                 >
-                    Generated Question Papers
+                    Academic Archives
                 </button>
             </div>
 
             {/* Teachers List */}
             {activeTab === 'teachers' && (
-                <div className="bg-white p-6 rounded-lg shadow-md border-t-4 border-green-500 animate-fade-in-up">
-                    <h3 className="text-xl font-bold mb-4 text-gray-800 flex items-center">
-                        <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm mr-3">{teachers.length}</span>
-                        Registered Teachers
+                <div className="bg-white p-10 rounded-[3rem] shadow-xl border border-gray-100 animate-fade-in-up">
+                    <h3 className="text-sm font-black mb-8 text-navy flex items-center gap-4 uppercase tracking-widest">
+                        <span className="bg-gold text-navy w-10 h-10 rounded-2xl flex items-center justify-center text-xl shadow-lg rotate-3">{teachers.length}</span>
+                        Authorized Staff
                     </h3>
                     <div className="overflow-x-auto">
                         <table className="w-full border-collapse">
                             <thead>
-                                <tr className="bg-gray-50 text-gray-700 border-b-2 border-gray-200">
-                                    <th className="p-3 text-left w-16">#</th>
-                                    <th className="p-3 text-left">Teacher Name</th>
-                                    <th className="p-3 text-left">Email Address</th>
-                                    <th className="p-3 text-center w-32">Actions</th>
+                                <tr className="text-navy/40 text-[10px] uppercase tracking-widest border-b-2 border-gray-100">
+                                    <th className="p-5 text-left w-16">ID</th>
+                                    <th className="p-5 text-left">Faculty Name</th>
+                                    <th className="p-5 text-left">Digital Identity</th>
+                                    <th className="p-5 text-center w-32">Administrative</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {teachers.map((t, index) => (
-                                    <tr key={t._id} className="border-b border-gray-100 hover:bg-green-50 transition">
-                                        <td className="p-3 text-gray-500 font-bold">{index + 1}</td>
-                                        <td className="p-3 font-semibold text-gray-800">{t.name}</td>
-                                        <td className="p-3 text-gray-600">{t.email}</td>
-                                        <td className="p-3 text-center">
-                                            <button onClick={() => handleDeleteTeacher(t._id)} className="text-red-500 font-bold hover:text-white hover:bg-red-500 px-3 py-1 rounded transition">Delete</button>
+                                    <tr key={t._id} className="border-b border-gray-50 hover:bg-navy/[0.02] transition">
+                                        <td className="p-5 text-navy font-black opacity-30">{String(index + 1).padStart(2, '0')}</td>
+                                        <td className="p-5 font-black text-navy">{t.name}</td>
+                                        <td className="p-5 text-navy/60 font-medium">{t.email}</td>
+                                        <td className="p-5 text-center">
+                                            <button onClick={() => handleDeleteTeacher(t._id)} className="bg-red-50 text-red-500 font-black text-[10px] uppercase tracking-widest hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl transition shadow-sm">Revoke</button>
                                         </td>
                                     </tr>
                                 ))}
-                                {teachers.length === 0 && <tr><td colSpan="4" className="text-center p-8 text-gray-500 italic">No teachers currently assigned to {subject}.</td></tr>}
+                                {teachers.length === 0 && <tr><td colSpan="4" className="text-center p-12 text-slate/30 font-bold uppercase tracking-widest text-xs italic">No faculty currently assigned to this division.</td></tr>}
                             </tbody>
                         </table>
                     </div>
@@ -125,45 +121,45 @@ const SubjectDetails = () => {
 
             {/* Generated Papers */}
             {activeTab === 'papers' && (
-                <div className="bg-white p-6 rounded-lg shadow-md border-t-4 border-purple-500 animate-fade-in-up">
-                    <h3 className="text-xl font-bold mb-6 text-gray-800 flex items-center">
-                        <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm mr-3">{papers.length}</span>
-                        Generated Question Papers
+                <div className="bg-white p-10 rounded-[3rem] shadow-xl border border-gray-100 animate-fade-in-up">
+                    <h3 className="text-sm font-black mb-10 text-navy flex items-center gap-4 uppercase tracking-widest">
+                        <span className="bg-gold text-navy w-10 h-10 rounded-2xl flex items-center justify-center text-xl shadow-lg rotate-3">{papers.length}</span>
+                        Departmental Archives
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {papers.map(p => {
                             const creator = teachers.find(t => t._id === p.teacherId);
-                            const creatorName = creator ? creator.name : 'Unknown Teacher';
+                            const creatorName = creator ? creator.name : 'Institutional Engine';
 
                             return (
-                                <div key={p._id} className="border border-gray-200 p-5 rounded-lg shadow-sm hover:shadow-md transition bg-white flex flex-col justify-between h-full">
-                                    <div className="mb-4">
-                                        <h4 className="font-bold text-gray-900 text-lg mb-2">{p.title}</h4>
-                                        <div className="space-y-1 text-sm text-gray-600">
-                                            <p><span className="font-semibold text-gray-500">Created By:</span> {creatorName}</p>
-                                            <p><span className="font-semibold text-gray-500">Target Classes:</span> {p.classes.join(', ')}</p>
-                                            <p><span className="font-semibold text-gray-500">Total Questions:</span> {p.questions.length}</p>
-                                            <p><span className="font-semibold text-gray-500">Date Created:</span> {new Date(p.createdAt).toLocaleDateString()}</p>
-                                            <div className="pt-3 mt-3 border-t border-gray-100">
-                                                <p className="flex items-center">
-                                                    <span className="font-semibold text-gray-500 mr-2">Status:</span>
-                                                    <span className={`px-2 py-0.5 rounded text-xs font-bold ${p.status === 'Approved' ? 'bg-green-100 text-green-700' : p.status === 'Rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                                                        {p.status || 'Pending Approval'}
+                                <div key={p._id} className="border-2 border-gray-100 p-8 rounded-[2.5rem] shadow-sm hover:shadow-2xl hover:border-navy/10 transition-all bg-white flex flex-col justify-between h-full relative group overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-24 h-24 bg-navy/5 -mr-12 -mt-12 rounded-full group-hover:scale-150 transition-all duration-500"></div>
+                                    <div className="mb-6 relative">
+                                        <h4 className="font-black text-navy text-xl mb-4 leading-tight tracking-tight uppercase">{p.title}</h4>
+                                        <div className="space-y-3 text-[10px] font-black text-slate/50 uppercase tracking-widest">
+                                            <p className="flex justify-between border-b border-gray-50 pb-2"><span>Archivist</span> <span className="text-navy">{creatorName}</span></p>
+                                            <p className="flex justify-between border-b border-gray-50 pb-2"><span>Target Class</span> <span className="text-navy">{p.classes.join(', ')}</span></p>
+                                            <p className="flex justify-between border-b border-gray-50 pb-2"><span>Volume</span> <span className="text-navy">{p.questions.length} Qs</span></p>
+                                            <p className="flex justify-between border-b border-gray-50 pb-2"><span>Timestamp</span> <span className="text-navy">{new Date(p.createdAt).toLocaleDateString()}</span></p>
+                                            <div className="pt-4">
+                                                <p className="flex items-center gap-3">
+                                                    <span>Protocol Status:</span>
+                                                    <span className={`px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest ${p.status === 'Approved' ? 'bg-navy text-gold' : p.status === 'Rejected' ? 'bg-red-500 text-white' : 'bg-gray-100 text-slate/40'}`}>
+                                                        {p.status || 'Pending'}
                                                     </span>
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="grid grid-cols-2 gap-2 mt-auto">
-                                        <button onClick={() => handleStatusUpdate(p._id, 'Rejected')} className="bg-red-50 text-red-700 border border-red-200 px-3 py-2 rounded text-sm font-bold hover:bg-red-600 hover:text-white transition text-center">Reject</button>
-                                        <button onClick={() => handleStatusUpdate(p._id, 'Approved')} className="bg-green-50 text-green-700 border border-green-200 px-3 py-2 rounded text-sm font-bold hover:bg-green-600 hover:text-white transition text-center">Approve</button>
-                                        <button onClick={() => navigate(`/admin/dashboard/preview/${p._id}`)} className="bg-blue-50 text-blue-700 border border-blue-200 px-3 py-2 rounded text-sm font-bold hover:bg-blue-600 hover:text-white transition text-center">Preview/Print</button>
-                                        <button onClick={() => navigate(`/admin/dashboard/preview/${p._id}`)} className="bg-purple-50 text-purple-700 border border-purple-200 px-3 py-2 rounded text-sm font-bold hover:bg-purple-600 hover:text-white transition text-center">Export Word</button>
+                                    <div className="grid grid-cols-2 gap-3 mt-auto relative">
+                                        <button onClick={() => handleStatusUpdate(p._id, 'Rejected')} className="bg-gray-50 text-red-500 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-red-500 hover:text-white transition shadow-sm">Reject</button>
+                                        <button onClick={() => handleStatusUpdate(p._id, 'Approved')} className="bg-navy text-gold py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-105 transition shadow-lg">Approve</button>
+                                        <button onClick={() => navigate(`/admin/dashboard/preview/${p._id}`)} className="col-span-2 bg-white border-2 border-gray-100 text-navy py-4 rounded-xl text-[10px] font-black uppercase tracking-widest hover:border-navy transition shadow-sm">Preview Full Document</button>
                                     </div>
                                 </div>
                             );
                         })}
-                        {papers.length === 0 && <div className="col-span-full p-8 text-center text-gray-500 border-2 border-dashed border-gray-200 rounded-lg bg-gray-50">No question papers have been generated for {subject} yet.</div>}
+                        {papers.length === 0 && <div className="col-span-full p-16 text-center text-slate/30 font-black uppercase tracking-widest text-sm border-2 border-dashed border-gray-100 rounded-[3rem] bg-gray-50/50">Zero assessment records found for this department.</div>}
                     </div>
                 </div>
             )}

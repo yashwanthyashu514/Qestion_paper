@@ -70,16 +70,16 @@ const AdminPaperPreview = () => {
     }
 
     return (
-        <div className="animate-fade-in-up">
-            <div className="flex justify-between items-center mb-6 no-print p-4 bg-white border border-gray-200 shadow-sm rounded-lg">
-                <button onClick={() => navigate(-1)} className="bg-gray-500 text-white px-5 py-2 rounded-lg font-bold hover:bg-gray-600 shadow transition">← Back</button>
-                <div className="space-x-4">
-                    <button onClick={handlePrint} className="bg-blue-600 text-white px-5 py-2 rounded-lg font-bold hover:bg-blue-700 shadow transition">Print Paper</button>
-                    <button onClick={() => exportToWord('.print-area', `${selectedPaper.title.replace(/\s+/g, '_')}.doc`)} className="bg-purple-600 text-white px-5 py-2 rounded-lg font-bold hover:bg-purple-700 shadow transition">Export Word</button>
+        <div className="animate-fade-in-up px-4 py-8">
+            <div className="flex justify-between items-center mb-10 no-print p-6 bg-white border border-gray-100 shadow-xl rounded-[2rem] max-w-5xl mx-auto">
+                <button onClick={() => navigate(-1)} className="bg-gray-100 text-slate/50 px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-gray-200 transition">← Back</button>
+                <div className="flex gap-4">
+                    <button onClick={handlePrint} className="bg-navy text-gold px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg">Print Archive</button>
+                    <button onClick={() => exportToWord('.print-area', `${selectedPaper.title.replace(/\s+/g, '_')}.doc`)} className="bg-gold text-navy px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg">Export Doc</button>
                 </div>
             </div>
 
-            <div className="bg-white p-10 shadow-xl max-w-4xl mx-auto print-area border border-gray-300 font-serif text-sm mb-10 min-h-[1000px]">
+            <div className="bg-white p-20 shadow-2xl max-w-4xl mx-auto print-area border-t-8 border-navy font-serif text-sm mb-20 min-h-[1100px] rounded-b-[3rem]">
                 {activeTemplate && activeTemplate.fileUrl && activeTemplate.fileUrl.match(/\.(jpeg|jpg|gif|png)$/i) && (
                     <div className="mb-6 border-b-2 border-black pb-4 text-center flex justify-center w-full">
                         <img src={activeTemplate.fileUrl} alt="College Template Header" className="max-w-full h-auto mx-auto max-h-40 object-contain block" style={{ margin: '0 auto' }} />

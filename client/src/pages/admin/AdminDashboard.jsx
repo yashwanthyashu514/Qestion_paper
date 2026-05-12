@@ -10,24 +10,27 @@ const DashboardHome = () => {
     const subjects = ['Physics', 'Chemistry', 'Biology', 'Maths', 'Computer Science', 'Kannada', 'English', 'Hindi'];
     return (
         <div className="animate-fade-in-up">
-            <div className="mb-8 bg-white p-6 rounded-xl shadow-sm border-l-4 border-[#1e3280]">
-                <h3 className="font-bold text-xl text-[#1e3280] mb-2">Welcome to the Admin Dashboard</h3>
-                <p className="text-gray-600 font-sans text-sm">
-                    Use the navigation at the top to upload the official college question paper template or create new teacher accounts.
-                    Click on any subject below to view the teachers assigned to that subject and all question papers they have generated.
+            <div className="mb-8 bg-surface p-8 rounded-3xl shadow-sm border-l-8 border-navy relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full -mr-16 -mt-16"></div>
+                <h3 className="font-black text-2xl text-navy mb-2">Welcome to the Administration</h3>
+                <p className="text-slate/70 font-medium text-sm max-w-2xl leading-relaxed">
+                    Manage the official college assessment system. Upload institutional paper templates, onboard teaching staff, and monitor academic progress across all departments.
                 </p>
             </div>
 
-            <h2 className="text-xl font-bold mb-6 text-[#1e3280] border-b-4 border-blue-500 pb-2 inline-block tracking-wide">SUBJECT DIRECTORY</h2>
+            <div className="flex items-center gap-4 mb-8">
+                <h2 className="text-sm font-black text-navy uppercase tracking-[0.2em]">Subject Directory</h2>
+                <div className="h-px flex-1 bg-gray-100"></div>
+            </div>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {subjects.map(sub => (
                     <Link 
                         to={`/admin/dashboard/subject/${sub}`}
                         key={sub}
-                        className="bg-white p-6 rounded-xl shadow-sm text-center font-bold text-lg transition border border-gray-100 text-gray-700 hover:shadow-md hover:border-blue-400 hover:text-blue-700 transform hover:-translate-y-1 flex flex-col items-center justify-center gap-3"
+                        className="bg-surface p-8 rounded-3xl shadow-sm text-center font-black text-lg transition border border-gray-100 text-slate hover:shadow-xl hover:border-gold hover:text-navy transform hover:-translate-y-2 flex flex-col items-center justify-center gap-4 group"
                     >
-                        <div className="bg-blue-50 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-inner">
+                        <div className="bg-gray-50 text-gold w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black shadow-inner group-hover:bg-navy group-hover:text-gold transition-colors duration-300">
                             {sub.charAt(0)}
                         </div>
                         {sub}
@@ -44,43 +47,43 @@ const AdminDashboard = () => {
     const location = useLocation();
 
     return (
-        <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans">
-            {/* Top Navigation Bar - Dark Blue */}
-            <nav className="bg-[#1e3280] p-4 text-white flex justify-between items-center z-10 rounded-t-lg mx-4 mt-4 shadow-md">
+        <div className="min-h-screen bg-background flex flex-col font-sans">
+            {/* Top Navigation Bar - Manchester Navy */}
+            <nav className="bg-navy p-4 text-white flex justify-between items-center z-10 shadow-2xl border-b-4 border-gold">
                 <div 
-                    className="flex items-center cursor-pointer hover:opacity-80 transition gap-4"
+                    className="flex items-center cursor-pointer hover:opacity-80 transition gap-4 ml-4"
                     onClick={() => navigate('/admin/dashboard')}
                 >
-                    <div className="bg-white text-[#1e3280] font-black rounded-lg w-10 h-10 flex items-center justify-center text-xl shadow-sm">A</div>
-                    <h1 className="text-xl font-bold tracking-wide">
+                    <div className="bg-gold text-navy font-black rounded-xl w-10 h-10 flex items-center justify-center text-xl shadow-lg rotate-3">M</div>
+                    <h1 className="text-xl font-black tracking-tight uppercase">
                         Admin Portal
                     </h1>
                 </div>
                 
-                <div className="space-x-3 flex items-center">
+                <div className="space-x-4 flex items-center mr-4">
                     <Link 
                         to="/admin/dashboard/upload-template" 
-                        className={`px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-1 ${location.pathname.includes('upload-template') ? 'bg-white/20 text-white border border-white/50' : 'bg-transparent border border-blue-400 text-blue-100 hover:bg-white/10'}`}
+                        className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition flex items-center gap-2 ${location.pathname.includes('upload-template') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
                     >
                         Upload Template
                     </Link>
                     <Link 
                         to="/admin/dashboard/create-teacher" 
-                        className={`px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-1 ${location.pathname.includes('create-teacher') ? 'bg-white/20 text-white border border-white/50' : 'bg-transparent border border-blue-400 text-blue-100 hover:bg-white/10'}`}
+                        className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition flex items-center gap-2 ${location.pathname.includes('create-teacher') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
                     >
                         + Create Teacher
                     </Link>
-                    <div className="w-px h-6 bg-blue-500/50 mx-2"></div>
+                    <div className="w-px h-8 bg-gold/20 mx-2"></div>
                     <button 
                         onClick={() => { logout(); navigate('/'); }} 
-                        className="bg-transparent border border-blue-400 text-blue-100 px-5 py-2 rounded-lg text-sm font-semibold hover:bg-white/10 transition"
+                        className="bg-red-500/10 border border-red-500/30 text-red-500 px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all shadow-sm"
                     >
                         Logout
                     </button>
                 </div>
             </nav>
 
-            <div className="flex-1 mx-4 mb-4 border-x border-b border-gray-200 bg-[#f8fafc] rounded-b-lg p-8">
+            <div className="flex-1 p-10 max-w-7xl mx-auto w-full">
                 <Routes>
                     <Route path="/" element={<DashboardHome />} />
                     <Route path="/upload-template" element={<UploadTemplate />} />

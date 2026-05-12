@@ -10,21 +10,31 @@ const api = axios.create({
     baseURL: API_URL
 });
 
+// Global loading callbacks
+let loadingCallback = (isLoading) => {};
+export const setLoadingCallback = (cb) => { loadingCallback = cb; };
+
 // Add a request interceptor to attach the JWT token to every request
 api.interceptors.request.use((config) => {
+    loadingCallback(true);
     const token = localStorage.getItem('token');
     if (token) {
         config.headers['Authorization'] = `Bearer ${token}`;
     }
     return config;
 }, (error) => {
+    loadingCallback(false);
     return Promise.reject(error);
 });
 
 // Add a response interceptor to handle token expiry globally
 api.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        loadingCallback(false);
+        return response;
+    },
     (error) => {
+        loadingCallback(false);
         if (error.response && error.response.status === 401) {
             // Token expired or invalid — clear storage
             localStorage.removeItem('token');

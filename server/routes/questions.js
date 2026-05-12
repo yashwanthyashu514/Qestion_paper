@@ -7,22 +7,7 @@ const Question = require('../models/Question');
 const auth = require('../middleware/auth');
 const checkRole = require('../middleware/role');
 
-// ── Absolute upload directory (works on any OS / cloud server)
-const uploadsDir = path.resolve(__dirname, '..', 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-    fs.mkdirSync(uploadsDir, { recursive: true });
-}
-
-// ── Multer disk storage config
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, uploadsDir);
-    },
-    filename: function (req, file, cb) {
-        const safeName = 'question-' + Date.now() + path.extname(file.originalname).toLowerCase();
-        cb(null, safeName);
-    }
-});
+const { storage } = require('../config/cloudinary');
 
 const upload = multer({
     storage,
@@ -54,10 +39,14 @@ router.post('/', [auth, checkRole(['teacher']), upload.single('image')], async (
         const count = await Question.countDocuments();
         questionData.questionId = `Q-${req.user.subject.substring(0,3).toUpperCase()}-${Date.now()}-${count+1}`;
 
+        // Ensure classes is an array (frontend sends a string for single select)
+        if (req.body.classes && typeof req.body.classes === 'string') {
+            questionData.classes = [req.body.classes];
+        }
+
         if (req.file) {
-            // Store full URL so images display on any device
-            const backendUrl = process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`;
-            questionData.imageUrl = `${backendUrl}/uploads/${req.file.filename}`;
+            // Cloudinary returns the full URL in req.file.path
+            questionData.imageUrl = req.file.path;
         }
 
         const question = new Question(questionData);
