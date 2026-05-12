@@ -264,6 +264,15 @@ const toDateStr = (date) => {
 /* ═══════════════════════════════════════════════════════════════════════ */
 const PaperView = ({ paper, activeTemplate, onBack }) => {
     const totalMarks = calcTotal(paper);
+    
+    // Paper Settings State
+    const [settings, setSettings] = useState({
+        fontFamily: 'Georgia, "Times New Roman", serif',
+        fontSize: '14px',
+        lineHeight: '1.5',
+        columns: 1,
+        showSettings: false
+    });
 
     const renderQuestions = () => {
         if (paper.pattern?.length) {
@@ -277,42 +286,104 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
                 pool = pool.filter(q => !usedIds.has(q._id));
                 if (!secQs.length) return null;
                 return (
-                    <div key={secIdx} style={{ marginBottom: '28px' }}>
+                    <div key={secIdx} style={{ marginBottom: '28px', breakInside: 'avoid-column' }}>
                         <div style={{ textAlign: 'center', margin: '28px 0 16px' }}>
                             <div style={{ fontWeight: 700, fontSize: '17px', textDecoration: 'underline' }}>{sec.sectionName}</div>
                             {sec.description && <div style={{ fontSize: '13px', color: '#555', fontStyle: 'italic', marginTop: '4px' }}>{sec.description}</div>}
                         </div>
-                        <QuestionList questions={secQs} />
+                        <QuestionList questions={secQs} fontSize={settings.fontSize} />
                     </div>
                 );
             });
         }
-        return <QuestionList questions={paper.questions} />;
+        return <QuestionList questions={paper.questions} fontSize={settings.fontSize} />;
     };
 
     return (
         <div style={S.page}>
-            <div style={S.viewToolbar} className="no-print">
-                <button style={S.btnBack} onClick={onBack}>← Back to Papers</button>
-                <div style={S.viewBtns}>
-                    {paper.status?.toLowerCase() === 'approved' ? (
-                        <>
-                            <button style={S.btnPrint} onClick={() => window.print()}>🖨 Print Paper</button>
-                            <button style={S.btnPdf} onClick={() => exportToWord('.print-area', `${paper.title.replace(/\s+/g, '_')}.doc`)}>⬇ Export Word</button>
-                        </>
-                    ) : (
-                        <span style={{ color: '#dc2626', fontSize: '13px', fontWeight: 600, display: 'flex', alignItems: 'center', padding: '0 10px' }}>
-                            Paper must be approved by admin to print or export.
-                        </span>
-                    )}
+            <div style={{ ...S.viewToolbar, flexDirection: 'column', gap: '16px', alignItems: 'stretch' }} className="no-print">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <button style={S.btnBack} onClick={onBack}>← Back to Papers</button>
+                    <div style={S.viewBtns}>
+                        <button 
+                            style={{ ...S.btnBack, background: settings.showSettings ? '#001f6d' : '#f1f5f9', color: settings.showSettings ? '#fff' : '#001f6d' }} 
+                            onClick={() => setSettings(s => ({ ...s, showSettings: !s.showSettings }))}
+                        >
+                            ⚙️ Paper Settings
+                        </button>
+                        {paper.status?.toLowerCase() === 'approved' ? (
+                            <>
+                                <button style={S.btnPrint} onClick={() => window.print()}>🖨 Print Paper</button>
+                                <button style={S.btnPdf} onClick={() => exportToWord('.print-area', `${paper.title.replace(/\s+/g, '_')}.doc`)}>⬇ Export Word</button>
+                            </>
+                        ) : (
+                            <span style={{ color: '#dc2626', fontSize: '13px', fontWeight: 600, display: 'flex', alignItems: 'center', padding: '0 10px' }}>
+                                Paper must be approved by admin to print or export.
+                            </span>
+                        )}
+                    </div>
                 </div>
+
+                {settings.showSettings && (
+                    <div style={{ padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
+                        <div>
+                            <label style={{ ...S.filterLabel, display: 'block', marginBottom: '8px' }}>Font Style</label>
+                            <select 
+                                style={S.filterSelect} 
+                                value={settings.fontFamily}
+                                onChange={e => setSettings(s => ({ ...s, fontFamily: e.target.value }))}
+                            >
+                                <option value='Georgia, "Times New Roman", serif'>Classic Serif</option>
+                                <option value="'Inter', sans-serif">Modern Sans</option>
+                                <option value="'JetBrains Mono', monospace">Technical Mono</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style={{ ...S.filterLabel, display: 'block', marginBottom: '8px' }}>Font Size</label>
+                            <select 
+                                style={S.filterSelect} 
+                                value={settings.fontSize}
+                                onChange={e => setSettings(s => ({ ...s, fontSize: e.target.value }))}
+                            >
+                                <option value="12px">Small (12px)</option>
+                                <option value="14px">Standard (14px)</option>
+                                <option value="16px">Large (16px)</option>
+                                <option value="18px">X-Large (18px)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style={{ ...S.filterLabel, display: 'block', marginBottom: '8px' }}>Line Spacing</label>
+                            <select 
+                                style={S.filterSelect} 
+                                value={settings.lineHeight}
+                                onChange={e => setSettings(s => ({ ...s, lineHeight: e.target.value }))}
+                            >
+                                <option value="1.2">Compact (1.2)</option>
+                                <option value="1.5">Standard (1.5)</option>
+                                <option value="2.0">Double (2.0)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style={{ ...S.filterLabel, display: 'block', marginBottom: '8px' }}>Page Layout</label>
+                            <select 
+                                style={S.filterSelect} 
+                                value={settings.columns}
+                                onChange={e => setSettings(s => ({ ...s, columns: parseInt(e.target.value) }))}
+                            >
+                                <option value={1}>Single Column</option>
+                                <option value={2}>Two Columns (1x2)</option>
+                            </select>
+                        </div>
+                    </div>
+                )}
             </div>
 
             <div className="print-area" style={{
                 background: '#fff', padding: '48px 56px',
-                maxWidth: '860px', margin: '0 auto',
+                maxWidth: '1000px', margin: '0 auto',
                 border: '1px solid #e2e8f0', borderRadius: '12px',
-                fontFamily: 'Georgia, "Times New Roman", serif', fontSize: '14px',
+                fontFamily: settings.fontFamily, fontSize: settings.fontSize,
+                lineHeight: settings.lineHeight,
                 boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
             }}>
                 {activeTemplate?.fileUrl?.match(/\.(jpeg|jpg|gif|png)$/i) && (
@@ -332,7 +403,13 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
                     </div>
                 </div>
 
-                <div>{renderQuestions()}</div>
+                <div style={{ 
+                    columnCount: settings.columns, 
+                    columnGap: '40px', 
+                    columnRule: settings.columns > 1 ? '1px solid #eee' : 'none' 
+                }}>
+                    {renderQuestions()}
+                </div>
 
                 <div style={{ textAlign: 'center', fontWeight: 700, borderTop: '2px solid #000', paddingTop: '16px', marginTop: '48px', fontSize: '13px' }}>
                     *** End of Paper ***
@@ -345,22 +422,22 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
           .print-area, .print-area * { visibility: visible; }
           .print-area { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none !important; border: none !important; border-radius: 0 !important; padding: 0 !important; margin: 0 !important; }
           .no-print { display: none !important; }
-          @page { margin: 20mm; }
+          @page { margin: 15mm; size: A4; }
         }
       `}</style>
         </div>
     );
 };
 
-const QuestionList = ({ questions }) => (
+const QuestionList = ({ questions, fontSize }) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         {questions.map((q, idx) => (
-            <div key={q._id} style={{ color: '#111' }}>
+            <div key={q._id} style={{ color: '#111', breakInside: 'avoid-column' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <div style={{ display: 'flex', alignItems: 'flex-start', flex: 1, paddingRight: '16px' }}>
-                        <span style={{ fontWeight: 700, marginRight: '8px', whiteSpace: 'nowrap', fontSize: '15px' }}>{idx + 1}.</span>
+                        <span style={{ fontWeight: 700, marginRight: '8px', whiteSpace: 'nowrap', fontSize: '1.1em' }}>{idx + 1}.</span>
                         <div style={{ flex: 1 }}>
-                            <p style={{ whiteSpace: 'pre-wrap', textAlign: 'justify', fontSize: '15px', margin: 0 }}>{q.questionText}</p>
+                            <p style={{ whiteSpace: 'pre-wrap', textAlign: 'justify', fontSize: '1em', margin: 0 }}>{q.questionText}</p>
                             {q.imageUrl && (
                                 <div style={{ marginTop: '12px', marginBottom: '8px' }}>
                                     <img src={q.imageUrl} alt="Diagram" style={{ maxWidth: '100%', maxHeight: '250px', objectFit: 'contain' }} />
@@ -368,10 +445,17 @@ const QuestionList = ({ questions }) => (
                             )}
                         </div>
                     </div>
-                    <span style={{ fontWeight: 700, whiteSpace: 'nowrap', fontSize: '14px' }}>[{formatMarks(q.type)}]</span>
+                    <span style={{ fontWeight: 700, whiteSpace: 'nowrap', fontSize: '0.9em' }}>[{formatMarks(q.type)}]</span>
                 </div>
                 {q.type === 'MCQ' && q.options && (
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px 32px', marginTop: '12px', marginLeft: '24px', fontSize: '14px' }}>
+                    <div style={{ 
+                        display: 'grid', 
+                        gridTemplateColumns: '1fr 1fr', 
+                        gap: '8px 24px', 
+                        marginTop: '8px', 
+                        marginLeft: '24px', 
+                        fontSize: '0.95em' 
+                    }}>
                         {q.options.map((opt, i) => (
                             <div key={i} style={{ display: 'flex' }}>
                                 <span style={{ marginRight: '6px', fontWeight: 600 }}>{String.fromCharCode(65 + i)})</span>
