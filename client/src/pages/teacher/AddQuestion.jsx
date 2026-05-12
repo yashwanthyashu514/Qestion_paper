@@ -64,9 +64,12 @@ const AddQuestion = () => {
             setImageFile(null);
             setEditId(null);
             fetchQuestions();
-            setShowForm(false); // Return to list view
+            setShowForm(false);
         } catch (err) {
-            alert('Failed to save question');
+            console.error('Full error:', err);
+            console.error('Status:', err.response?.status);
+            console.error('Data:', err.response?.data);
+            alert(`Error: ${err.response?.data?.msg || err.response?.data?.message || err.message}`);
         }
     };
 

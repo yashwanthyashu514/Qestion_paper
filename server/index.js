@@ -16,11 +16,11 @@ const app = express();
 
 // ── CORS: allow all origins in production (Vercel, Render, any device)
 app.use(cors({
-    origin: '*',
+    origin: ['https://qestion-paper.vercel.app', 'http://localhost:5173', 'http://localhost:3000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
+    credentials: true
 }));
-// app.options('*', cors()); // Handled by app.use(cors()) above
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
