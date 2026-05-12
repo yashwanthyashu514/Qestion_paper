@@ -14,6 +14,7 @@ const AddQuestion = () => {
         answer: ''
     });
     const [imageFile, setImageFile] = useState(null);
+    const [editId, setEditId] = useState(null);
 
     const fetchQuestions = async () => {
         try {
@@ -47,18 +48,41 @@ const AddQuestion = () => {
                 submitData.append('image', imageFile);
             }
 
-            await api.post('/api/questions', submitData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
+            if (editId) {
+                await api.put(`/api/questions/${editId}`, submitData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+                alert('Question updated successfully!');
+            } else {
+                await api.post('/api/questions', submitData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+                alert('Question added successfully!');
+            }
             
-            setFormData({ ...formData, questionText: '', answer: '', options: ['', '', '', ''] });
+            setFormData({ chapter: '', concept: '', level: 'easy', classes: '11', type: 'MCQ', questionText: '', answer: '', options: ['', '', '', ''] });
             setImageFile(null);
+            setEditId(null);
             fetchQuestions();
             setShowForm(false); // Return to list view
-            alert('Question added successfully!');
         } catch (err) {
-            alert('Failed to add question');
+            alert('Failed to save question');
         }
+    };
+
+    const handleEdit = (q) => {
+        setFormData({
+            chapter: q.chapter || '',
+            concept: q.concept || '',
+            level: q.level || 'easy',
+            classes: q.classes[0] || '11',
+            type: q.type || 'MCQ',
+            questionText: q.questionText || '',
+            options: q.options && q.options.length === 4 ? q.options : ['', '', '', ''],
+            answer: q.answer || ''
+        });
+        setEditId(q._id);
+        setShowForm(true);
     };
 
     const handleDelete = async (id) => {
@@ -82,7 +106,15 @@ const AddQuestion = () => {
                     <p className="text-[10px] font-black text-slate/40 uppercase tracking-[0.2em] ml-1">Academic Question Bank Management</p>
                 </div>
                 <button 
-                    onClick={() => setShowForm(!showForm)} 
+                    onClick={() => {
+                        if (showForm) {
+                            setShowForm(false);
+                            setEditId(null);
+                            setFormData({ chapter: '', concept: '', level: 'easy', classes: '11', type: 'MCQ', questionText: '', answer: '', options: ['', '', '', ''] });
+                        } else {
+                            setShowForm(true);
+                        }
+                    }} 
                     className={`px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg ${showForm ? 'bg-gray-100 text-slate/60 hover:bg-gray-200' : 'bg-navy text-gold hover:scale-105 active:scale-95'}`}
                 >
                     {showForm ? '← View Repository' : '+ New Question'}
@@ -92,8 +124,8 @@ const AddQuestion = () => {
             {showForm ? (
                 <div className="max-w-3xl mx-auto bg-gray-50/50 p-10 rounded-[2.5rem] border border-gray-100 shadow-inner">
                     <h3 className="text-xl font-black mb-8 text-navy flex items-center gap-4">
-                        <span className="bg-gold text-navy w-10 h-10 rounded-2xl flex items-center justify-center text-xl shadow-lg rotate-3">+</span>
-                        Create Entry
+                        <span className="bg-gold text-navy w-10 h-10 rounded-2xl flex items-center justify-center text-xl shadow-lg rotate-3">{editId ? '✎' : '+'}</span>
+                        {editId ? 'Edit Entry' : 'Create Entry'}
                     </h3>
                     <form onSubmit={handleSubmit} className="space-y-8">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -218,7 +250,9 @@ const AddQuestion = () => {
                             <input type="text" placeholder="Enter answer or hints..." className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-green-500" value={formData.answer} onChange={e=>setFormData({...formData, answer: e.target.value})} />
                         </div>
                         
-                        <button type="submit" className="w-full bg-navy text-gold font-black py-5 rounded-2xl hover:scale-[1.01] shadow-2xl transition-all transform active:scale-95 mt-6 uppercase tracking-[0.2em] text-xs">Finalize Repository Entry</button>
+                        <button type="submit" className="w-full bg-navy text-gold font-black py-5 rounded-2xl hover:scale-[1.01] shadow-2xl transition-all transform active:scale-95 mt-6 uppercase tracking-[0.2em] text-xs">
+                            {editId ? 'Update Repository Entry' : 'Finalize Repository Entry'}
+                        </button>
                     </form>
                 </div>
             ) : (
@@ -229,7 +263,7 @@ const AddQuestion = () => {
                     {questions.map(q => (
                         <div key={q._id} className="border border-gray-200 p-5 rounded-lg shadow-sm bg-white relative group hover:shadow-md transition">
                             <div className="absolute top-4 right-4 hidden group-hover:flex space-x-3">
-                                <button className="text-blue-600 hover:text-blue-800 text-sm font-bold bg-blue-50 px-3 py-1 rounded">Edit</button>
+                                <button onClick={() => handleEdit(q)} className="text-blue-600 hover:text-blue-800 text-sm font-bold bg-blue-50 px-3 py-1 rounded">Edit</button>
                                 <button onClick={() => handleDelete(q._id)} className="text-red-600 hover:text-red-800 text-sm font-bold bg-red-50 px-3 py-1 rounded">Delete</button>
                             </div>
                             <div className="flex items-center gap-3 mb-3">

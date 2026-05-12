@@ -108,4 +108,47 @@ router.delete('/:id', [auth, checkRole(['teacher'])], async (req, res) => {
     }
 });
 
+// @route   PUT /api/questions/:id
+// @desc    Update a question
+// @access  Teacher
+router.put('/:id', [auth, checkRole(['teacher']), upload.single('image')], async (req, res) => {
+    try {
+        let question = await Question.findById(req.params.id);
+        if (!question) return res.status(404).json({ msg: 'Question not found' });
+        
+        if (question.subject !== req.user.subject) {
+             return res.status(401).json({ msg: 'Not authorized to edit this subject question' });
+        }
+        
+        const questionData = { ...req.body };
+        
+        if (req.body.options && typeof req.body.options === 'string') {
+            try {
+                questionData.options = JSON.parse(req.body.options);
+            } catch(e) {
+                console.error('Error parsing options:', e);
+            }
+        }
+
+        if (req.body.classes && typeof req.body.classes === 'string') {
+            questionData.classes = [req.body.classes];
+        }
+
+        if (req.file) {
+            questionData.imageUrl = req.file.path;
+        }
+
+        question = await Question.findByIdAndUpdate(
+            req.params.id,
+            { $set: questionData },
+            { new: true }
+        );
+        
+        res.json(question);
+    } catch (err) {
+        console.error('Update question error:', err.message);
+        res.status(500).json({ msg: 'Server Error', error: err.message });
+    }
+});
+
 module.exports = router;

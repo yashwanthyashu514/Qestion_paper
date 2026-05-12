@@ -686,14 +686,17 @@ const CreatePaper = () => {
                                     <span className="font-semibold text-xs bg-gray-50 text-gray-600 px-2 py-1 rounded-md border border-gray-200">Class: {previewQuestion.classes?.join(',')}</span>
                                     <span className="font-semibold text-xs bg-green-50 text-green-700 px-2 py-1 rounded-md border border-green-100">{previewQuestion.type}</span>
                                 </div>
-                                <p className="text-gray-800 font-medium whitespace-pre-wrap mb-6 text-sm leading-relaxed">{previewQuestion.questionText}</p>
+                                <p 
+                                    className="text-gray-800 font-medium whitespace-pre-wrap mb-6 text-sm leading-relaxed"
+                                    dangerouslySetInnerHTML={{ __html: previewQuestion.questionText }}
+                                />
                                 {previewQuestion.imageUrl && <div className="mb-6"><img src={previewQuestion.imageUrl} alt="Question Reference" className="max-w-full rounded border border-gray-200" /></div>}
                                 {previewQuestion.type === 'MCQ' && previewQuestion.options && (
                                     <ul className="space-y-3 text-sm text-gray-600 mb-6">
                                         {previewQuestion.options.map((opt, i) => (
                                             <li key={i} className="flex items-center gap-3 font-medium">
                                                 <span className="bg-gray-100 w-6 h-6 flex items-center justify-center rounded-full text-gray-500 font-bold text-xs">{String.fromCharCode(65 + i)}</span>
-                                                {opt}
+                                                <span dangerouslySetInnerHTML={{ __html: opt }} />
                                             </li>
                                         ))}
                                     </ul>
