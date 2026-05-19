@@ -1,0 +1,164 @@
+[
+    {
+        "questionId": "Q-PHY-EMW-01",
+        "questionText": "The energy associated with electric field is (UE) and with magnetic field is (UB) for an electromagnetic wave in free space. Then :",
+        "options": ["UE = UB/2", "UE < UB", "UE = UB", "UE > UB"],
+        "answer": "UE = UB",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-02",
+        "questionText": "The magnetic field of a plane electromagnetic wave is B = 3 x 10⁻⁸ sin[200π(y + ct)] î T. Where c = 3 x 10⁸ ms⁻¹ is the speed of light. The corresponding electric field is :",
+        "options": ["E = -10⁻⁶ sin[200π(y + ct)] k̂ V/m", "E = -9 sin[200π(y + ct)] k̂ V/m", "E = 9 sin[200π(y + ct)] k̂ V/m", "E = 3 x 10⁻⁸ sin[200π(y + ct)] k̂ V/m"],
+        "answer": "E = 9 sin[200π(y + ct)] k̂ V/m",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-03",
+        "questionText": "A plane electromagnetic wave Ez = 100 cos(6 x 10⁸ t + 4x) V/m propagates in a medium. The refractive index of the medium is",
+        "options": ["1.5", "2.0", "2.4", "4.0"],
+        "answer": "2.0",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-04",
+        "questionText": "The electromagnetic waves having speed 2.5 x 10⁸ m/s are travelling in a medium of relative permeability 0.8. The relative permittivity of the medium is",
+        "options": ["1.0", "1.8", "2.5", "1.2"],
+        "answer": "1.8",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-05",
+        "questionText": "When a plane electromagnetic wave travels in vacuum, the average electric energy density is given by (here E₀ is the amplitude of the electric field of the wave) is",
+        "options": ["1/4 ε₀E₀²", "1/2 ε₀E₀²", "ε₀E₀²", "2ε₀E₀²"],
+        "answer": "1/4 ε₀E₀²",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-06",
+        "questionText": "A parallel plate capacitor of plate separation 2 mm is connected in an electric circuit having source voltage 400 V. If the plate area is 60 cm², then the value of displacement current for 10⁻⁶ s will be",
+        "options": ["1.062 A", "1.062 x 10⁻² A", "1.062 x 10⁻³ A", "1.062 x 10⁻⁴ A"],
+        "answer": "1.062 x 10⁻² A",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-07",
+        "questionText": "Light with an energy flux of 25 x 10⁴ W m⁻² falls on a perfectly reflecting surface at normal incidence. If the surface area is 15 cm², the average force exerted on the surface is",
+        "options": ["1.25 x 10⁻⁶ N", "2.50 x 10⁻⁶ N", "1.20 x 10⁻⁶ N", "3.0 x 10⁻⁶ N"],
+        "answer": "2.50 x 10⁻⁶ N",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-08",
+        "questionText": "If υ_g , υ_x and υ_m are the speeds of gamma-rays, X-rays and micro waves respectively in vacuum, then",
+        "options": ["υ_g > υ_x > υ_m", "υ_g < υ_x < υ_m", "υ_g > υ_x < υ_m", "υ_g = υ_x = υ_m"],
+        "answer": "υ_g = υ_x = υ_m",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-09",
+        "questionText": "Assertion : UV radiation causes photo dissociation of ozone into O₂ and O, thus causing damage to the stratospheric ozone layer.\nReason : Ozone hole is resulting in global warming and climate change.",
+        "options": ["If both assertion and reason are true and reason is the correct explanation of assertion", "If both assertion and reason are true but reason is not the correct explanation of assertion", "If assertion is true but reason is false", "If both assertion and reason are false"],
+        "answer": "If assertion is true but reason is false",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-10",
+        "questionText": "A charged particle with charge q enters a region of constant, uniform and mutually orthogonal fields E and B with a velocity v perpendicular to both E and B, and comes out without any change in magnitude or direction of v. Then,",
+        "options": ["v = E x B / B²", "v = B x E / E²", "v = E x B / E²", "v = B x E / B²"],
+        "answer": "v = E x B / B²",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-11",
+        "questionText": "The magnetic field component of intensity of electromagnetic wave is 4I₀. What is the electric field component of intensity?",
+        "options": ["2I₀", "4I₀", "I₀", "I₀/4"],
+        "answer": "4I₀",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-12",
+        "questionText": "A plane electromagnetic wave of frequency 30MHz travels in free space along x-direction. The electric field component of the wave at a particular point of space and time E = 6Vm⁻¹ along y-direction. Its magnetic field component B at this point would be",
+        "options": ["2 x 10⁻⁸T along z-direction", "6 x 10⁻⁸T along x-direction", "2 x 10⁻⁸T along y-direction", "6 x 10⁻⁸T along z-direction"],
+        "answer": "2 x 10⁻⁸T along z-direction",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-13",
+        "questionText": "Electromagnetic waves can be deflected by",
+        "options": ["only electric field", "only magnetic field", "Both (a) and (b)", "None of these"],
+        "answer": "None of these",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-14",
+        "questionText": "How would you establish an instantaneous displacement current of 2A in the space between the two parallel plates of 1μF capacitor?",
+        "options": ["2 x 10⁶ Vs⁻¹", "3 x 10⁶ Vs⁻¹", "4 x 10⁶ Vs⁻¹", "5 x 10⁻⁶ Vs⁻¹"],
+        "answer": "2 x 10⁶ Vs⁻¹",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-15",
+        "questionText": "Electromagnetic waves are produced by:",
+        "options": ["Static charge", "Accelerating charge", "Charge less particle", "A moving charge"],
+        "answer": "Accelerating charge",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-16",
+        "questionText": "If the intensity of the incident radiowave of 1watt/m² is reflected by the surface. Find the pressure exerted on the surface?",
+        "options": ["7 x 10⁻⁹ N/m²", "8 x 10⁻⁹ N/m²", "6 x 10⁻¹⁰ N/m²", "10⁻¹⁰ N/m²"],
+        "answer": "7 x 10⁻⁹ N/m²",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-17",
+        "questionText": "Find the energy of photon in watt-hour for electromagnetic waves of wavelengths 3000 Å. Given (h = 6.6 x 10⁻³⁴ Js)",
+        "options": ["2 x 10⁻²² Wh", "2 x 10²² Wh", "1.83 x 10⁻²² Wh", "1.83 x 10²² Wh"],
+        "answer": "1.83 x 10⁻²² Wh",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-18",
+        "questionText": "Displacement current is set up between the plates of a capacitor when the potential difference across the plates is",
+        "options": ["Maximum", "Zero", "Minimum", "Varying"],
+        "answer": "Varying",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-EMW-19",
+        "questionText": "Match the items of Column I with those of Column II and choose the correct option from the codes given below.\nColumn I:\n(A) ∮ E.dA = Q/ε₀\n(B) ∮ B.dA = 0\n(C) ∮ E.dl = -dΦ_B/dt\n(D) ∮ B.dl = μ₀i_c + μ₀ε₀dΦ_E/dt\nColumn II:\n(1) Faraday's law\n(2) Ampere-Maxwell law\n(3) Gauss law for electricity\n(4) Gauss law for magnetism",
+        "options": ["A - (4) , B -(3) , C - (2) , D - (1)", "A - (3) , B - (2) , C - (1) , D - (4)", "A - (3) , B - (4) , C - (1) , D - (2)", "A - (1) , B - (2) , C - (3) , D - (4)"],
+        "answer": "A - (3) , B - (4) , C - (1) , D - (2)",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778626970614.png",
+        "diagramCrop": [50, 710, 750, 850]
+    },
+    {
+        "questionId": "Q-PHY-EMW-20",
+        "questionText": "The electric field intensity produced by the radiations coming from 100 W bulb at a 3 m distance is E. The electric field intensity produced by the radiations coming from 50 W bulb at the same distance is",
+        "options": ["E/2", "2E", "E/√2", "√2 E"],
+        "answer": "E/√2",
+        "level": "easy",
+        "type": "MCQ"
+    }
+]

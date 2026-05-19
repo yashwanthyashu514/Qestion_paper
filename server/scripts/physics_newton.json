@@ -1,0 +1,226 @@
+[
+    {
+        "questionId": "Q-PHY-NLM-01",
+        "questionText": "A cricketer catches a ball of mass 150 gm in 0.1 sec moving with speed 20 m/s, then he experiences force of",
+        "options": ["300 N", "30 N", "3 N", "0.3 N"],
+        "answer": "30 N",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-02",
+        "questionText": "A 0.2 kg object at rest is subjected to a force (0.3î - 0.4ĵ) N. What is the velocity after 6 s?",
+        "options": ["(9î - 12ĵ)", "(8î - 16ĵ)", "(12î - 9ĵ)", "(16î - 8ĵ)"],
+        "answer": "(9î - 12ĵ)",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-03",
+        "questionText": "There are four forces acting at a point P produced by strings as shown in figure, which is at rest. The forces F₁ and F₂ are",
+        "options": ["1/√2 N, 3/√2 N", "3/√2 N, 1/√2 N", "1/√2 N, 1/√2 N", "3/√2 N, 3/√2 N"],
+        "answer": "1/√2 N, 3/√2 N",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778618682592.png",
+        "diagramCrop": [350, 240, 650, 430]
+    },
+    {
+        "questionId": "Q-PHY-NLM-04",
+        "questionText": "A body of mass 2 kg is moving towards east with a uniform speed of 2 m/s. A force of 3 N is applied to it towards north. The magnitude of the displacement of the body 2 s after the application of force is",
+        "options": ["4 m", "5 m", "6 m", "7 m"],
+        "answer": "5 m",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-05",
+        "questionText": "A bullet of mass 40 g moving with a speed of 90 m/s enters a heavy wooden block and is stopped after a distance of 60 cm. The average resistive force exerted by the block on the bullet is",
+        "options": ["180 N", "220 N", "270 N", "320 N"],
+        "answer": "270 N",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-06",
+        "questionText": "A ball is suspended on a thread from the ceiling of a car. The brakes are applied and the speed of car changes from 5 m/sec to 5/3 m/sec during the time interval of 3 seconds. Find the angle that the thread with the ball will deviate from vertical",
+        "options": ["θ = tan⁻¹(1/9)", "θ = tan⁻¹(8/9)", "θ = sin⁻¹(1/9)", "θ = cos⁻¹(1/9)"],
+        "answer": "θ = tan⁻¹(1/9)",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-07",
+        "questionText": "A machine gun is mounted on a 2800 kg vehicle on a horizontal smooth rod (negligible friction). The gun fires 10 bullets per sec with a velocity of 200 m/s. If the mass of each bullet is 50 g. What is the acceleration produced in the vehicle?",
+        "options": ["3.5 cm/s²", "4 cm/s²", "5.2 cm/s²", "4.9 cm/s²"],
+        "answer": "3.5 cm/s²",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-08",
+        "questionText": "A ball of mass m strikes a rigid wall with speed u at an angle of 30° and get reflected with the same speed and at the same angle as shown in the figure. If the ball is in contact with the wall for time t, then the force acting on the wall is",
+        "options": ["(mu sin 30°) / t", "(2mu sin 30°) / t", "(mu cos 30°) / t", "(2mu cos 30°) / t"],
+        "answer": "(2mu cos 30°) / t",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778618714305.png",
+        "diagramCrop": [350, 70, 650, 220]
+    },
+    {
+        "questionId": "Q-PHY-NLM-09",
+        "questionText": "In a lift moving up with an acceleration of 5 m/s² a ball is dropped from a height of 1.25 m. The time taken by ball to reach the floor of the lift is........(nearly)(g = 10 m/s²)",
+        "options": ["0.3 second", "0.2 second", "0.16 second", "0.4 second"],
+        "answer": "0.4 second",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-10",
+        "questionText": "Figure shows the variation of force acting on a body with time. Assuming the body to start from rest, the variation of its momentum with time is best represented by which plot?",
+        "options": ["Graph 1 (S-curve, p=80)", "Graph 2 (Concave up)", "Graph 3 (S-curve, p=40)", "Graph 4 (Concave down)"],
+        "answer": "Graph 3 (S-curve, p=40)",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778618714305.png",
+        "diagramCrop": [50, 360, 950, 560]
+    },
+    {
+        "questionId": "Q-PHY-NLM-11",
+        "questionText": "Consider the situation shown in figure. All the surfaces are smooth. The tension in the string connected to 2m is",
+        "options": ["mg/3", "4mg/3", "2mg/3", "mg"],
+        "answer": "4mg/3",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778618714305.png",
+        "diagramCrop": [300, 610, 700, 730]
+    },
+    {
+        "questionId": "Q-PHY-NLM-12",
+        "questionText": "In the figure shown neglecting friction and mass of pulleys, what is the acceleration of mass B?",
+        "options": ["g/3", "5g/2", "2g/2", "2g/5"],
+        "answer": "g/3",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778618714305.png",
+        "diagramCrop": [380, 780, 580, 930]
+    },
+    {
+        "questionId": "Q-PHY-NLM-13",
+        "questionText": "The ratio of tensions in the string connected to the block of mass m₂ in figure-(i) and figure-(ii) respectively is (friction is absent everywhere): [m₁ = 50 kg, m₂ = 80 kg and F = 1000 N]",
+        "options": ["7 : 2", "2 : 7", "3 : 4", "4 : 3"],
+        "answer": "3 : 4",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778618731539.png",
+        "diagramCrop": [250, 60, 750, 220]
+    },
+    {
+        "questionId": "Q-PHY-NLM-14",
+        "questionText": "In order to raise a mass of 100 kg a man of mass 60 kg fastens a rope to it and passes the rope over a smooth pulley. He climbs the rope with acceleration 5g/4 relative to the rope The tension in the rope is: Take g = 10 m/s²",
+        "options": ["1432 N", "928 N", "1219 N", "642 N"],
+        "answer": "1219 N",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-15",
+        "questionText": "Two blocks of masses 8 kg and 5 kg are connected with a rod of mass 3 kg (see figure). The upper block is pulled up with a force of 180 N. The tension in the rod in contact with the upper block is",
+        "options": ["22.5 N", "45 N", "90 N", "180 N"],
+        "answer": "90 N",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778618731539.png",
+        "diagramCrop": [420, 400, 580, 580]
+    },
+    {
+        "questionId": "Q-PHY-NLM-16",
+        "questionText": "Same spring is attached with 2 kg, 3 kg and 1 kg blocks in three different cases as shown in figure. If x₁, x₂, x₃ be the extensions in the spring in the three cases, then",
+        "options": ["x₁= 0, x₃ > x₂", "x₁ > x₂ > x₃", "x₃ > x₂ > x₁", "x₂ > x₁ > x₃"],
+        "answer": "x₃ > x₂ > x₁",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778618731539.png",
+        "diagramCrop": [580, 610, 950, 750]
+    },
+    {
+        "questionId": "Q-PHY-NLM-17",
+        "questionText": "In the figure shown, the tension in the horizontal cord is 30 N. The weight of the body B is",
+        "options": ["40 N", "30 N", "20 N", "10 N"],
+        "answer": "40 N",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778618731539.png",
+        "diagramCrop": [750, 770, 950, 900]
+    },
+    {
+        "questionId": "Q-PHY-NLM-18",
+        "questionText": "The mass of a lift is 2000 kg. When the tension in the supporting cable is 28000 N, then its acceleration is",
+        "options": ["4 m/s² upwards", "4 m/s² downwards", "14 m/s² upwards", "30 m/s² downwards"],
+        "answer": "4 m/s² upwards",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-19",
+        "questionText": "Two blocks of 2 kg and 1 kg are in contact on a frictionless table. If a force of 3 N is applied on 2 kg block, then the force of contact between the two blocks will be :",
+        "options": ["0 N", "1 N", "2 N", "3 N"],
+        "answer": "1 N",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778618746691.png",
+        "diagramCrop": [150, 60, 850, 180]
+    },
+    {
+        "questionId": "Q-PHY-NLM-20",
+        "questionText": "A block of mass m is placed on smooth triangular block as shown in the figure. The triangular block is moving horizontally with uniform speed 2√3 m/s. The acceleration of block of mass m with respect to the triangular block is:",
+        "options": ["5 m/s²", "8 m/s²", "4 m/s²", "6 m/s²"],
+        "answer": "5 m/s²",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778618746691.png",
+        "diagramCrop": [750, 210, 950, 310]
+    },
+    {
+        "questionId": "Q-PHY-NLM-21",
+        "questionText": "A block of mass 4 kg rests on an inclined plane. The inclination of the plane is gradually increased. It is found that when the inclination is 3 in 5 (sin θ = 3/5), the block just begins to slide down the plane. The coefficient of friction between the block and the plane is",
+        "options": ["0.4", "0.6", "0.8", "0.75"],
+        "answer": "0.75",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-22",
+        "questionText": "When a body slides down an inclined plane with coefficient of friction as μk , then its acceleration is given by",
+        "options": ["g (μk sin θ + cos θ)", "g (μk sin θ - cos θ)", "g (sin θ + μk cos θ)", "g (sin θ - μk cos θ)"],
+        "answer": "g (sin θ - μk cos θ)",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-23",
+        "questionText": "A small mass slides down an inclined plane of inclination θ with the horizontal. The coefficient of friction is μ = μ₀ x where x is the distance through which the mass slides down and μ₀, a constant. Then the speed is maximum after the mass covers a distance of",
+        "options": ["cos θ / μ₀", "sin θ / μ₀", "tan θ / μ₀", "2 tan θ / μ₀"],
+        "answer": "tan θ / μ₀",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-24",
+        "questionText": "The backside of a truck is open and a box of 40 kg is placed 5 m away from the rear end. The coefficient of friction of the box with the surface of the truck is 0.15. The truck starts from rest with 2 m/s² acceleration. The distance covered by the truck when the box falls off will be",
+        "options": ["20 m", "30 m", "40 m", "50 m"],
+        "answer": "20 m",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-25",
+        "questionText": "A block pressed against the vertical wall is in equilibrium. The minimum coefficient of friction is:",
+        "options": ["0.4", "0.2", "0.5", "none of these"],
+        "answer": "0.5",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778618746691.png",
+        "diagramCrop": [750, 750, 950, 950]
+    }
+]

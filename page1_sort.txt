@@ -1,0 +1,42 @@
+                                     SIR M.V EDUCATION TRUST(R)
+         SIR M.V GROUP OF INSTITUTIONS
+                               Near Government ITI College, Hadadi Road, Davangere
+
+                    LT-PHY-MODULE-02
+
+            CLASS WORK- WORK POWER ENERGY
+
+ DAY-1 (WORK DONE BY CONSTANT AND VARIABLE FORCE)
+1. A block of mass m = 0.1 kg  is released from a height of 4 m on a curved smooth surface. On the
+  horizontal surface, path AB is smooth and path BC is rough with a coefficient of friction μ = 0.1 . If the
+  impact of the block with the vertical wall at C is perfectly elastic, the total distance covered by the block on
+  the horizontal surface before coming to rest will be (take g = 10 m s−2 )
+   (1) 29 m        (2) 49 m       (3) 59 m       (4) 109 m
+
+
+
+
+
+2. The sign of work done by a force on a body is important to understand. For
+   (i) work done by a man in lifting a bucket out of a well by means of a rope tied to the bucket
+   (ii) work done by friction on a body sliding down an inclined plane
+   (iii) work done by a applied force on a body moving on a rough horizontal plane with uniform velocity
+   (iv) work done by the resistive force of air on a vibrating pendulum in bringing it to rest
+  Choose the sign of work done
+   (1) +, - +, -                (2) +, +, -, -                (3) +, -,+, +                (4) -, + - ,+
+
+3. A vertical spring of force constant 100 Nm−1  is attached to the ceiling, with a block of mass 10 kg
+  suspended from it. Now an external force F  is applied on the block so that the spring is stretched by an
+   additional length of 2 m . The work done by the force F is [Take g = 10 m s−2 ]
+
+
+   (1) 200J             (2) 400J             (3) 100J             (4) 600J
+
+
+
+
+
+4. The bob of a pendulum is released from a horizontal position A as shown in the figure. If the length of the
+  pendulum is 1.5 m , what is the speed with which the bob arrives at the lowermost point B  , given that it
+   dissipated 5% of its initial energy against air resistance?
+   (1) 5ms−1        (2) 5.5 m s−1        (3) 5.3 m s−1        (4) 4.4 m s−1

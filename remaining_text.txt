@@ -1,0 +1,335 @@
+27. A small body slides down a frictionless track after being released from rest from a point at a vertical height
+   h . The track ends in a vertical circular hoop which is in the form of a vertical circle of diameter D . The
+   body remains in contact with the hoop as it moves along it and completes the circle. The minimum height h
+    in terms of the diameter D of the hoop is
+    (1) 4D                     (2) 3D                     (3) 5D                     (4) 6D
+          4                             4                             4                             4
+28. The banking angle for a curved road of radius 490m for a vehicle moving at 35m s−1 is :
+    (1) tan−1 (0.25)           (2) tan−1 (0.55)           (3) tan−1 (0.45)           (4) tan−1 (0.75)
+                                                 −−−
+29. The velocity of a body revolving in a vertical circle of radius  ' r  ' at the lowest point √7gr . The ratio of
+   maximum to minimum tensions in the string is
+    (1) 8 : 1                  (2) 4 : 1                  (3) √ 7– : 1                  (4) 1 : √ 7–
+
+30. A body of weight 10N attached to one end of a string of length 1m is rolated in a vertical plane. At the
+    instant when the string makes an angle of 60∘ with the downward vertical, the speed of the bob is
+   −−−  √ 9.8m s−1 . The tension in the string at that instant is equal to
+    (1) 10N                   (2) 15N                   (3) 20N                   (4) 25N
+   DAY-4 (COLLISIONS)
+31. Three balls A, B and C of masses 2 kg, 4 kg and 8 kg , respectively,
+   move along the same straight line and in the same direction, with
+    velocities 4 m/s, 1 m/s and 3/4 m/s .  If A  collides with B and
+   subsequently B collides with C , find the velocity of ball A and ball B
+    after collision respectively, taking the coefficient of restitution as unity.
+    (1) 3 m/s, 9/4 m/s         (2) 0 m/s, 3 m/s         (3) 3 m/s, 0 m/s         (4) 0 m/s, 0 m/s
+32. A particle of mass ′m′ is moving with speed ′ 2 v′ and collides with a mass ′ 2m′ moving with speed ′v′ in the
+   same direction. After collision, the first mass is stopped completely while the second one splits into two
+    particles each of mass ′m′ , which move at angle 45∘ with respect to the origianl direction.
+   The speed of each of the moving particle will be :
+    (1) v/(2√ 2–)                 (2) 2√ 2–v                 (3) √ 2–v                 (4) v/√ 2–
+33. The figure shows two blocks of mass m each, connected by an ideal unstretched spring and then placed on
+    a frictionless floor. If the blocks are given velocities v0 and 2v0 as shown, then the maximum extension in
+    the spring is
+     −−−             −−−
+          mv20                          mv20    (1)                             (2)   √  k          √ 2k
+    −−−−
+           9mv20                    (4) None of these    (3)   √  2k
+34. A body of mass m1 moving with an unknown velocity of v1i^, undergoes a collinear collision with a body
+    of mass m2 moving with a velocity v2i^ . After collision, m1 and m2 move with velocities of v3i^ and v4i^ ,
+    respectively.
+     If m2 = 0.5 m1 and v3 = 0.5v1 , then v1 is :-
+    (1) v4 −  v2                (2) v4 −  v2                (3) v4 − v2                (4) v4 + v2                4                             2
+35. A projectile of mass M is fired so that the horizontal range is 4 km. At the highest point the projectile
+    explodes in two parts of masses M/4 and 3M/4 respectively and the heavier part starts falling down
+    vertically with zero initial speed. The horizontal range (distance from point of firing) of the lighter part is :
+    (1) 16 km                  (2) 1 km                  (3) 10 km                  (4) 2 km
+
+36. A smooth sphere is moving on a horizontal surface with velocity vector 2 i^ + 2 j^ immediately before it hits
+   a vertical wall. The wall is parallel to j^ vector and the coefficient of restitution between the sphere and the
+   wall is e = 1/2 . The velocity vector of the sphere after it hits the wall is
+    (1) i^ − j^                (2) −+i^   2 j^                (3) −−i^     j^                (4) 2 i^ − j^
+
+37. Two particles, of masses M and 2M , moving, as shown, with speeds
+    of 10 m/s and 5 m/s , collide elastically at the origin. After the
+    collision, they move along the indicated directions with speeds υ1 and
+   υ2 , respectively.
+   The values of υ1 and υ2 are nearly :
+    (1) 3.2 m/s and 6.3 m/s            (2) 3.2 m/s and 12.6 m/s
+    (3) 6.5 m/s and 6.3 m/s            (4) 6.5 m/s and 3.2 m/s
+
+38. A projectile moving vertically upwards with a velocity of 200 ms−1 breaks into two equal parts at a height
+    of 490 m . One part starts moving vertically upwards with a velocity of 400 ms−1 . How much time it will
+    take, after the break up with the other part to hit the ground?
+       −−                                                    −−    (1) 2 √ 10 S                   (2) 5 s                  (3) 10 s                  (4) √ 10 S
+
+39. A particle of mass m is moving horizontally with a constant velocity v towards a rigid wall that is moving
+    in opposite direction with a constant speed u . Assuming elastic impact between the particle and wall, the
+   work done by the wall in reflecting the particle is equal to
+    (1) (1/2)m(u + v)2         (2) (1/2)m(u + v)         (3) (1/2)muv         (4) None of these
+
+40. A ball is dropped from a height of 45 m from the ground. The coefficient of restitution between the ball and
+    the ground is 2/3 . What is the distance travelled by the ball in 4th second of its motion. Assume negligible
+   time is spent in rebounding. Let g = 10 ms2 .
+    (1) 5 m                   (2) 20 m                   (3) 15 m                   (4) 10 m
+
+41. A particle of mass m moving with velocity 1 m/s collides perfectly elastically with another stationary
+    particle of mass 2 m . If the incident particle is deflected by 90∘ , the heavy mass will make an angle θ with
+    the initial direction of m equal to
+    (1) 60∘                    (2) 45∘                    (3) 15∘                    (4) 30∘ .
+
+42. A steel ball of mass 0.5 kg is fastened to a cord 20 cm long and fixed at the far end and is released when the
+   cord is horizontal. At the bottom of its path the ball strikes a 2.5 kg steel block initially at rest on a
+    frictionless surface. The collision is elastic. The speed of the block just after the collision will be.
+    (1) 10 m s−1               (2) 20 m s−1               (3) 5 ms−1               (4) 5 m s−1         3                             3                                                          3
+
+                     LT-PHY-MODULE-02
+
+                CLASS WORK (WAVE OPTICS)
+
+
+  DAY-1 (INTERFERENCE)
+
+ 1. Consider an interference pattern between two coherent sources. If I1 and I2 be intensities at points where
+   the phase difference are π and 2π respectively, then the intensity at maxima is                               3       3
+   (1)  I2 −3I1                  (2)  I1 −3I2                  (3) 3 I2 + I1                  (4) 3 I1 − I2
+           2                             2                             2                             2
+ 2. When a thin transparent sheet of refractive index μ = 3 is placed near one of the slit in YDSE, the intensity                                                                2
+   at centre of screen reduces to half of maximum intensity. Then, minimum thickness of sheet should be
+   (1) λ                      (2) λ                      (3) λ                      (4) λ        4                             8                             2                             3
+ 3. In the double slit experiment, 5th dark fringe is formed opposite to one of the slits. The wavelength of light
+    is
+         d2                             d2                             d2                             d2   (1)                         (2)                         (3)                          (4)
+      6D                    5D                      15D                    9D
+ 4. In the figure below, P and Q are two equally intense coherent sources emitting radiation of wavelength
+  20m. The separation between P and Q is 5m and the phase of P is ahead of that of Q by 90∘ . A, B and C
+   are three distinct points of observation, each equidistant from the midpoint of PQ . The intensities of
+   radiation at A, B, C will be in the ratio:
+
+
+
+
+
+      (1) 0 : 1 : 2     (2) 4 : 1 : 0     (3) 0 : 1 : 4     (4) 2 : 1 : 0
+
+
+5. In young's double slit experiment the y-coordinates of central maximum and 10 th maxima are 2 cm and
+  5 cm respectively. When the YDSE apparatus  is immersed in a liquid of refractive index 1.5 , the
+  corresponding y-coordinates will be
+   (1) 2 cm, 7.5 cm            (2) 3 cm, 6 cm           (3) 2 cm, 4 cm           (4) 4 cm, 10 cm                                                                                                3       3
+6. The intensity of central fringe in the interference pattern produced by two identical slits is I . When one of
+  the slits is closed then the intensity at the same points is Io. The relation between I and IO is
+   (1) I = 4I0                (2) I = 2I0                (3) I = I0                (4) I =  I0                                                                                                       2
+7. Young's double slit experment is first performed in air and then in a medium other than air. It is found that
+  8th bright fringe in the medium lies where 5th dark fringe lies in air. The refractive index of the medium is
+  nearly :
+   (1) 1.59                    (2) 1.69                    (3) 1.78                    (4) 1.25
+
+ 8. Two coherent point sources S1 and S2 are separated by a small distance
+   d as shown. The fringes obtained on the screen will be
+    (1) points                           (2) straight lines
+    (3) semi-circle                      (4) concentric circles
+
+
+
+ 9. A ray of light of intensity I is incident on a parallel glass-slab at a
+    point A as shown in fig. It undergoes partial reflection and refraction.
+   At each reflection 25% of incident energy is reflected. The rays AB
+   and A′B′ undergo interference. The ratio Imax /Imin is
+    (1) 4 : 1         (2) 8 : 1         (3) 7 : 1         (4) 49 : 1
+
+
+
+10. Two  coherent  sources  separated by  distance d  are  radiating  in phase having
+   wavelength λ . A detector moves in a big circle around the two sources in the plane of
+    the two sources. The angular position of n = 4 interference maxima is given as
+    (1) sin−1 nλ         (2) cos−1 4λ         (3) tan−1  d          (4) cos−1  λ                d                      d                     4λ                     4d
+    DAY-2 (DIFFRACTION)
+11. A single  slit of width 0.1 mm  is illuminated by a parallel beam of light of wavelength 6000 A˚ and
+    diffraction bands are observed on a screen 0.5 m from the slit. The distance of the third dark band from the
+    central bright band is :
+    (1) 3 mm                 (2) 9 mm                 (3) 4.5 mm                 (4) 1.5 mm
+
+12. An observer is moving with half the speed of light towards a stationary microwave source emitting waves at
+   frequency 10 GHz . What is the frequency of the microwave measured by the observer ?
+   (speed of light = 3 × 108 m s−1 )
+    (1) 10.1 GHz              (2) 12.1 GHz              (3) 17.3 GHz              (4) 15.3 GHz
+13. A parallel beam of monochromatic light of wavelength 5000 Å is incident normally on a single narrow slit
+    of width 0.001 mm . The light is focused by a convex lens on a screen placed in focal plane. The first
+   minimum will be formed for the angle of diffraction equal to
+    (1) 0∘                     (2) 15∘                     (3) 30∘                     (4) 50∘
+
+14. For what distance is ray optics a good approximation when the aperture is 3 mm wide and the wavelength is
+   500 nm ?
+    (1) 12 m                   (2) 15 m                   (3) 18 m                   (4) 20 m
+
+15. Light of wavelength 550 nm falls normally on a slit of width 22.0 × 10−5 cm. The angular position of the
+   second minima from the central maximum will be (in radians) :
+    (1)  π                       (2) π                      (3) π                      (4) π
+         12                             8                             6                             4
+16. In a Fraunhofer diffraction experiment at a single  slit using a light of wavelength 400 nm , the  first
+   minimum is formed at an angle of 30∘ . The direction θ of the first secondary maximum is given by
+    (1) Si n−1 2/3             (2) Sin−1 3/4             (3) Sin−1 1/4             (4) Ta n−1 2/3
+
+17. A parallel beam of light of wavelength λ is incident normally on a narrow slit. A diffraction pattern is
+   formed on a screen placed perpendicular to the direction of the incident beam. At the second minimum of
+    the diffraction pattern, the phase difference between the rays coming from the two edges of slit is
+    (1) πλ                     (2) 2π                     (3) 3π                     (4) 4π
+
+18. Yellow light is used in a single slit diffraction experiment with slit width of 0.6 mm . If yellow light is
+    replaced by X - rays, then the observed pattern will reveal,
+    (1) that the central maximum is narrower             (2) more number of fringes
+    (3) less number of fringes                             (4) no diffraction pattern
+
+19. A parallel beam of fast moving electrons is incident normally on a narrow slit. A fluorescent screen is
+   placed at a large distance from the slit. If the speed of the electrons is increased, which of the following
+    statements is correct ?
+    (1) The angular width of central maximum will be unaffacted.
+    (2) Diffraction pattern is not observed on the screen in the case of electrons.
+    (3) The angular width of the central maximum of the diffraction pattern will increase.
+    (4) The angular width of the central maximum will decrease.
+20. A screen is placed 50 cm from a single slit which is illuminated with light of wavelength 6000A˚ . If the
+    distance between the first and third minima in the diffraction pattern is 3.0 mm . The width of the slit is
+    (1) 1 × 10−4 m           (2) 2 × 10−4 m           (3) 0.5 × 10−4 m           (4) 4 × 10−4 m
+
+   DAY-3 (POLARISATION)
+21. Unpolarized light of intensity I passes through an ideal polarizer A . Another identical polarizer B is placed
+   behind A . The intensity of light beyond B is found to be  I . Now another identical polarizer C is placed
+                                                                      2
+   between A and B . The intensity beyond B is now found to be I . The angle between polarizer A and C is
+                                                                          8
+    (1) 0∘                     (2) 30∘                     (3) 45∘                     (4) 60∘
+22. Two beams, A and B, of plane polarised light with mutually perpendicular planes of polarisation are seen
+   through a Polaroid. From the position when the beam A has maximum intensity (and beam B has zero
+    intensity), a rotation of Polaroid through 30∘ makes the two beams appear equally bright. If the initial
+    intensities of the two beams are IA and IB respectively, then IA / IB equals
+    (1) 3                      (2) 3/2                      (3) 1                      (4) 1/3
+23. The critical angle of a certain medium is sin−1 ( 3 ). The polarizing angle of the medium is                                                          5
+    (1) sin−1 ( 4 )              (2) tan−1 ( 5 )              (3) tan−1 ( 3 )              (4) ta n−1 ( 4 )                 5                             3                             4                             3
+24. Light is incident on a glass surface at polarizing angle of 57.5∘ . Then the angle between the incident ray and
+    the refracted ray is
+    (1) 57.5∘                   (2) 115∘                   (3) 205∘                   (4) 145∘
+25. Unpolarised light of intensity 32 W m−2 passes through three polarisers such that transmission axis of first
+    is crossed with third. If intensity of emerging light is 2 W m−2  , what is the angle of transmission axis
+   between the first two polarisers ?
+    (1) 30∘                    (2) 45∘                    (3) 22.5∘                    (4) 60∘
+26. The refractive index of a medium is √ 3– . If the unpolarized light is incident on it at the polarizing angle of
+    the medium, the angle of refraction is
+    (1) 60∘                     (2) 45∘                     (3) 30∘                     (4) 0∘
+
+27. The graph showing the dependence of intensity of transmitted light on the angle between polariser and
+    analyser is:
+
+
+    (1)                                                     (2)
+
+
+
+
+
+    (3)                                                     (4)
+
+
+
+28. A transparent thin plate of a polaroid is placed on another similar plate such that the angle between their
+   axes is 30∘ The intensities of the emergent and the unpolarised incident light will be in the ratio of
+    (1) 1 : 4                    (2) 1 : 3                    (3) 3 : 4                    (4) 3 : 8
+
+29. Unpolarised light of intensity 32 Wm−2 passes through three polarizers such that transmission axes of the
+     first and second polarizer makes and angle 30∘ with each other and the transmission axis of the last
+    polarizer is crossed with that of the first. The intensity of final emerging light will be
+    (1) 32 Wm−2              (2) 3 Wm−2              (3) 8 Wm−2              (4) 4 Wm−2
+30. Two polamoids are oriented with their pass axes inclined at an angle of 60∘ . The percentage of incident
+   unpolarized light which passes through the system is
+    (1) 50%                  (2) 100%                  (3) 12.5%                  (4) 37.5%
+
+                    LT-PHY-MODULE-02
+
+            CLASS WORK (NEWTONS LAWS MOTION)
+
+
+
+  DAY-1-MOMENTUM, FORCE, IMPLES, TRANSLATIONAL EQUILIBRIUM
+
+1. A cricketer catches a ball of mass 150 gm in 0.1 sec moving with speed 20 m/s , then he experiences force
+  of
+   (1) 300 N                   (2) 30 N                   (3) 3 N                   (4) 0.3 N
+
+2. A 0.2 kg object at rest is subjected to a force                                                    N. What is the velocity after 6 s?                                       (0.3i^                                     −0.4j^)
+   (1)                              (2)                                                          (3)                                                                                      (4)    (9 i^      −12 j^)                        (8 i^                      −16 j^)                                            (12i^                                  −9 j^)                                                                (16i^                                                −8 j^)
+
+3. There are four forces acting at a point P produced by strings as shown in figure, which is at rest. The forces
+  F1 and F2 are
+
+
+
+
+
+   (1)  1 N,  3 N                                       (2)  3 N,  1 N
+    √ 2   √ 2                              √ 2   √ 2
+   (3)  1 N,  1 N                                       (4)  3 N,  3 N
+    √ 2   √ 2                              √ 2   √ 2
+
+4. A body of mass 2 kg is moving towards east with a uniform speed of 2 ms−1 . A force of 3 N is applied to it
+  towards north. The magnitude of the displacement of the body 2 s after the application of force is
+   (1) 4 m                    (2) 5 m                    (3) 6 m                    (4) 7 m
+
+5. A bullet of mass 40 g moving with a speed of 90 ms−1 enters a heavy wooden block and is stopped after a
+  distance of 60 cm. The average resistive force exerted by the block on the bullet is
+   (1) 180 N                 (2) 220 N                 (3) 270 N                 (4) 320 N
+
+6. A ball is suspended on a thread from the ceiling of a car. The brakes are applied and the speed of car
+  changes from 5 m/sec to 5/3 m/sec during the time interval of 3 seconds. Find the angle that the thread
+  with the ball will deviate from vertical
+   (1) θ = tan−1 ( 19 )        (2) θ = tan−1 ( 89 )        (3) θ = si n−1 ( 19 )        (4) θ = cos−1 ( 19 )
+
+7. A machine gun is mounted on a 2800kg vehicle on a horizontal smooth rod (negligible friction). The gun
+   fires 10 bullets per sec with a velocity of 200m/s . If the mass of each bullet is 50g. What is the acceleration
+  produced in the vehicle?
+   (1) 3.5cm/s2              (2) 4cm/s2              (3) 5.2cm/s2              (4) 4.9cm/s2
+
+  8. A ball of mass m strikes a rigid wall with speed u at an angle of 30∘ and get reflected with the same speed
+   and at the same angle as shown in the figure. If the ball is in contact with the wall for time t, then the force
+    acting on the wall is
+
+
+
+
+
+      mu sin 30∘                    2 mu sin 30∘             mu cos 30∘                    2 mu cos 30∘    (1)                        (2)                          (3)                        (4)                   t                                        t                                        t                                        t
+
+  9. In a lift moving up with an acceleration of 5 ms−2 a ball is dropped from a height of 1.25 m .The time
+    taken by ball to reach the floor of the lift is........(nearly)(g = 10 ms−2 )
+    (1) 0.3 second             (2) 0.2 second             (3) 0.16 second             (4) 0.4 second
+
+10. Figure shows the variation of force acting on a body with time. Assuming the body to start from rest, the
+    variation of its momentum with time is best represented by which plot?
+
+
+    (1)                                     (2)
+
+
+
+
+
+    (3)                                      (4)
+
+
+
+   DAY-2-CONNECTED, CONTACT BODIES, PULLEYS
+
+11. Consider the situation shown in figure. All the surfaces are smooth. The tension in the string connected to
+   2 m is
+
+
+
+
+
+    (1) mg                     (2) 4mg                     (3) 2mg                     (4) mg         3                             3                             3
+12. In the figure shown neglecting friction and mass of pulleys, what is the acceleration of mass B ?
+
+
+
+
+
+    (1) g                      (2) 5g                      (3) 2g                      (4) 2g         3                             2                             2                             5
+

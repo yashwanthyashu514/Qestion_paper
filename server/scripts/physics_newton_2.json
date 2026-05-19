@@ -1,0 +1,132 @@
+[
+    {
+        "questionId": "Q-PHY-NLM-26",
+        "questionText": "A circular racetrack of radius 300 m is banked at an angle of 15°. The coefficient of friction between the wheels of a race car and the road is 0.2. The optimum speed of the race car to avoid wear and tear on its tyres is (Take tan 15° = 0.27, g = 10 m s⁻²)",
+        "options": ["10√3 m s⁻¹", "9√10 m s⁻¹", "√10 m s⁻¹", "2√10 m s⁻¹"],
+        "answer": "9√10 m s⁻¹",
+        "level": "hard",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-27",
+        "questionText": "A rough vertical board has an acceleration a so that a 2 kg block pressing against it does not fall. The coefficient of friction between the block and the board should be",
+        "options": ["> g/a", "< g/a", "= g/a", "> a/g"],
+        "answer": "> g/a",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778620571462.png",
+        "diagramCrop": [650, 100, 950, 350]
+    },
+    {
+        "questionId": "Q-PHY-NLM-28",
+        "questionText": "A box of mass m kg is placed on the rear side of an open truck accelerating at 4 m s⁻². The coefficient of friction between the box and the surface below it is 0.4. The net acceleration of the box with respect to the truck is zero. The value of m is",
+        "options": ["4 kg", "8 kg", "9.78 kg", "It could be any value"],
+        "answer": "It could be any value",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-29",
+        "questionText": "Find the value of frictional forces between the blocks A and B and between B and ground. (Take g = 10 m s⁻²)",
+        "options": ["90 N , 5 N", "5 N , 90 N", "5 N , 75 N", "0 N , 80 N"],
+        "answer": "5 N , 90 N",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778620571462.png",
+        "diagramCrop": [550, 420, 950, 540]
+    },
+    {
+        "questionId": "Q-PHY-NLM-30",
+        "questionText": "How large must F be in the figure shown to give the 700 g block an acceleration of 30 cm/s²? The coefficient of friction between all surfaces is 0.15.",
+        "options": ["2.18 N", "3.18 N", "4 N", "6 N"],
+        "answer": "2.18 N",
+        "level": "hard",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778620571462.png",
+        "diagramCrop": [600, 520, 950, 650]
+    },
+    {
+        "questionId": "Q-PHY-NLM-31",
+        "questionText": "The figure shows a horizontal force F acting on a block of mass M on an inclined plane (angle θ). What is the normal reaction N on the block?",
+        "options": ["mgsinθ + Fcosθ", "mgsinθ - Fcosθ", "mgcosθ - Fsinθ", "mgcosθ + Fsinθ"],
+        "answer": "mgcosθ + Fsinθ",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778620571462.png",
+        "diagramCrop": [550, 650, 950, 800]
+    },
+    {
+        "questionId": "Q-PHY-NLM-32",
+        "questionText": "A block of mass ‘m’ is placed on a rough inclined plane When the inclination of the plane is θ, the block just begins to slide down the plane under its own weight. The minimum force applied parallel to the plane, to move the block up the plane, is",
+        "options": ["mg sin θ", "2mg sin θ", "mg cos θ", "mg tan θ"],
+        "answer": "2mg sin θ",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-33",
+        "questionText": "A body of mass m is placed on a rough surface with coefficient of friction (μ) inclined at θ. If the mass is in equilibrium, then",
+        "options": ["θ = tan⁻¹ (m/μ)", "θ = tan⁻¹ (μ)", "θ = tan⁻¹ (μ/m)", "θ = tan⁻¹ (1/μ)"],
+        "answer": "θ = tan⁻¹ (μ)",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-34",
+        "questionText": "A block of wood resting on an inclined plane of angle 30°, just starts moving down. If the coefficients of friction is 0. 2, its velocity (in ms-1) after 5 s is: (g = 10ms⁻²)",
+        "options": ["12. 75", "16. 35", "18. 25", "20"],
+        "answer": "16. 35",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-35",
+        "questionText": "A body of mass 1 kg lies on smooth inclined plane. The block of mass m is given force F = 10 N horizontally as shown. The magnitude of net normal reaction on the block is:",
+        "options": ["10√2 N", "10/√2 N", "10 N", "none of these"],
+        "answer": "10√2 N",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778620588672.png",
+        "diagramCrop": [650, 150, 950, 280]
+    },
+    {
+        "questionId": "Q-PHY-NLM-36",
+        "questionText": "A uniform metal chain is placed on a rough table such that one end of chain hangs downover the edge of the table. When two - third of its chain length hangs over the edge the chain start sliding. Then the coefficient of static friction is",
+        "options": ["1", "2", "3", "4"],
+        "answer": "2",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-37",
+        "questionText": "A given object takes n times more time to slide down a 45° rough inclined plane as it takes to slide down a perfectly smooth 45° incline. The coefficient of kinetic friction between the object and the incline is :",
+        "options": ["1/(1-n²)", "1 - 1/n²", "√(1 - 1/n²)", "√(1/(1-n²))"],
+        "answer": "1 - 1/n²",
+        "level": "hard",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-38",
+        "questionText": "The minimum force required to start pushing a body up a rough (frictional coefficient μ) inclined plane is F₁ while the minimum force needed to prevent it from sliding down is F₂. If the inclined plane makes an angle θ from the horizontal such that tan θ = 2μ then the ratio F₁/F₂ is :",
+        "options": ["1", "2", "3", "4"],
+        "answer": "3",
+        "level": "hard",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-39",
+        "questionText": "A block is able to slide freely down an incline of inclination θ at a constant velocity. If it is projected up the same incline with initial speed v, it will return back after a time: ( Given μs > μk)",
+        "options": ["v/(gsinθ)", "2v/(gsinθ)", "5v/(gsinθ)", "will never return"],
+        "answer": "will never return",
+        "level": "hard",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-NLM-40",
+        "questionText": "F₁ and F₂ are the minimum and maximum forces needed to keep a body on a rough inclined plane stationary. If θ be the angle of inclination of the surface, so that tanθ = 2μ. Find the ratio of F₁ and F₂.",
+        "options": ["1 : 2", "2 : 1", "1 : 3", "3 : 1"],
+        "answer": "1 : 3",
+        "level": "hard",
+        "type": "MCQ"
+    }
+]

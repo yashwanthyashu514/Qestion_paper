@@ -1,0 +1,2236 @@
+ #1
+}{}
+**NCERT Based**
+}{}
+    A. #1
+    B. #2
+    C. #3
+    D. #4
+
+{**TOPICWISE QUESTIONS**}\
+{ NCERT Based}
+ REDOX REACTIONS: CLASSICAL IDEA, IN TERMS OF ELECTRON TRANSFER, TYPES OF REDOX REACTIONS
+
+Q. In which of the following reactions, hydrogen is acting as an oxidising agent?
+    A. With Li to form LiH
+    B. With I2 to give HI
+    C. With S to give H2S
+    D. None of the above
+
+
+Q. Which of the following acts as an oxidising as well as reducing agent?
+    A. Na2O
+    B. Na2O2
+    C. NaNO3
+    D. NaNO2
+
+
+Q. Which quantities are conserved in all oxidation-reduction reactions?
+    A. Charge only
+    B. Mass only
+    C. Both charge and mass
+    D. Neither charge nor mass
+
+
+Q. In the reaction, SO2 + 2H2S -> 3S + 2H2O, the substance oxidised is
+    A. H2S
+    B. SO2
+    C. S
+    D. H2O
+
+
+Q. In which of the following reactions, chlorine acts as an oxidising agent?
+    A. (i) CH3CH2OH + Cl2 -> CH3CHO + HCl
+    B. (ii) CH3CHO + Cl2 -> CCl3CHO + HCl
+    C. (iii) CH4 + Cl2 -> CH3Cl + HCl
+
+The correct answer is
+    A. (i) only
+    B. (ii) only
+    C. (i) and (iii)
+    D. (i), (ii) and (iii)
+
+
+Q. Which of the following is not a redox reaction?
+    A. 2Na + Cl2 -> 2NaCl
+    B. C + O2 -> CO2
+    C. AgNO3 + NaCl -> NaNO3 + AgCl
+    D. Zn + H2SO4 -> ZnSO4 + H2
+
+
+Q. In the reaction, H2O2 + Na2CO3 -> Na2O2 + CO2 + H2O the substance undergoing oxidation is
+    A. H2O2
+    B. Na2CO3
+    C. Na2O2
+    D. None of these
+
+
+Q. In the following reaction, 4P + 3KOH + 3H2O -> 3KH2PO2 + PH3
+    A. P is only oxidized
+    B. P is only reduced
+    C. P is both oxidized as well as reduced
+    D. P is neither oxidized nor reduced
+
+
+Q. In which reaction, the underlined substance has been reduced?
+    A. _Carbon monoxide_ + copper oxide $->$ carbon dioxide + copper
+    B. _Copper oxide_ + hydrochloric acid $->$ water + copper chloride
+    C. _Steam_ + iron $->$ hydrogen + iron oxide
+    D. _Hydrogen_ + iron oxide $->$ water + iron
+
+
+Q. Bleaching action of SO2 is due to:
+    A. Reduction
+    B. Oxidation
+    C. Hydrolysis
+    D. Acidic nature
+
+
+Q. In the preparation of chlorine from HCl, MnO2 acts as:
+    A. Reducing agent
+    B. Oxidising agent
+    C. Catalytic agent
+    D. Dehydrating agent
+
+
+Q. Sulphurous acid can be used as:
+    A. Oxidising agent
+    B. Reducing agent
+    C. Bleaching agent
+    D. All of these
+
+
+Q. Stannous chloride gives a white precipitate with a solution of mercuric chloride. In this process, mercuric chloride is:
+    A. Oxidized
+    B. Reduced
+    C. Converted into a complex compound containing Sn and Hg
+    D. Converted into a chloro complex of Hg
+
+
+Q. Oxidants are substances which:
+    A. Show a decrease in their oxidation number during a change
+    B. Gain electrons during a change
+    C. Oxidise others and reduce themselves
+    D. All of the above
+
+
+Q. In which SO2 acts as oxidant, while reacting with:
+    A. Acidified KMnO4
+    B. Acidified K2Cr2O7
+    C. H2S
+    D. Acidified C2H5OH
+
+
+Q. Which is not an oxidising agent?
+    A. KClO3
+    B. O2
+    C. C6H12O6
+    D. K2Cr2O7
+
+
+Q. Respiration is an example of
+    A. Oxidation
+    B. Reduction
+    C. Both (1) and (2)
+    D. Combination
+
+
+Q. Magnesium reacts with acids producing hydrogen and corresponding magnesium salts. In such reactions, magnesium undergoes:
+    A. Oxidation
+    B. Reduction
+    C. Neither oxidation nor reduction
+    D. Simple dissolution
+
+
+Q. LiAlH4 is used as:
+    A. Oxidising agent
+    B. Reducing agent
+    C. A mordant
+    D. Water softener
+
+
+Q. A sulphur containing species that cannot be an oxidising agent is:
+    A. H2SO4
+    B. H2S
+    C. SO2
+    D. H2SO3
+
+
+Q. Which statement is incorrect?
+    A. Oxidation of a substance is followed by reduction of another.
+    B. Reduction of a substance is followed by oxidation of another.
+    C. Oxidation and reduction are complementary reactions.
+    D. It is not necessary that both oxidation and reduction should take place in the same reaction.
+
+
+Q. In C + H2O -> CO + H2; H2O acts as:
+    A. Oxidant
+    B. Reductant
+    C. Both (1) and (2)
+    D. Catalyst
+
+
+Q. In N2 + 2H2O -> NH4+ + NO2-; N is:
+    A. Oxidised
+    B. Reduced
+    C. Both (1) and (2)
+    D. Neither (1) nor (2)
+
+
+Q. Fluorine is a strong oxidising agent because:
+    A. It has several isotopes
+    B. It is very small and has 7 electrons in valence shell
+    C. Its valency is one
+    D. It is the first member of the halogen series
+
+
+Q. Reductants are substances which:
+    A. Show an increase in their oxidation number during a change
+    B. Lose electrons during a change
+    C. Reduce others and oxidise themselves
+    D. All of the above
+
+
+Q. Stronger is oxidising agent, more is;
+    A. Standard reduction potential of that species
+    B. The tendency to get itself oxidised
+    C. The tendency to lose electrons by that species
+    D. Standard oxidation potential of that species
+
+
+Q. Corrosion of iron is:
+    A. Oxidation process
+    B. Neutralization process
+    C. Precipitation process
+    D. Combination process
+
+
+Q. Which conversion is an oxidation reaction?
+    A. SO4^{2- -> SO3^{2-}}
+    B. Cu^{2+ -> Cu}
+    C. H+ -> H
+    D. H- -> H
+
+
+Q. Which of the following reaction involves oxidation and reduction?
+    A. NaBr + HCl -> NaCl + HBr
+    B. HBr + AgNO3 -> AgBr + HNO3
+    C. H2 + Br2 -> 2HBr
+    D. Na2O + H2SO4 -> Na2SO4 + H2O
+
+
+Q. How many electrons are involved in reduction of KMnO4 in basic medium?
+    A. 1
+    B. 2
+    C. 5
+    D. 3
+
+
+Q. The number of electrons lost or gained during the change Fe + H2O -> Fe3O4 + H2 is
+    A. 2
+    B. 4
+    C. 6
+    D. 8
+
+
+Q. Which change occur when lead monoxide is converted into lead nitrate?
+    A. Oxidation
+    B. Reduction
+    C. Neither oxidation nor reduction
+    D. Both oxidation and reduction
+
+
+Q. In the reaction, C + 4HNO3 -> CO2 + 2H2O + 4NO2, HNO3 acts as:
+    A. An oxidising agent
+    B. An acid
+    C. An acid as well as oxidising agent
+    D. A reducing agent
+
+
+Q. Reduction is a process which involves:
+    A. Electronation
+    B. Addition of hydrogen or removal of oxygen
+    C. Addition of metal or removal of non-metal
+    D. All of the above
+
+
+Q. In a conjugate pair of reductant and oxidant, oxidation number of the reductant is
+    A. Lower
+    B. Higher
+    C. Same
+    D. Either of these
+
+
+Q. When NaCl is dissolved in water, the sodium ion becomes:
+    A. Oxidized
+    B. Reduced
+    C. Hydrolysed
+    D. Hydrated
+
+
+Q. Which is not a redox reaction?
+    A. H2 + Br2 -> 2HBr
+    B. NH4Cl -> NH3 + HCl
+    C. NH4NO3 -> N2O + 2H2O
+    D. Fe + S -> FeS
+
+
+Q. In presence of moisture, SO2 can
+    A. Gain electrons
+    B. Lose electrons
+    C. Act as oxidising agent
+    D. Does not act as reducing agent
+
+
+Q. The reaction, Ag^{+2(aq) + Ag(s) <=> 2Ag+(aq)} is an example of
+    A. Reduction
+    B. Oxidation
+    C. Disproportionation
+    D. Comproportionation
+
+
+Q. In the reaction H2S + H2O2 -> S + 2H2O
+    A. H2S is an acid and H2O2 is a base
+    B. H2S is a base and H2O2 is an acid
+    C. H2S is an oxidising agent and H2O2 is a reducing agent
+    D. H2S is a reducing agent and H2O2 is an oxidising agent
+
+
+Q. Which of the following chemical reactions depicts the oxidising behaviour of H2SO4?
+    A. 2HI + H2SO4 -> I2 + SO2 + 2H2O
+    B. Ca(OH)2 + H2SO4 -> CaSO4 + 2H2O
+    C. NaCl + H2SO4 -> NaHSO4 + HCl
+    D. 2PCl5 + H2SO4 -> 2POCl3 + 2HCl + SO2Cl2
+
+
+Q. The reaction, P4 + 3NaOH + 3H2O -> 3NaH2PO2 + PH3 is an example of
+    A. Disproportionation reaction
+    B. Neutralisation reaction
+    C. Double-decomposition reaction
+    D. Pyrolytic reaction
+
+
+Q. Which of the following is a redox reaction?
+    A. NaCl + KNO3 -> NaNO3 + KCl
+    B. CaCO3 + 2HCl -> CaCl2 + H2CO3
+    C. Ca(OH)2 + 2NH4Cl -> CaCl2 + 2NH3 + 2H2O
+    D. 2K[Ag(CN)2] + Zn -> 2Ag + K2[Zn(CN)4]
+
+
+Q. Which is the best description of behaviour of bromine in the reaction given below?
+H2O + Br2 -> HBr + HOBr
+    A. Proton accepted only
+    B. Both oxidised and reduced
+    C. Oxidised only
+    D. Reduced only
+
+
+Q. Which one of the following reactions involves disproportionation?
+    A. 2H2SO4 + Cu -> CuSO4 + 2H2O + SO2
+    B. As2O3 + 3H2S -> As2S3 + 3H2O
+    C. 2KOH + Cl2 -> KCl + KOCl + H2O
+    D. Ca3P2 + 6H2O -> 3Ca(OH)2 + 2PH3
+
+
+Q. Which is the reducing agent in the reaction,
+8H+ + 4NO3- + 6Cl- + Sn -> SnCl6^{2- + 4NO2 + 4H2O}?
+    A. Sn
+    B. Cl-
+    C. NO3-
+    D. NO2(g)
+
+
+Q. The reaction of white phosphorus with aqueous NaOH gives phosphine along with another phosphorus containing compound. The reaction type, the oxidation states of phosphorus in phosphine and the other product are respectively:
+    A. Redox reaction; $-3$ and $-5$
+    B. Redox reaction; $+3$ and $+5$
+    C. Disproportionation reaction; $-3$ and $+1$
+    D. Disproportionation reaction; $-3$ and $+3$
+
+
+Q. Which of the following is redox reaction?
+    A. N2O5 + H2O -> 2HNO3
+    B. AgNO3 + KI -> AgI + KNO3
+    C. BaO2 + H2SO4 -> BaSO4 + H2O2
+    D. SnCl2 + HgCl2 -> SnCl4 + Hg
+
+
+Q. Which reaction indicates the oxidising behavior of H2SO4?
+    A. 2PCl5 + H2SO4 -> 2POCl3 + 2HCl + SO2Cl2
+    B. 2NaOH + H2SO4 -> Na2SO4 + 2H2O
+    C. NaCl + H2SO4 -> NaHSO4 + HCl
+    D. 2HI + H2SO4 -> I2 + SO2 + 2H2O
+
+
+Q. Which of the following change represents a disproportionation reaction(s)?
+    A. Cl2 + 2OH- -> ClO- + Cl- + H2O
+    B. Cu2O + 2H+ -> Cu + Cu^{2+ + H2O}
+    C. 2HCuCl2 ->[\text{Dilution with water] Cu + Cu^{2+} + 4Cl- + 2H}
+    D. All of the above
+
+
+Q. The reaction, 3ClO-(aq) -> ClO3-(aq) + 2Cl-(aq) is an example of:
+    A. Oxidation reaction
+    B. Reduction reaction
+    C. Disproportionation reaction
+    D. Decomposition reaction
+
+
+Q. The decomposition of KClO3 to KCl and O2 on heating is an example of:
+    A. Intermolecular redox change
+    B. Intramolecular redox change
+    C. Disproportionation or auto-redox change
+    D. Displacement redox change
+
+
+Q. In the reaction, Zn + 2H+ + 2Cl- -> Zn^{2+ + 2Cl- + H2}, the spectator ion is:
+    A. Cl-
+    B. Zn^{2+}
+    C. H+
+    D. All of these
+
+
+Q. Change of hydrogen into proton is:
+    A. Oxidation of hydrogen
+    B. Acid-base reaction
+    C. Reduction of hydrogen
+    D. Displacement reaction
+
+
+Q. In the reaction; 2Ag + 2H2SO4 -> Ag2SO4 + 2H2O + SO2, H2SO4 act as:
+    A. Oxidising agent
+    B. Reducing agent
+    C. Dehydrating agent
+    D. None of these
+
+
+ OXIDATION NUMBER
+
+Q. In which of the following compounds, the oxidation number of iodine is fractional?
+    A. IF3
+    B. IF5
+    C. I3-
+    D. IF7
+
+
+Q. The oxidation state of I in ICl3 is
+    A. $+1$
+    B. $+3$
+    C. $+5$
+    D. $+7$
+
+
+Q. The oxidation states of iodine in HIO4, H3IO5 and H5IO6 are respectively
+    A. $+1, +3, +7$
+    B. $+7, +7, +3$
+    C. $+7, +7, +7$
+    D. $+7, +5, +3$
+
+
+Q. The oxidation number of chromium in potassium dichromate is
+    A. $+2$
+    B. $+4$
+    C. $+6$
+    D. $+8$
+
+
+Q. In permonosulphuric acid (H2SO5), the oxidation number of sulphur is
+    A. $+8$
+    B. $+4$
+    C. $+5$
+    D. $+6$
+
+
+Q. The oxidation state of Cr in chromium trioxide is
+    A. $+3$
+    B. $+4$
+    C. $+5$
+    D. $+6$
+
+
+Q. The oxidation number of Xe in XeF4 and XeO3 is
+    A. $+6$
+    B. $+4$
+    C. $+1$
+    D. $+3$
+
+
+Q. The oxidation number of xenon in XeOF2 is
+    A. Zero
+    B. 2
+    C. 4
+    D. 3
+
+
+Q. Oxidation state of chromium
+    A. $+10$
+    B. $+6$
+    C. $+3$
+    D. $+2$
+
+
+Q. The oxidation state of Fe in Fe3O4 is
+    A. $+3$
+    B. $+8/3$
+    C. $+6$
+    D. $+2$
+
+
+Q. The oxidation number of oxygen in KO3 and Na2O2 respectively is
+    A. 3, 2
+    B. 1, 0
+    C. 0, 1
+    D. $-0.33, -1$
+
+
+Q. What is the oxidation state of P in Ba(H2PO2)2?
+    A. $+1$
+    B. $+2$
+    C. $+3$
+    D. $-1$
+
+
+Q. The oxidation number of Cr in K2CrO4 is
+    A. $+3$
+    B. $-6$
+    C. $+6$
+    D. $-3$
+
+
+Q. Oxidation number of sulphur in Caro's acid is
+    A. $+6$
+    B. $+4$
+    C. $+8$
+    D. $+7$
+
+
+Q. What is the oxidation number of chlorine in ClO3-?
+    A. $+5$
+    B. $+3$
+    C. $+4$
+    D. $+2$
+
+
+Q. Arrange the following as in increase in oxidation number.
+(i) Mn^{2+}   (ii) MnO2   (iii) KMnO4   (iv) K2MnO4
+    A. (i) $>$ (ii) $>$ (iii) $>$ (iv)
+    B. (i) $<$ (ii) $<$ (iv) $<$ (iii)
+    C. (ii) $<$ (iii) $<$ (i) $<$ (iv)
+    D. (iii) $>$ (i) $>$ (iv) $>$ (ii)
+
+
+Q. Nitrogen has fractional oxidation number in:
+    A. N2H4
+    B. NH4
+    C. N2H
+    D. N2F3
+
+
+Q. Oxidation state of carbon in graphite is:
+    A. Zero
+    B. $+1$
+    C. $+4$
+    D. $+2$
+
+
+Q. Oxidation number of S in (CH3)2SO is:
+    A. Zero
+    B. $+1$
+    C. $+2$
+    D. $+3$
+
+
+Q. Oxidation number of nitrogen in AgNO3 is:
+    A. $+5$
+    B. $-3$
+    C. $+3$
+    D. $-2$
+
+
+Q. Oxidation number of Fe in K3[Fe(CN)6] is:
+    A. $+2$
+    B. $+3$
+    C. $+4$
+    D. $+1$
+
+
+Q. The oxidation number of iodine in IF5 is:
+    A. $+5$
+    B. $-5$
+    C. $-1$
+    D. $+1$
+
+
+Q. The oxidation state of nitrogen in NH4NO3 is:
+    A. $-3$ and $+5$
+    B. $+3$ and $+5$
+    C. $+5$
+    D. $+3$
+
+
+Q. Oxidation state of oxygen atom in potassium superoxide (KO2) is:
+    A. $-1/2$
+    B. Zero
+    C. $+1/2$
+    D. $-2$
+
+
+Q. Which of the following shows highest oxidation no. in combined state?
+    A. Os
+    B. Ru
+    C. Both (1) and (2)
+    D. Mn
+
+
+Q. The oxidation number of carbon in H2C2O4 is:
+    A. $+2$
+    B. $+3$
+    C. $+4$
+    D. $+1$
+
+
+Q. The oxidation state of nitrogen varies from:
+    A. $-3$ to $+5$
+    B. $0$ to $+5$
+    C. $-3$ to $1$
+    D. $+3$ to $+5$
+
+
+Q. Iodine has $+7$ oxidation state in:
+    A. HIO4
+    B. H3IO5
+    C. H5IO6
+    D. All of these
+
+
+Q. The oxidation number of Cr in [Cr(NH3)4Cl2]+ is:
+    A. $+3$
+    B. $+2$
+    C. $+1$
+    D. zero
+
+
+Q. In the compounds KMnO4 and K2Cr2O7, the highest oxidation state is of the element
+    A. Mn
+    B. K
+    C. O
+    D. Cr
+
+
+Q. When K2Cr2O7 is converted into K2CrO4, the change in oxidation number of chromium is
+    A. 0
+    B. 5
+    C. 7
+    D. 9
+
+
+Q. In the conversion of Br2 to BrO3-, the oxidation number of Br changes from
+    A. Zero to $+5$
+    B. $+1$ to $+5$
+    C. Zero to 3
+    D. $+2$ to $+5$
+
+
+Q. Oxidation state of oxygen in H2O2 is
+    A. $-1$
+    B. $+2$
+    C. $+1/2$
+    D. $-2$
+
+
+Q. In the equation, CrO4^{2- + SO3^{2-} -> Cr(OH)4- + SO4^{2-}} the oxidation number of Cr changes from
+    A. 6 to 4
+    B. 6 to 3
+    C. 8 to 4
+    D. 4 to 3
+
+
+Q. Manganese acts as strongest oxidising agent in the oxidation state
+    A. $+7$
+    B. $+2$
+    C. $+4$
+    D. $+5$
+
+
+Q. The difference in the oxidation numbers of the two types of sulphur atoms in Na2S4O6 is
+    A. 4
+    B. 5
+    C. 6
+    D. 7
+
+
+Q. The oxidation number of N and Cl in NOClO4 respectively are
+    A. $+2$ and $+7$
+    B. $+3$ and $+7$
+    C. $-3$ and $+5$
+    D. $+2$ and $-7$
+
+
+Q. Oxidation number of P in HP2O7- ion is
+    A. $+5$
+    B. $+6$
+    C. $+7$
+    D. $+3$
+
+
+Q. What is the oxidation no. of Mn in K2MnO4?
+    A. $+4$
+    B. $+6$
+    C. $+2$
+    D. $+8$
+
+
+Q. The oxidation state of chlorine is highest in the compound:
+    A. Cl2
+    B. HCl
+    C. ClO
+    D. Cl2O7
+
+
+Q. The oxidation number that iron does not exhibit in its common compounds or in its elemental state is:
+    A. Zero
+    B. $+1$
+    C. $+2$
+    D. $+3$
+
+
+Q. Maximum oxidation state is present in:
+    A. CrO2Cl2 and MnO4-
+    B. MnO2
+    C. [Fe(CN)6]^{3-} and [Co(CN)6]^{3-}
+    D. MnO
+
+
+Q. In the reaction, 2Na2S2O3 + I2 -> Na2S4O6 + 2NaI, the oxidation state of sulphur is:
+    A. Decreased
+    B. Increased
+    C. Unchanged
+    D. None of these
+
+
+Q. The oxidation state of two sulphur atoms in H2S2O8
+    A. $-6$
+    B. $-2$
+    C. $+6$
+    D. $-4$
+
+
+Q. Oxidation state of sulphur in Na2S2O3 and Na2S4O6
+    A. 4 and 6
+    B. 3 and 5
+    C. 2 and 2.5
+    D. 6 and 6
+
+
+Q. Sulphur in $+3$ oxidation state is present in
+    A. Sulphurous acid
+    B. Pyrosulphuric acid
+    C. Dithionous acid
+    D. Thiosulphuric acid
+
+
+Q. When sulphur dioxide is passed in an acidified K2Cr2O7 solution, the oxidation state of sulphur is changed from
+    A. 4 to 0
+    B. 4 to 2
+    C. 4 to 6
+    D. 6 to 4
+
+
+Q. In which of the following, oxygen shows $-1$ oxidation state?
+    A. H2O2
+    B. CO2
+    C. H2O
+    D. OF2
+
+
+Q. In which of the following, the oxidation number of oxygen has been arranged in increasing order?
+    A. OF2 $<$ KO2 $<$ BaO2 $<$ O3
+    B. BaO2 $<$ KO2 $<$ O3 $<$ OF2
+    C. BaO2 $<$ O3 $<$ OF2 $<$ KO2
+    D. KO2 $<$ O3 $<$ BaO2 $<$ OF2
+
+
+Q. As the oxidation state for any metal increases, the tendency to show ionic nature:
+    A. Decreases
+    B. Increases
+    C. Remains same
+    D. None of these
+
+
+Q. The most stable oxidation state of chromium is:
+    A. $+5$
+    B. $+3$
+    C. $+2$
+    D. $+4$
+
+
+ BALANCING OF REDOX REACTIONS
+
+Q. Reaction of Br2 with Na2CO3 in aqueous solution gives sodium bromide and sodium bromate with evolution of CO2 gas. The number of sodium bromide molecules involved in the balanced chemical equation is
+    A. 1
+    B. 3
+    C. 5
+    D. 7
+
+
+Q. aK2Cr2O7 + bKCl + cH2SO4 -> xClO2Cl2 + yKHSO4 + zH2O.
+The above equation balances when
+    A. $a=2, b=4, c=6$ and $x=2, y=6, z=3$
+    B. $a=4, b=2, c=6$ and $x=6, y=2, z=3$
+    C. $a=6, b=4, c=2$ and $x=6, y=3, z=2$
+    D. $a=1, b=4, c=6$ and $x=2, y=6, z=3$
+
+
+Q. In the ionic equation, BiO3- + 6H+ + xe- -> Bi^{3+ + 3H2O}. The value of $x$ is
+    A. 6
+    B. 2
+    C. 4
+    D. 3
+
+
+Q. For the reaction, NH3 + OCl- -> N2H4 + Cl- occurring in basic medium, the coefficient of N2H4 in the balanced equation will be
+    A. 1
+    B. 2
+    C. 3
+    D. 4
+
+
+Q. The value of `$n$' in the reaction
+Cr2O7^{2- + 14H+ + nFe^{2+} -> 2Cr^{3+} + nFe^{3+} + 7H2O} will be
+    A. 2
+    B. 3
+    C. 6
+    D. 7
+
+
+Q. The number of moles of KMnO4 reduced by one mole of KI in alkaline medium is
+    A. 1
+    B. 5
+    C. 1/2
+    D. 1/5
+
+
+Q. The value of $n$ in MnO4- + 8H+ + ne- -> Mn^{2+ + 4H2O} is
+    A. 5
+    B. 4
+    C. 2
+    D. 3
+
+
+Q. In the reactions; As2S3 + HNO3 -> H3AsO4 + H2SO4 + NO, the element oxidized is/are:
+    A. As only
+    B. S only
+    C. N only
+    D. As and S both
+
+
+Q. In balancing the half reaction, S2O3^{2- -> S(s)}, the number of electrons that must be added is:
+    A. 2 on the right
+    B. 2 on the left
+    C. 3 on the right
+    D. 4 on the left
+
+
+Q. What volume of 3 molar HNO3 is needed to oxidise 8 g of Fe^{2+} to Fe^{3+}? HNO3 gets converted to NO:
+    A. 8 mL
+    B. 16 mL
+    C. 32 mL
+    D. 64 mL
+
+
+Q. In the reduction of dichromate by Fe (II), the number of electrons involved per chromium atom is:
+    A. 3
+    B. 1
+    C. 2
+    D. 4
+
+
+Q. In the following reaction
+M^{x+ + MnO4- -> MO3- + Mn^{2+} + \frac{1}{2}O2}
+If one mole of MnO4- oxidises 2.5 moles of M^{x+} then the value of $x$ is
+    A. 5
+    B. 3
+    C. 4
+    D. 2
+
+
+ REDOX REACTIONS AS THE BASIS FOR TITRATIONS
+
+Q. During a redox titration involving a solution containing Fe^{2+} ions against MnO4- in the presence of excess of H+ ions, the number of electrons that gets transferred is
+    A. 6
+    B. 5
+    C. 4
+    D. 2
+
+
+Q. Which one of the compound does not decolourised an acidified solution of KMnO4?
+    A. SO2
+    B. FeCl3
+    C. H2O2
+    D. FeSO4
+
+
+Q. How many moles of electron are involved in the reduction of one mole of MnO4- ion in alkaline medium to MnO3-?
+    A. 2
+    B. 1
+    C. 3
+    D. 4
+
+
+Q. If H2S is passed through an acidified K2Cr2O7 solution, the colour of the solution:
+    A. Will remain unchanged
+    B. Will change to deep red
+    C. Will change to dark green
+    D. Will change to dark brown
+
+
+Q. When an acidified solution of ferrous ammonium sulphate is treated with KMnO4 solution, the ion which is oxidised is:
+    A. Fe^{2+}
+    B. SO4^{2-}
+    C. NH4+
+    D. MnO4-
+
+
+Q. Reaction of acidified KMnO4 with ferrous oxalate gives oxidation products containing:
+    A. Fe^{3+}
+    B. CO2
+    C. Both (1) and (2)
+    D. Fe^{2+}
+
+
+Q. In presence of dil. H2SO4, the equivalent weight of KMnO4 is
+    A. 1/5 of its molecular weight
+    B. 1/6 of its molecular weight
+    C. 1/10 of its molecular weight
+    D. 1/2 of its molecular weight
+
+
+Q. In the reaction, 2CuSO4 + 4KI -> Cu2I2 + 2K2SO4 + I2. The ratio of equivalent weight of CuSO4 to its molecular weight is:
+    A. 1/8
+    B. 1/4
+    C. 1/2
+    D. 1
+
+
+Q. In the reaction, N2 -> NH3. The eq.wt. of N2 and NH3 are respectively equal to:
+    A. $\frac{28}{3}, \frac{17}{3}$
+    B. $\frac{28}{6}, \frac{17}{3}$
+    C. $\frac{28}{2}, \frac{17}{2}$
+    D. $\frac{28}{5}, \frac{17}{5}$
+
+
+Q. The equivalent weight of KMnO4 (acidic medium) is (at. wt. of K = 39; Mn = 55):
+    A. 158
+    B. 15.8
+    C. 31.6
+    D. 3.16
+
+
+Q. The equivalent weight of iron in Fe2O3 would be:
+    A. 18.6
+    B. 28
+    C. 56
+    D. 11
+
+
+Q. In alkaline condition KMnO4 reacts as follows,
+2KMnO4 + 2KOH -> 2K2MnO4 + H2O + O
+Therefore, its equivalent weight will be:
+    A. 31.6
+    B. 52.7
+    C. 79.0
+    D. 158.0
+
+
+Q. 1 mole of MnO4^{2-} in neutral aqueous medium disproportionates to:
+    A. $\frac{2}{3}$ mole of MnO4 and $\frac{1}{3}$ mole of MnO2
+    B. $\frac{1}{3}$ mole of MnO4 and $\frac{2}{3}$ mole of MnO2
+    C. $\frac{1}{3}$ mole of $\frac{1}{3}$ and mole of MnO2
+    D. $\frac{2}{3}$ mole of Mn2O7 and $\frac{1}{3}$ mole of MnO2
+
+
+Q. Titre value is the volume of titrant used for a definite amount of unknown reagent at its
+    A. Equivalence point
+    B. End point
+    C. Neutralization point
+    D. All of these
+
+
+Q. When BrO3- ion reacts with Br- ion in acidic solution Br2 is liberated. The equivalent weight of KBrO3 is:
+    A. M/8
+    B. M/3
+    C. M/5
+    D. M/6
+
+
+Q. The eq. wt. of K2CrO4 as an oxidising agent in acid medium is:
+    A. (mol. wt.)/2
+    B. (2 $\times$ mol. wt.)/3
+    C. (mol. wt.)/3
+    D. (mol. wt.)/6
+
+
+Q. Which one is not a redox titration?
+    A. FeSO4 vs. K2Cr2O7
+    B. CuSO4 vs. hypo
+    C. I2 vs. hypo
+    D. AgNO3 vs. KCl
+
+
+Q. Starch gives blue colour with
+    A. KI
+    B. I2
+    C. Cl2
+    D. None of these
+
+
+Q. Equivalent mass of Na2S2O3 in its reaction with I2 is equal to:
+    A. Molar mass
+    B. Molar mass/2
+    C. Molar mass/3
+    D. Molar mass/4
+
+
+ REDOX REACTIONS AND ELECTRODE PROCESS
+
+Q. Which one of the following reaction is possible at anode?
+    A. F2 + 2e- -> 2F-
+    B. 2H+ + \frac{1{2}O2 + 2e- -> H2O}
+    C. 2Cr^{3+ + 7H2O -> Cr2O7^{2-} + 14H+ + 6e-}
+    D. Fe^{2+ -> Fe^{3+} + e-}
+
+
+Q. When Fe metal is rusted then Fe is:
+    A. Oxidised
+    B. Reduced
+    C. Hydrolysed
+    D. Precipitated
+
+
+Q. The function of a salt bridge is to
+    A. eliminate the impurities present in the electrolyte
+    B. eliminate liquid-junction potential where the ions are present in excess at the junction
+    C. decrease the cell potential at the negative electrode
+    D. increase the cell potential at the positive electrode
+
+
+Q. Reduction potential of $A$, $B$, $C$ and $D$ are 0.8 V, 0.79 V, 0.34 V and $-2.37$ V respectively. Which element displaces all other three elements?
+    A. B
+    B. A
+    C. D
+    D. C
+
+
+Q. a. Fe^{3+ + e- -> Fe^{2+}aq}   $E^o = +0.77$ V
+b. Al^{3+ + 3e- -> Al(s)}   $E^o = -1.66$ V
+c. Br2 + 2e- -> 2Br-aq   $E^o = +1.08$ V
+Based on the data given above, the correct order of reducing power is
+    A. Br2 $<$ Fe^{3+} $<$ Al
+    B. Br- $<$ Fe^{2+} $<$ Al
+    C. Fe^{2+} $<$ Al $<$ Br-
+    D. Al $<$ Br- $<$ Fe^{2+}
+
+
+ MIXED CONCEPT QUESTIONS
+
+Q. H2O2 reduces MnO4- ion to
+    A. Mn+
+    B. Mn^{2+}
+    C. Mn^{3+}
+    D. Mn-
+
+
+Q. When a sulphur atom becomes a sulphide ion
+    A. There is no change in the composition of atom
+    B. It gains two electrons
+    C. The mass number changes
+    D. The atomic number changes
+
+
+Q. The ultimate products of oxidation of most of hydrogen and carbon in food stuffs are
+    A. H2O alone
+    B. CO2 alone
+    C. H2O and CO2
+    D. H2O and CO
+
+
+Q. In the reaction H2S + NO2 -> H2O + NO + S. H2S is
+    A. Oxidised
+    B. Reduced
+    C. Precipitated
+    D. Neither oxidized nor reduced
+
+
+Q. The conversion of PbO2 to Pb(NO3)2 is
+    A. Oxidation
+    B. Reduction
+    C. Neither oxidation nor reduction
+    D. Both oxidation and reduction
+
+
+Q. In the course of a chemical reaction, an oxidant
+    A. Loses electrons
+    B. Gains electrons
+    C. Both loses and gains electron
+    D. Electron change takes place
+
+
+Q. 2CuI -> Cu + CuI2, the reaction is
+    A. Redox
+    B. Neutralisation
+    C. Oxidation
+    D. Reduction
+
+
+Q. H2O2 reduces K4Fe(CN)6
+    A. In neutral solution
+    B. In acidic solution
+    C. In non-polar solvent
+    D. In alkaline solution
+
+
+Q. In the reaction 3Mg + N2 -> Mg3N2
+    A. Magnesium is reduced
+    B. Magnesium is oxidized
+    C. Nitrogen is oxidized
+    D. Both magnesium and nitrogen are reduced
+
+
+Q. When sodium metal is dissolved in liquid ammonia, blue colour solution is formed. The blue colour is due to
+    A. Solvated Na+ ions
+    B. Solvated electrons
+    C. Solvated NH2- ions
+    D. Solvated protons
+
+
+Q. Following reaction describes the rusting of iron
+4Fe + 3O2 -> 4Fe^{3+ + 6O^{2-}}
+Which one of the following statement is incorrect?
+    A. This is an example of a redox reaction
+    B. Metallic iron is reduced to Fe^{3+}
+    C. Fe^{3+} is an oxidising agent
+    D. Metallic iron is a reducing agent
+
+
+Q. SnCl2 gives a precipitate with a solution of HgCl2. In this process, HgCl2 is
+    A. Reduced
+    B. Oxidised
+    C. Converted into a complex compound containing both Sn and Hg
+    D. Converted into a chloro complex of Hg
+
+
+Q. Oxidation involves
+    A. Loss of electrons
+    B. Gain of electrons
+    C. Increase in the valency of negative part
+    D. Decrease in the valency of positive part
+
+
+Q. Incorrect statement regarding rusting is
+    A. Metallic iron is oxidised to Fe^{3+} ions
+    B. Metallic iron is reduced to Fe^{2-} ions
+    C. Oxygen gas is reduced to oxide ion
+    D. Yellowish -- brown product is formed
+
+
+Q. When copper turnings are added to silver nitrate solution, a blue coloured solution is formed after some time. It is because, copper
+    A. Displaces silver from the solution
+    B. Forms a blue coloured complex with AgNO3
+    C. Is oxidised to Cu^{2+}
+    D. Is reduced to Cu^{2+}
+
+
+Q. Equation H2S + H2O2 -> S + 2H2O represents
+    A. Acidic nature of H2O2
+    B. Basic nature of H2O2
+    C. Oxidising nature of H2O2
+    D. Reducing nature of H2O2
+
+
+Q. In the reaction
+C2O4^{2- + MnO4- + H+ -> Mn^{2+} + CO2 + H2O}
+the reductant is
+    A. C2O4^{2-}
+    B. MnO4-
+    C. Mn^{2+}
+    D. H+
+
+
+Q. Which of the following is the most powerful oxidizing agent?
+    A. F2
+    B. Cl2
+    C. Br2
+    D. I2
+
+
+Q. Of the four oxyacids of chlorine, the strongest oxidising agent in dilute aqueous solution is
+    A. HClO4
+    B. HClO3
+    C. HClO4
+    D. HOCl
+
+
+Q. Identify the correct statement about H2O2
+    A. It acts as reducing agent only.
+    B. It acts as both oxidising and reducing agent.
+    C. It is neither an oxidiser nor reducer.
+    D. It acts as oxidising agent only.
+
+
+Q. Several blocks of magnesium are fixed to the bottom of a ship to
+    A. Keep away the sharks
+    B. Make the ship lighter
+    C. Prevent action of water and salt
+    D. Prevent puncturing by under-sea rocks
+
+
+Q. Which of the following behaves as both oxidising and reducing agents?
+    A. H2SO4
+    B. SO2
+    C. H2S
+    D. HNO3
+
+
+Q. Which of the following is not a reducing agent?
+    A. NaNO2
+    B. NaNO3
+    C. HI
+    D. SnCl2
+
+
+Q. Which of the following cannot work as oxidising agent?
+    A. O2
+    B. KMnO4
+    C. I2
+    D. None of these
+
+
+Q. In C + H2O -> CO + H2, H2O acts as
+    A. Oxidising agent
+    B. Reducing agent
+    C. (1) and (2) both
+    D. Neither (1) nor (2)
+
+
+Q. Strongest reducing agent is
+    A. F-
+    B. Cl-
+    C. Br-
+    D. I-
+
+
+Q. A solution of sulphur dioxide in water reacts with H2S precipitating sulphur. Here, sulphur dioxide acts as
+    A. As oxidising agent
+    B. A reducing agent
+    C. An acid
+    D. A catalyst
+
+
+Q. Which of these substances is a good reducing agent?
+    A. NaOCl
+    B. HI
+    C. FeCl3
+    D. KBr
+
+
+Q. The strongest reducing agent is
+    A. HNO2
+    B. H2S
+    C. H2SO3
+    D. SnCl2
+
+
+Q. Which one is an oxidising agent?
+    A. FeSO4
+    B. HNO3
+    C. FeSO4.(NH4)2SO4.6H2O
+    D. H2S
+
+
+Q. In which of the following reactions, H2O2 is a reducing agent?
+    A. 2FeCl2 + 2HCl + H2O2 -> 2FeCl3 + 2H2O
+    B. Cl2 + H2O2 -> 2HCl + O2
+    C. 2HI + H2O2 -> 2H2O + I2
+    D. H2SO3 + H2O2 -> H2SO4 + H2O
+
+
+Q. When NaCl is dissolved in water, the sodium ion is
+    A. Oxidised
+    B. Reduced
+    C. Hydrolysed
+    D. Hydrated
+
+
+Q. Strongest reducing agent is
+    A. K
+    B. Mg
+    C. Al
+    D. Br
+
+
+Q. Which substance is serving as a reducing agent in the following reaction?
+14H+ + Cr2O7^{2- + 3Ni -> 2Cr^{3+} + 7H2O + 3Ni^{2+}}
+    A. H2O
+    B. Ni
+    C. H+
+    D. Cr2O7^{2-}
+
+
+Q. Which of the following acid possesses oxidising, reducing and complex forming properties?
+    A. HNO3
+    B. H2SO4
+    C. HCl
+    D. HNO2
+
+
+Q. Which one is an oxidising substance?
+    A. C2H2O2
+    B. CO
+    C. H2S
+    D. CO2
+
+
+Q. The compound that can work both as oxidising and reducing agent is
+    A. KMnO4
+    B. H2O2
+    C. BaO2
+    D. K2Cr2O7
+
+
+Q. The oxidation number of C in CO2 is
+    A. $-2$
+    B. $+2$
+    C. $-4$
+    D. $+4$
+
+
+Q. The oxidation number of As is
+    A. $+2$ and $3$
+    B. $+3$ and $+5$
+    C. $+3$ and $+4$
+    D. $+1$ and $+2$
+
+
+Q. The oxidation number of Ba in barium peroxide is
+    A. $+6$
+    B. $+2$
+    C. $+1$
+    D. $+4$
+
+
+Q. HNO2 acts both as reductant and oxidant, while HNO3 acts only as oxidant. It is due to their
+    A. Solubility
+    B. Maximum oxidation number
+    C. Minimum oxidation number
+    D. Minimum number of valence electrons
+
+
+Q. Chlorine is in $+1$ oxidation state in
+    A. HCl
+    B. HClO4
+    C. ICl
+    D. Cl2O
+
+
+Q. The valency of Cr in the complex [Cr(H2O)4Cl2]+
+    A. 1
+    B. 3
+    C. 5
+    D. 6
+
+
+Q. In the conversion Br2 -> BrO3-, the oxidation state of bromine changes from
+    A. $-1$ to $-1$
+    B. $0$ to $-1$
+    C. $0$ to $+5$
+    D. $0$ to $-5$
+
+
+Q. In the chemical reaction Cl2 + H2S -> 2HCl + S, the oxidation number of sulphur changes from
+    A. 0 to 2
+    B. 2 to 0
+    C. $-2$ to 0
+    D. $-2$ to $-1$
+
+
+Q. Oxidation number of cobalt in K[Co(CO)4] is
+    A. $+1$
+    B. $+3$
+    C. $-1$
+    D. $-3$
+
+
+Q. When K2Cr2O7 is converted to K2CrO4, the change in the oxidation state of chromium is
+    A. 0
+    B. 6
+    C. 4
+    D. 3
+
+
+Q. The oxidation number of chlorine in HOCl
+    A. $-1$
+    B. 0
+    C. $+1$
+    D. $+2$
+
+
+Q. Oxidation number of S in S^{2-} is
+    A. $-2$
+    B. 0
+    C. $-6$
+    D. $+2$
+
+
+Q. Oxidation number of N in (NH4)2SO4 is
+    A. $-1/3$
+    B. $-1$
+    C. $+1$
+    D. $-3$
+
+
+Q. In which compound, oxidation state of nitrogen is $+1$?
+    A. NO
+    B. N2O
+    C. NH2OH
+    D. N2H4
+
+
+Q. Oxidation number of nickel in Ni(CO)4
+    A. 0
+    B. $+2$
+    C. $-4$
+    D. $+2$
+
+
+Q. The oxidation number of sulphur in H2SO4 is
+    A. $-2$
+    B. $+2$
+    C. $+4$
+    D. $+6$
+
+
+Q. Oxidation state of chlorine in perchloric acid is
+    A. $-1$
+    B. 0
+    C. $-7$
+    D. $+7$
+
+
+Q. Oxidation number of N in HNO3 is
+    A. $-3.5$
+    B. $+3.5$
+    C. $-3, +5$
+    D. $+5$
+
+
+Q. The oxidation number of Mn in MnO4- is
+    A. $+7$
+    B. $-5$
+    C. $+6$
+    D. $+5$
+
+
+Q. Sn^{n+} loses two electrons in a reaction. What will be the oxidation number of tin after the reaction
+    A. $+2$
+    B. Zero
+    C. $+4$
+    D. $-2$
+
+
+Q. The oxidation state of Mn in K2MnO4
+    A. $+2$
+    B. $+7$
+    C. $-2$
+    D. $+6$
+
+
+Q. Oxidation number of oxygen in O2 molecule is
+    A. $+1$
+    B. 0
+    C. $+2$
+    D. $-2$
+
+
+Q. Maximum oxidation state of Cr is
+    A. $+3$
+    B. $+4$
+    C. $+6$
+    D. $+7$
+
+
+Q. In which of the following compounds transition metal has zero oxidation state
+    A. CrO5
+    B. K2Cr2O7
+    C. MnO2
+    D. [Fe(CO)5]
+
+
+Q. Carbon is in the lowest oxidation state in
+    A. CH4
+    B. CCl4
+    C. CF4
+    D. CO2
+
+
+Q. Oxidation number of carbon in H2C2O4 is
+    A. $+4$
+    B. $+3$
+    C. $+2$
+    D. $-2$
+
+
+Q. The oxidation number of Pt in [Pt(C2H4)Cl3]- is
+    A. $+1$
+    B. $+2$
+    C. $+3$
+    D. $+4$
+
+
+Q. The oxidation number of carbon in CH2Cl2 is
+    A. 0
+    B. $+2$
+    C. $-2$
+    D. $+4$
+
+
+Q. The oxidation states of phosphorus vary from
+    A. $-3$ to $+5$
+    B. $-1$ to $+1$
+    C. $-3$ to $+3$
+    D. $-5$ to $+1$
+
+
+Q. The process in which oxidation number increases is known as
+    A. Oxidation
+    B. Reduction
+    C. Auto-oxidation
+    D. Decomposition
+
+
+Q. The oxidation number of S in H2S2O8 is
+    A. $+2$
+    B. $+4$
+    C. $+6$
+    D. $+7$
+
+
+Q. The oxidation state of nitrogen in N3H is
+    A. $+1/3$
+    B. $+3$
+    C. $-1$
+    D. $-1/3$
+
+
+Q. Which of the following statements is correct?
+    A. Hydrogen has oxidation number $-1$ and $+1$.
+    B. Hydrogen has same electronegativity as halogens.
+    C. Hydrogen will not be liberated at anode.
+    D. Hydrogen has same ionization potential as alkali metals.
+
+
+Q. The oxidation state of Cr in [Cr(NH3)4Cl2]+ is
+    A. $+3$
+    B. $+2$
+    C. $+1$
+    D. 0
+
+
+Q. Sulphur has highest oxidation state in
+    A. SO2
+    B. H2SO4
+    C. Na2S2O3
+    D. Na2S4O6
+
+
+Q. The oxidation number of Fe and S in iron pyrites are
+    A. $+4, -2$
+    B. $+2, -1$
+    C. $+3, -1.5$
+    D. $+3, -1$
+
+
+Q. The oxidation number of nitrogen in NO3- is
+    A. $-1$
+    B. $+2$
+    C. $+3$
+    D. $+5$
+
+
+Q. Oxidation state of elemental carbon is
+    A. 0
+    B. 1
+    C. 2
+    D. 3
+
+
+Q. Which one of the following has the highest oxidation number of iodine?
+    A. KI3
+    B. KI
+    C. IF5
+    D. KIO4
+
+
+Q. The oxidation number of N in N2H4+
+    A. $-3$
+    B. $(-2)$
+    C. $-1$
+    D. $+2$
+
+
+Q. In which of the following compounds, the oxidation number of carbon is maximum?
+    A. HCHO
+    B. CHCl3
+    C. CH3OH
+    D. C12H22O11
+
+
+Q. The oxidation state of chlorine in KClO4 is
+    A. $-1$
+    B. $+1$
+    C. $+7$
+    D. $-7$
+
+
+Q. The oxidation state of I in H4IO6- is
+    A. $+7$
+    B. $+5$
+    C. $+3$
+    D. $-1$
+
+
+Q. An element which never has a positive oxidation number in any of its compounds
+    A. Boron
+    B. Oxygen
+    C. Chlorine
+    D. Fluorine
+
+
+Q. In an oxidation process, oxidation number
+    A. Decreases
+    B. Increases
+    C. Does not change
+    D. First increases then decreases
+
+
+Q. If HNO3 changes into N2O, the oxidation number is changed by
+    A. $+2$
+    B. $-1$
+    C. 0
+    D. $+4$
+
+
+Q. The characteristic oxidation number of atoms in free metals is
+    A. Minus one
+    B. Any number
+    C. One
+    D. Zero
+
+
+Q. In which one of the following changes, there are transfer of five electrons?
+    A. MnO4- -> Mn^{2+}
+    B. CrO4^{2- -> Cr^{3+}}
+    C. MnO4^{2- -> MnO2}
+    D. Cr2O7^{2- -> 2Cr^{3+}}
+
+
+Q. Oxidation number of C in C6H12O6 is
+    A. $+6$
+    B. $-6$
+    C. 0
+    D. $+4$
+
+
+Q. In which of the following compounds, iron has lowest oxidation state?
+    A. FeSO4.(NH4)2SO4.6H2O
+    B. K4[Fe(CN)6]
+    C. Fe(CO)5
+    D. Fe2O3
+
+
+Q. The oxidation number of hydrogen in $MH_2$ is
+    A. $+1$
+    B. $-1$
+    C. $+2$
+    D. $-2$
+
+
+Q. Oxidation number of iodine varies from
+    A. $-1$ to $+1$
+    B. $-1$ to $+7$
+    C. $+3$ to $+5$
+    D. $-1$ to $+5$
+
+
+Q. When SO2 is passed through acidic solution of potassium dichromate, then chromium sulphate is formed. Change in valency of chromium is
+    A. $+4$ to $+2$
+    B. $+5$ to $+3$
+    C. $+6$ to $+3$
+    D. $+7$ to $+2$
+
+
+Q. The oxidation states of the most electronegative element in the products of the reaction of BaO2 with dilute H2SO4 are
+    A. 0 and $-1$
+    B. $-1$ and $-2$
+    C. $-2$ and 0
+    D. $-2$ and $+1$
+
+
+Q. The highest oxidation state of Mn is shown
+    A. K2MnO4
+    B. KMnO4
+    C. MnO2
+    D. Mn2O3
+
+
+Q. Oxidation state of oxygen in hydrogen peroxide is
+    A. $-1$
+    B. $+1$
+    C. 0
+    D. $-2$
+
+
+Q. The oxidation number of Cr in K2Cr2O7 is
+    A. $+6$
+    B. $-7$
+    C. $+2$
+    D. $-2$
+
+
+Q. In which of the following compounds transition metal is in oxidation state zero
+    A. [Co(NH3)6]Cl2
+    B. [Fe(H2O)6]SO4
+    C. [Ni(CO)4]
+    D. [Fe(H2O)3](OH)2
+
+
+Q. The value of $x$ in the partial redox equation
+MnO4- + 8H+ + xe- <=> Mn^{2+ + 4H2O} is
+    A. 5
+    B. 3
+    C. 1
+    D. 0
+
+
+Q. C2H6(g) + nO2 -> CO2(g) + H2O($l$)
+In the balanced equation, the ratio of the coefficients of CO2 and H2O is
+    A. 1:1
+    B. 2:3
+    C. 3:2
+    D. 1:3
+
+
+Q. The number of electrons involved in the reduction of Cr2O7^{2-} in acidic solution to Cr^{3+} is
+    A. 0
+    B. 2
+    C. 3
+    D. 5
+
+
+Q. When KMnO4 acts as an oxidising agent and ultimately forms [MnO4]^{2-}, MnO2, Mn2O3, Mn^{+2} then the number of electrons transferred in each case respectively is
+    A. 4, 3, 1, 5
+    B. 1, 5, 3, 7
+    C. 1, 3, 4, 5
+    D. 3, 5, 7, 1
+
+
+Q. Starch paper is used to test for the presence of
+    A. Iodine
+    B. Oxidising agent
+    C. Iodide ion
+    D. Reducing agent
+
+
+Q. How many moles of K2Cr2O7 can be reduced by 1 mole of Sn^{2+}?
+    A. 1/3
+    B. 1/6
+    C. 2/3
+    D. 1
+
+
+Q. 2MnO4- + 5H2O2 + 6H+ -> 2Z + 5O2 + 8H2O. In this reaction Z is
+    A. Mn^{+2}
+    B. Mn^{+4}
+    C. MnO2
+    D. Mn
+
+
+Q. What is `$A$' in the following reaction?
+2Fe^{3+(aq) + Sn^{2+}(aq) -> 2Fe^{2+}(aq) + A}
+    A. Sn^{3+(aq)}
+    B. Sn^{4+(aq)}
+    C. Sn^{2+(aq)}
+    D. Sn
+
+
+Q. For the redox reaction
+MnO4- + C2O4^{2- + H+ -> Mn^{2+} + CO2 + H2O}
+the correct coefficients of the reactants for the balanced reaction are
+\begin{tabular}{lccc}
+->prule
+& MnO4- & C2O4^{2-} & H+ 
+\midrule
+(1) & 2 & 5 & 16 
+(2) & 16 & 5 & 2 
+(3) & 5 & 16 & 2 
+(4) & 2 & 16 & 5 
+\bottomrule
+\end{tabular}
+
+Q. In the equation H2S + 2HNO3 -> 2H2O + 2NO2 + S. The equivalent weight of hydrogen sulphide is
+    A. 16
+    B. 68
+    C. 34
+    D. 17
+
+
+Q. If 1.2 g of metal displace 1.12 litre hydrogen at normal temperature and pressure, equivalent weight of metal would be
+    A. 24
+    B. 12
+    C. $1.2 + 11.2$
+    D. $1.2 \times 11.2$
+
+
+Q. Prevention of corrosion of iron by zinc coating is called
+    A. Galvanization
+    B. Cathodic protection
+    C. Electrolysis
+    D. Photo-electrolysis
+
+
+Q. The metal used in galvanizing of iron is
+    A. Pb
+    B. Zn
+    C. Al
+    D. Sn
+
+
+Q. In which of the following reactions, there is no change in valency
+    A. 4KClO3 -> 3KClO4 + KCl
+    B. SO2 + 2H2S -> 2H2O + 3S
+    C. BaO2 + H2SO4 -> BaSO4 + H2O2
+    D. 2BaO + O2 -> 2BaO2
+
+
+Q. The equivalent weight of phosphoric acid (H3PO4) in the reaction NaOH + H3PO4 -> NaH2PO4 + H2O is
+    A. 25
+    B. 49
+    C. 59
+    D. 98
+
+
+Q. What is the equivalent mass of IO4- when it is converted into I2 in acid medium?
+    A. M/6
+    B. M/7
+    C. M/5
+    D. M/4
+
+
+Q. For decolourization of 1 mole of KMnO4, the moles of H2O2 required is
+    A. 1/2
+    B. 3/2
+    C. 5/2
+    D. 7/2
+
+
+ ASSERTION--REASON / STATEMENT BASED QUESTIONS
+\noindent**Read the statements carefully to mark the correct option out of the options given below**
+\begin{enumerate}[label=(\arabic*), leftmargin=2em, itemsep=1pt]
+
+Q. If both statements are true and Reason is the correct explanation of Assertion.
+
+Q. If both statements are true but Reason is not the correct explanation of Assertion.
+
+Q. If Assertion is true but Reason is false.
+
+Q. If Assertion is false but Reason is true.
+\end{enumerate}
+
+Q. **Assertion:** In the reaction, $\frac{1}{2}O2 + F2 -> OF2$, Fluorine is oxidant.
+**Reason:** Fluorine cannot show positive oxidation state.
+
+Q. **Assertion:** In the reaction Zn(s) + Cu^{2+(aq) -> Zn^{2+}(aq) + Cu(s)}, Cu^{2+} ions act as oxidising agent and Zn atoms act as a reducing agent.
+**Reason:** A substance which readily gain electrons from other substances is an oxidising agent while reducing agent is a substance which can lose electrons to other substances.
+
+Q. **Assertion:** Zn(s) + Cu^{2+(aq) -> Zn^{2+}(aq) + Cu(s)} can be split into following half reactions:
+Zn(s) -> Zn^{2+ + 2e-} (Oxidation half reaction)
+Cu^{2+(aq) + 2e- -> Cu} (Reduction half reaction)
+**Reason:** Every redox reaction can be split into two reactions, one representing loss of electrons and the other representing gain of electrons.
+
+Q. **Assertion:** Oxidation number of carbon in H--C$\equiv$N is $+4$.
+**Reason:** Carbon can show any oxidation number.
+
+Q. **Assertion:** In NH4NO3, the oxidation number of the two N-atoms is not equal.
+**Reason:** One N atom is present in the ammonium ion while the other is present in the nitrate ion.
+
+Q. **Assertion:** Oxidation number of carbon in CH2O is zero.
+**Reason:** CH2O (formaldehyde) is a covalent compound.
+
+Q. **Assertion:** Nitrous acid (HNO2) may act as an oxidising agent as well as a reducing agent.
+**Reason:** The oxidation number of nitrogen remains same in all the compounds.
+
+Q. **Assertion:** Oxidation number of Ni in [Ni(CO)4] is zero.
+**Reason:** Nickel is bonded to neutral ligand, carbonyl.
+
+Q. **Assertion:** Bromide ion is serving as a reducing agent in the reaction.
+2MnO4-(aq) + Br-(aq) + H2O -> 2MnO2(aq) + BrO3-(aq) + 2OH-(aq)
+**Reason:** Oxidation number of Br increases from $-1$ to $+5$.
+
+Q. **Assertion:** In acidic medium, equivalent weight of K2Cr2O7 is equal to $294/6$.
+**Reason:** In acidic medium, Cr2O7^{2-} is reduced in Cr^{3+}.
+
+Q. **Assertion:** In a redox reaction, the oxidation number of the oxidant decreases while that of reductant increases.
+**Reason:** Oxidant gains electron(s) while reductant loses electron(s).
+
+Q. **Assertion:** H2SO4 cannot act as a reducing agent.
+**Reason:** Sulphur cannot increase its oxidation number beyond $+6$.
+
+Q. **Assertion:** In HClO4, Chlorine has the oxidation number of $+7$.
+**Reason:** HClO4 is oxyacid of chlorine.
+
+Q. **Assertion:** Oxidation number of S in HSO3- is $+4$.
+**Reason:** Sulphur different oxidation state in different compounds.
+
+Q. **Assertion:** H2 is the reducing agent and Cl2 is reduced in the reaction.
+H2 + Cl2 -> 2HCl
+**Reason:** Reducing agent is the one which has been oxidised and decrease of oxidation number means reduction.
+
+Q. **Assertion:** MnO4- is always reduced to Mn^{2+}.
+**Reason:** Decrease in oxidation number or gaining of electrons means reduction.
+
+Q. **Assertion:** Oxidation number of Cr in CrO5 is $+6$.
+**Reason:** In CrO5, four oxygen atoms are involved in peroxide linkage.
+
+Q. **Assertion:** Oxidation number of Cr in Cr(CO)6 is zero.
+**Reason:** Cr is a metal.
+
+Q. **Assertion:** Cr^{+2} is a reducing agent and Mn^{+3} is oxidising agent.
+**Reason:** Mn^{+3} has d^5 configuration.
+
+Q. **Assertion:** The formal oxidation number of sulphur in Na2S4O6 is 2.5.
+**Reason:** Two sulphur-atoms are not directly linked with oxygen-atoms.
+
+\noindent**In the following questions, Statement I is followed by Statement II. Each question has the following four choices out of which only one is correct.**
+\begin{enumerate}[label=(\arabic*), leftmargin=2em, itemsep=1pt]
+
+Q. Both statement I and statement II are true.
+
+Q. Both statement I and statement II are false.
+
+Q. Statement I is true but statement II is false.
+
+Q. Statement I is false but statement II is true.
+\end{enumerate}
+
+Q. **Statement I:** Oxidation state of hydrogen is $+1$ in H2O while $-1$ in CaH2.
+**Statement II:** CaH2 is a metal hydride and for metal hydrides, hydrogen is assigned the oxidation number of $-1$.
+
+Q. **Statement I:** A reducing agent is a substance which accepts electron.
+**Statement II:** A substance which itself gets oxidized but reduces the other substance is known as reducing agent.
+
+Q. **Statement I:** H2S + Cl2 -> 2HCl + S. In the above reaction, Cl has been oxidised to Cl- while S^{2-} has been reduced to S.
+**Statement II:** In a reaction, the element whose oxidation number decreases is reduced and the element whose oxidation number increases is oxidised.
+
+Q. **Statement I:** KClO3 -> KClO4 + KCl. This is an example of disproportionation reaction.
+**Statement II:** The reaction in which one substance oxidise or reduce is known as disproportionation reaction.
+
+Q. **Statement I:** Oxidation number of carbon in all its compounds is $+4$.
+**Statement II:** An element has a fixed oxidation state.
+
+Q. **Statement I:** Among Br-, O2^{2-}, H- and NO3-, the ions that cannot act as oxidising agents are Br- and H-.
+**Statement II:** Br- and H- cannot be reduced.
+
+Q. **Statement I:** In the compounds between oxygen and fluorine oxygen shows positive oxidation number though it is an electronegative element.
+**Statement II:** Fluorine is more electronegative than oxygen.
+
+ MATRIX MATCH QUESTIONS
+
+Q. Match the compounds given in column-I with oxidation states of carbon given in column-II and mark the appropriate choice.
+\begin{tabular}{|l|l||l|l|}
+\hline
+\multicolumn{2}{|c||}{**Column I**} & \multicolumn{2}{c|}{**Column II**} 
+\hline
+A & C6H6O & i & $+3$ 
+B & CHCl3 & ii & $-3$ 
+C & CH3CH3 & iii & $+2$ 
+D & (COOH)2 & iv & 0 
+\hline
+\end{tabular}
+    A. A$->$iv; B$->$iii; C$->$ii; D$->$i
+    B. A$->$i; B$->$ii; C$->$iii; D$->$iv
+    C. A$->$ii; B$->$iii; C$->$iv; D$->$i
+    D. A$->$iii; B$->$ii; C$->$i; D$->$iv
+
+
+Q. Match the column I (reactions) with column II (type of reactions) and mark the appropriate choice.
+\begin{tabular}{|l|l||l|l|}
+\hline
+\multicolumn{2}{|c||}{**Column I**} & \multicolumn{2}{c|}{**Column II**} 
+\hline
+A & 3Mg_{(s) + N2_{(g)} -> Mg3N2_{(s)}} & i & Displacement 
+B & NaH_{(s) + H2O_{(l)} -> NaOH_{(aq)} + H2_{(g)}} & ii & Decomposition 
+C & 3ClO-(aq) -> 2Cl-(aq) + ClO3-(aq) & iii & Combination 
+D & 2KClO3_{(s) -> 2KCl_{(s)} + 3O2_{(g)}} & iv & Disproportionation 
+\hline
+\end{tabular}
+    A. A$->$i; B$->$iii; C$->$ii; D$->$iv
+    B. A$->$iv; B$->$i; C$->$iii; D$->$i
+    C. A$->$ii; B$->$i; C$->$iii; D$->$iv
+    D. A$->$iii; B$->$i; C$->$iv; D$->$ii
+
+
+Q. Match the column I with column II and mark the appropriate choice.
+\begin{tabular}{|l|l||l|l|}
+\hline
+\multicolumn{2}{|c||}{**Column I (Compound)**} & \multicolumn{2}{c|}{**Column II (Oxidation State of Fe)**} 
+\hline
+A & K2[Fe(OH)6] & i & $+8/3$ 
+B & K2[FeO4] & ii & $+2$ 
+C & FeSO4.(NH4)2SO4.6H2O & iii & $+3$ 
+D & Fe3O4 & iv & $+6$ 
+\hline
+\end{tabular}
+    A. A$->$iii; B$->$i; C$->$ii; D$->$iv
+    B. A$->$iv; B$->$iii; C$->$ii; D$->$i
+    C. A$->$i; B$->$iv; C$->$iii; D$->$ii
+    D. A$->$iv; B$->$i; C$->$ii; D$->$iii
+
+
+Q. Match Column I with Column II and choose the correct combination from the options given.
+\begin{tabular}{|l|l||l|l|}
+\hline
+\multicolumn{2}{|c||}{**Column I (Reaction electrons)**} & \multicolumn{2}{c|}{**Column II (No. of lost or gained)**} 
+\hline
+a & Mn(OH)2 + H2O2 -> MnO2 & p & 8 
+b & AlCl3 + 3K -> Al + 3KCl & q & 2 
+c & 3Fe + 4H2O -> Fe3O4 + 4H2 & r & 3 
+d & H2S + NO -> S + NO & s & 6 
+\hline
+\end{tabular}
+    A. a$->$s; b$->$r; c$->$q; d$->$p
+    B. a$->$r; b$->$s; c$->$p; d$->$q
+    C. a$->$p; b$->$s; c$->$q; d$->$r
+    D. a$->$q; b$->$r; c$->$p; d$->$s
+
+
+Q. Match Column I with Column II and choose the correct combination from the options given.
+\begin{tabular}{|l|p{4cm}||l|p{3cm}|}
+\hline
+\multicolumn{2}{|c||}{**Column I (Reaction and substance acting as oxidant or reductant)**} & \multicolumn{2}{c|}{**Column II (Oxidant and reductant)**} 
+\hline
+a & 3I2 + 6NaOH -> NaIO3 + 5NaI + 3H2O; I2 acts as & p & Neither oxidant or reductant 
+b & BaCl2 + Na2SO4 -> BaSO4 and 2NaCl; BaCl2 acts as & q & Reductant 
+c & AlCl3 + 3Na -> 3NaCl + Al; AlCl3 acts as & r & Both oxidant and reductant 
+d & SO2 + 2H2S -> 3S + H2O; H2S acts as & s & Oxidant 
+\hline
+\end{tabular}
+    A. a$->$s; b$->$r; c$->$q; d$->$p
+    B. a$->$p; b$->$s; c$->$r; d$->$q
+    C. a$->$r; b$->$p; c$->$s; d$->$q
+    D. a$->$q; b$->$p; c$->$s; d$->$r
+
+
+ PREVIOUS YEARS' QUESTIONS
+
+Q. Which is the best description of the behaviour of bromine in the reaction given below? \hfill [AIPMT 2004]
+H2O + Br2 -> HOBr + HBr
+    A. Both oxidized and reduced
+    B. Oxidized only
+    C. Reduced only
+    D. Proton acceptor only
+
+
+Q. The number of moles of KMnO4 reduced by one mole of KI in alkaline medium is \hfill [AIPMT 2005]
+    A. One
+    B. Two
+    C. Five
+    D. One fifth
+
+
+Q. The correct order of acidic strength is \hfill [AIPMT 2005]
+    A. HClO4 $<$ HClO3 $<$ HClO2 $<$ HClO
+    B. HClO2 $<$ HClO3 $<$ HClO4 $<$ HClO
+    C. HClO4 $<$ HClO $<$ HClO2 $<$ HClO3
+    D. HClO $<$ HClO2 $<$ HClO3 $<$ HClO4
+
+
+Q. Number of moles of MnO4- required to oxidize one mole of ferrous oxalate completely in acidic medium will be \hfill [AIPMT 2008]
+    A. 7.5 mole
+    B. 0.2 mole
+    C. 0.6 mole
+    D. 0.4 mole
+
+
+Q. Oxidation numbers of P in PO4^{3-}, S in SO4^{2-} and that of Cr in Cr2O7^{2-} are respectively \hfill [AIPMT 2009]
+    A. $-3, +6$ and $+6$
+    B. $+5, +6$ and $+6$
+    C. $+3, +6$ and $+5$
+    D. $+5, +3$ and $+6$
+
+
+Q. Correct order of oxidising strength is: \hfill [AIIMS 2010]
+    A. MnO4- $>$ VO2+ $>$ Cr2O7^{2-}
+    B. Cr2O7^{2-} $>$ MnO4- $>$ VO2+
+    C. Cr2O7^{2-} $>$ VO2+ $>$ MnO4-
+    D. MnO4- $>$ Cr2O7^{2-} $>$ VO2+
+
+
+Q. When S2O8^{2-} oxidise Fe^{2+} then product formed is \hfill [AIIMS 2010]
+    A. S2O6^{2-}
+    B. SO4^{2-}
+    C. S2O3^{2-}
+    D. SO3^{2-}
+
+
+Q. How much amount of CuSO4.5H2O required for liberation of 2.54 g I2 when titrated with KI? \hfill [AIIMS 2011]
+    A. 2.5 gm
+    B. 4.99 gm
+    C. 2.4 gm
+    D. 1.2 gm
+
+
+Q. Standard reduction potentials of the half reactions are given below \hfill [AIPMT 2012]
+F2(g) + 2e- -> 2F-(aq); $E^o = +2.85$ V
+Cl2(g) + 2e- -> 2Cl-(aq); $E^o = +1.36$ V
+Br2(l) + 2e- -> 2Br-(aq); $E^o = +1.06$ V
+I2(g) + 2e- -> 2I-(aq); $E^o = +0.53$ V
+The strongest oxidation and reducing agents respectively are
+    A. F2 and I-
+    B. Br2 and Cl-
+    C. Cl2 and Br-
+    D. Cl2 and I2
+
+
+Q. In which of the following compounds, nitrogen exhibits the highest oxidation state? \hfill [AIPMT 2012]
+    A. N2H
+    B. NH2OH
+    C. N2H4
+    D. NH3
+
+
+Q. When Cl2 gas reacts with hot and concentrated sodium hydroxide solution, the oxidation number of chlorine changes from \hfill [AIPMT 2012]
+    A. zero to $-1$ and zero to $+3$
+    B. zero to $+1$ and zero to $-3$
+    C. zero to $+1$ and zero to $-5$
+    D. zero to $-1$ and zero to $+5$
+
+
+Q. A mixture of potassium chlorate, oxalic acid and sulphuric acid is heated. During the reaction, which element undergoes maximum change in the oxidation number? \hfill [AIPMT 2012]
+    A. Cl
+    B. C
+    C. S
+    D. H
+
+
+Q. (I) H2O2 + O3 -> H2O + 2O2
+(II) H2O2 + Ag2O -> 2Ag + H2O + O2
+Role of hydrogen peroxide in the above reactions is respectively \hfill [AIPMT 2014]
+    A. oxidizing in (I) and reducing in (II)
+    B. reducing in (I) and oxidizing in (II)
+    C. reducing in (I) and (II)
+    D. oxidizing in (I) and (II)
+
+
+Q. In acidic medium, H2O2 changes Cr2O7^{2-} to CrO5 which has to ($-$O$-$O$-$) bonds. Oxidation state of Cr in CrO5 is \hfill [AIPMT 2014]
+    A. $+5$
+    B. $+3$
+    C. $+6$
+    D. $-10$
+
+
+Q. The reaction of aqueous KMnO4 with H2O2 in acidic conditions gives \hfill [AIPMT 2014]
+    A. Mn^{4+} and O2
+    B. Mn^{2+} and O2
+    C. Mn^{3+} and O3
+    D. Mn^{4+} and MnO2
+
+
+Q. The pair of compounds that can exist together is \hfill [AIPMT 2014]
+    A. FeCl3, SnCl2
+    B. HgCl2, SnCl2
+    C. FeCl2, SnCl2
+    D. FeCl3, KI
+
+
+Q. Hot concentrated sulphuric acid is a moderately strong oxidizing agent. Which of the following reactions does not show oxidizing behaviour? \hfill [NEET 2016]
+    A. CaF2 + H2SO4 -> CaSO4 + 2HF
+    B. Cu + 2H2SO4 -> CuSO4 + SO2 + 2H2O
+    C. 2S + 2H2SO4 -> 2SO2 + 2H2O
+    D. C + 2H2SO4 -> CO2 + 2SO2 + 2H2O
+
+
+Q. Consider the change in oxidation state of bromine corresponding to different emf values as shown in the diagram below: \hfill [NEET 2018]
+BrO4- ->[\text{1.82V] BrO3- ->[\text{1.5V}] HBrO ->[\text{1.595V}] Br2 ->[\text{1.0652V}] Br-}
+The species undergoing disproportionation is
+    A. BrO3-
+    B. BrO4-
+    C. Br2
+    D. HBrO
+
+
+Q. For the redox reaction
+MnO4- + C2O4^{2- + H+ -> Mn^{2+} + CO2 + H2O}
+the correct coefficients of the reactants for the balanced equation are \hfill [NEET 2018]
+\begin{tabular}{lccc}
+->prule
+& MnO4- & C2O4^{2-} & H+ 
+\midrule
+(1) & 16 & 5 & 2 
+(2) & 2 & 5 & 16 
+(3) & 2 & 16 & 5 
+(4) & 5 & 16 & 2 
+\bottomrule
+\end{tabular}
+
+Q. What is the change in oxidation number of carbon in the following reaction? \hfill [NEET 2020 Phase 1]
+CH4(g) + 4Cl2(g) -> CCl4(l) + 4HCl(g)
+    A. 0 to $-4$
+    B. $+4$ to $+4$
+    C. 0 to $+4$
+    D. $-4$ to $+4$
+
+
+Q. The oxidation number of the underlined atom in the following species \hfill [NEET 2020 Phase 2]
+    A. HAu_Cl_4 is $+3$
+    B. _Cu_2O is $-1$
+    C. _Cl_O3- is $+5$
+    D. K2_Cr_2O7 is $+6$
+
+Identify the incorrect option.
+
+Q. Identify the reaction from following having top position in EMF series (Std. red. potential) according to their electrode potential at 298 K. \hfill [NEET 2020 Phase 2]
+    A. K+ + 1e- -> K_{(s)}
+    B. Mg^{2+ + 2e- -> Mg_{(s)}}
+    C. Fe^{2+ + 2e- -> Fe_{(s)}}
+    D. Au^{3+ + 3e- -> Au_{(s)}}
+
+
+Q. Which of the following reactions is the metal displacement reaction? Choose the right option. \hfill [NEET 2021]
+    A. 2KClO3 ->[\Delta] 2KCl + 3O2
+    B. Cr2O3 + 2Al ->[\Delta] Al2O3 + 2Cr
+    C. Fe + 2HCl -> FeCl2 + H2^
+    D. 2Pb(NO3)2 -> 2PbO + 4NO2 + O2^
+
+
+Q. At 298 K, the standard electrode potentials of Cu^{2+/Cu}, Zn^{2+/Zn}, Fe^{2+/Fe} and Ag+/Ag are 0.34 V, $-0.76$ V, $-0.44$ V and 0.80 V, respectively. On the basis of standard electrode potential, predict which of the following reaction cannot occur? \hfill [NEET 2022]
+    A. FeSO4(aq) + Zn(s) -> ZnSO4(aq) + Fe(s)
+    B. 2CuSO4(aq) + 2Ag(s) -> 2Cu(s) + Ag2SO4(aq)
+    C. CuSO4(aq) + Zn(s) -> ZnSO4(aq) + Cu(s)
+    D. CuSO4(aq) + Fe(s) -> FeSO4(aq) + Cu(s)
+
+
+Q. On balancing the given redox reaction,
+Cr2O7^{2- + bSO3^{2-}(aq) + cH+(aq) ->}
+2aCr^{3+(aq) + bSO4^{2-}(aq) + \frac{c}{2}H2O($l$)}
+the coefficients $a$, $b$ and $c$ are found to be, respectively \hfill [NEET 2023]
+    A. 1, 3, 8
+    B. 3, 8, 1
+    C. 1, 8, 3
+    D. 8, 1, 3
+
+
+Q. Which reaction is NOT a redox reaction? \hfill [NEET 2024]
+    A. H2 + Cl2 -> 2HCl
+    B. BaCl2 + Na2SO4 -> BaSO4 + 2NaCl
+    C. Zn + CuSO4 -> ZnSO4 + Cu
+    D. 2KClO3 + I2 -> 2KIO3 + Cl2
+
+

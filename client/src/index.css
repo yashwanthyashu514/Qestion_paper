@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+
+
+@theme {
+  /* MANCHESTER COLLEGE COLOR THEME */
+  --color-primary: #001f6d;       /* Deep Royal Blue */
+  --color-primary-hover: #00154d; /* Darker Blue */
+  
+  --color-secondary: #c5a059;       /* Rich Metallic Gold */
+  --color-secondary-hover: #a68541; /* Antique Gold */
+  
+  --color-accent: #e5e7eb;          /* Sophisticated Gray */
+  --color-background: #f3f4f6;      /* Light Slate Gray Background */
+  --color-surface: #ffffff;         /* Pure White Surface */
+
+  --color-navy: #001f6d;
+  --color-gold: #c5a059;
+  --color-slate: #1e293b;
+
+  /* UNIVERSAL TYPOGRAPHY */
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: #1e293b; /* Slate 800 - Professional dark gray text */
+  margin: 0;
+  padding: 0;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  --s: 15px;
+  width: calc(var(--s)*2.33);
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: space-between;
+}
+.loader::before,
+.loader::after {
+  content: "";
+  width: var(--s);
+  --_g: no-repeat radial-gradient(farthest-side,#1e3a8a 94%,#0000);
+  background:
+    var(--_g) top,
+    var(--_g) bottom;
+  background-size: 100% var(--s);
+  transform-origin: 50% calc(100% - var(--s)/2);
+  animation: l30 1s infinite;
+}
+.loader::after {
+  transform-origin: 50% calc(var(--s)/2);
+}
+@keyframes l30 {
+   70%,100% {transform:rotate(-270deg)}
+}
+
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}

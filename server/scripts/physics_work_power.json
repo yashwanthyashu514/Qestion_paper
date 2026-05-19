@@ -1,0 +1,308 @@
+[
+    {
+        "questionId": "Q-PHY-WPE-01",
+        "questionText": "A block of mass m = 0.1 kg is released from a height of 4 m on a curved smooth surface. On the horizontal surface, path AB is smooth and path BC is rough with a coefficient of friction μ = 0.1 . If the impact of the block with the vertical wall at C is perfectly elastic, the total distance covered by the block on the horizontal surface before coming to rest will be (take g = 10 m s⁻² )",
+        "options": ["29 m", "49 m", "59 m", "109 m"],
+        "answer": "59 m",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778622627949.png",
+        "diagramCrop": [600, 150, 950, 300]
+    },
+    {
+        "questionId": "Q-PHY-WPE-02",
+        "questionText": "The sign of work done by a force on a body is important to understand. For\n(i) work done by a man in lifting a bucket out of a well by means of a rope tied to the bucket\n(ii) work done by friction on a body sliding down an inclined plane\n(iii) work done by a applied force on a body moving on a rough horizontal plane with uniform velocity\n(iv) work done by the resistive force of air on a vibrating pendulum in bringing it to rest\nChoose the sign of work done",
+        "options": ["+, -, +, -", "+, +, -, -", "+, -, +, +", "-, +, -, +"],
+        "answer": "+, -, +, -",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-03",
+        "questionText": "A vertical spring of force constant 100 Nm⁻¹ is attached to the ceiling, with a block of mass 10 kg suspended from it. Now an external force F is applied on the block so that the spring is stretched by an additional length of 2 m . The work done by the force F is [Take g = 10 m s⁻² ]",
+        "options": ["200 J", "400 J", "100 J", "600 J"],
+        "answer": "200 J",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778622627949.png",
+        "diagramCrop": [750, 550, 950, 750]
+    },
+    {
+        "questionId": "Q-PHY-WPE-04",
+        "questionText": "The bob of a pendulum is released from a horizontal position A as shown in the figure. If the length of the pendulum is 1.5 m , what is the speed with which the bob arrives at the lowermost point B , given that it dissipated 5% of its initial energy against air resistance?",
+        "options": ["5 m s⁻¹", "5.5 m s⁻¹", "5.3 m s⁻¹", "4.4 m s⁻¹"],
+        "answer": "5.3 m s⁻¹",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778622627949.png",
+        "diagramCrop": [750, 780, 950, 950]
+    },
+    {
+        "questionId": "Q-PHY-WPE-05",
+        "questionText": "It is well known that a raindrop falls under the influence of the downward gravitational force and opposing resistive force. The latter is known to be proportional to the speed of the drop. Consider a drop of mass 1 gm falling from a height of 1 km. If it hits the ground with a speed of 50 m s⁻¹. The work done by the resistive force is",
+        "options": ["-1.25 J", "-4.75 J", "-8.75 J", "-10 J"],
+        "answer": "-8.75 J",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-06",
+        "questionText": "A simple pendulum consisting of a mass M attached to a string of length L is released from rest at an angle α. A pin is located at a distance l below the pivot point. When the pendulum swings down, the string hits the pin as shown in the figure. The maximum angle θ which the string makes with the vertical after hitting the pin is",
+        "options": ["cos⁻¹ [ (L cos α + l) / (L + l) ]", "cos⁻¹ [ (L cos α + l) / (L - l) ]", "cos⁻¹ [ (L cos α - l) / (L - l) ]", "cos⁻¹ [ (L cos α - l) / (L + l) ]"],
+        "answer": "cos⁻¹ [ (L cos α - l) / (L - l) ]",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778622645325.png",
+        "diagramCrop": [680, 100, 950, 300]
+    },
+    {
+        "questionId": "Q-PHY-WPE-07",
+        "questionText": "A bus can be stopped by applying a retarding force F when it is moving with speed v on a level road. The distance covered by it before coming to rest is s. If the load of the bus increases by 50% because of passengers, for the same speed and same retarding force, the distance covered by the bus to come to rest shall be",
+        "options": ["1.5 s", "2 s", "1 s", "2.5 s"],
+        "answer": "1.5 s",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-08",
+        "questionText": "The system shown in the figure is released from rest with mass 2 kg in contact with the ground. Pulley and spring are massless, and friction is absent everywhere. The speed of 5 kg block when 2 kg block leaves the contact with the ground is (force constant of the spring k = 40 Nm⁻¹ and g = 10 m s⁻² )",
+        "options": ["√3 m s⁻¹", "2√2 m s⁻¹", "2 m s⁻¹", "√2 m s⁻¹"],
+        "answer": "2√2 m s⁻¹",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778622645325.png",
+        "diagramCrop": [800, 400, 950, 550]
+    },
+    {
+        "questionId": "Q-PHY-WPE-09",
+        "questionText": "The relationship between the force F and position x of a body is as shown in the figure. The work done in displacing the body from x = 1 m to x = 5 m will be",
+        "options": ["30 J", "15 J", "25 J", "20 J"],
+        "answer": "15 J",
+        "level": "easy",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778622645325.png",
+        "diagramCrop": [650, 550, 950, 700]
+    },
+    {
+        "questionId": "Q-PHY-WPE-10",
+        "questionText": "When a person stands on a weighing balance, working on the principle of Hooke's law, it shows a reading of 60 kg after a long time and the spring gets compressed by 2.5 cm. If the person jumps on the balance from a height of 10 cm, the maximum reading of the balance will be",
+        "options": ["60 kg", "120 kg", "180 kg", "240 kg"],
+        "answer": "180 kg",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-11",
+        "questionText": "Two bodies A and B of mass m and 2m respectively are placed on a smooth floor. They are connected by a spring of negligible mass. A third body C of mass m is placed on the floor. The body C moves with a velocity v₀ along the line joining A and B and collides elastically with A. At a certain time after the collision it is found that the instantaneous velocities of A and B are same and the compression of the spring is x₀. The spring constant k will be",
+        "options": ["m v₀²/x₀²", "m v₀ / (2x₀)", "2m v₀ / x₀", "2/3 m (v₀/x₀)²"],
+        "answer": "2/3 m (v₀/x₀)²",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-12",
+        "questionText": "A ring of mass m free to slide on a fixed smooth horizontal rod is attached to a particle of mass M kg by a inextensible string of length l . Initially, both M and m are at rest and the string is vertical. A horizontal velocity v₀ is imparted to the particle. The maximum height up to which block will rise w.r.t its initial position is (M = 2m)",
+        "options": ["v₀² / (2g)", "v₀² / (4g)", "v₀² / (6g)", "v₀² / (8g)"],
+        "answer": "v₀² / (6g)",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778622665488.png",
+        "diagramCrop": [700, 80, 950, 250]
+    },
+    {
+        "questionId": "Q-PHY-WPE-13",
+        "questionText": "A block of mass m = 1 kg, moving on a horizontal surface with speed vᵢ = 2 m s⁻¹ enters a rough patch ranging from x = 0.10 m to x = 2.01 m. The retarding force F_r on the block in this range is F_r = - k/x for 0.1 < x < 2.01 m and = 0 for x < 0.1 m and x > 2.01 m where k = 0.5 J. The final kinetic energy of the block is : (given ln 20.1 ≈ 3)",
+        "options": ["0.5 J", "1 J", "1.5 J", "2 J"],
+        "answer": "0.5 J",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-14",
+        "questionText": "The block of mass 'm' initially at x = 0 is acted upon by a horizontal force F = a - bx as shown in the figure. The coefficient of friction between the surfaces of contact is μ . The net work done on the block is zero if the block travels a distance of ________.",
+        "options": ["(a - μmg) / 2b", "(a - μmg) / b", "2(a - μmg) / b", "(a - 2μmg) / b"],
+        "answer": "2(a - μmg) / b",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778622665488.png",
+        "diagramCrop": [650, 450, 950, 550]
+    },
+    {
+        "questionId": "Q-PHY-WPE-15",
+        "questionText": "A block of 4 kg mass starts at rest and slides a distance d down a friction less incline (angle 30° ) where it runs into a spring of negligible mass. The block slides an additional 25 cm before it is brought to rest momentarily by compressing the spring. The force constant of the spring is 400 Nm⁻¹ . The value of d is (take g = 10 m s⁻² )",
+        "options": ["25 cm", "37.5 cm", "62.5 cm", "None of the above"],
+        "answer": "37.5 cm",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778622665488.png",
+        "diagramCrop": [750, 550, 950, 650]
+    },
+    {
+        "questionId": "Q-PHY-WPE-16",
+        "questionText": "A car of weight W is on an inclined road that rises by 100 m over a distance of 1 km and applies a constant frictional force W/20 on the car. While moving uphill on the road at a speed of 10 m s⁻¹, the car needs power P . If it needs power P/2 while moving downhill at speed v then value of v is :",
+        "options": ["20 m s⁻¹", "15 m s⁻¹", "10 m s⁻¹", "5 m s⁻¹"],
+        "answer": "15 m s⁻¹",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-17",
+        "questionText": "Power of the only force acting on a particle of mass m = 1 kg moving in a straight line depends on its velocity as P = v² where v is in m s⁻¹ and P is in watt . If the initial velocity of the particle is 1 m s⁻¹ , then the displacement of the particle in ln(2) seconds will be",
+        "options": ["(ln2 - 1) m", "(ln2)² m", "1 m", "2 m"],
+        "answer": "1 m",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-18",
+        "questionText": "A one-ton car moves with a constant velocity of 15 m s⁻¹ on a rough horizontal road. The total resistance to the motion of the car is 12% of the weight of the car. The power required to keep the car moving with the same constant velocity of 15 m s⁻¹ is [Take g = 10 m s⁻² ].",
+        "options": ["9 kW", "18 kW", "24 kW", "36 kW"],
+        "answer": "18 kW",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-19",
+        "questionText": "A body of mass m starts moving from rest along x-axis so that its velocity varies as v = a √s where a is a constant and s is the distance covered by the body. The total work done by all the forces acting on the body in the first t seconds after the start of the motion is :",
+        "options": ["1/8 m a⁴ t²", "8 m a⁴ t²", "4 m a⁴ t²", "1/4 m a⁴ t²"],
+        "answer": "1/8 m a⁴ t²",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-20",
+        "questionText": "While running, a person transforms about 0.60 J of chemical energy to mechanical energy per step per kilogram of body mass. If a 60 kg runner transforms energy at a rate of 72 W during a race, how fast is the person running? Assume that a running step is 1.5 m long.",
+        "options": ["2.0 m/s", "3.0 m/s", "2.5 m/s", "5.0 m/s"],
+        "answer": "3.0 m/s",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-21",
+        "questionText": "A small sphere is given vertical velocity of magnitude v₀ = 5 m s⁻¹ and it swings in a vertical plane about the end of a massless string. The angle θ with the vertical at which string will break, knowing that it can withstand a maximum tension equal to twice the weight of the sphere, is",
+        "options": ["cos⁻¹(2/3)", "cos⁻¹(1/4)", "60°", "30°"],
+        "answer": "cos⁻¹(2/3)",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778622685986.png",
+        "diagramCrop": [700, 200, 950, 350]
+    },
+    {
+        "questionId": "Q-PHY-WPE-22",
+        "questionText": "A particle of mass m moves along a circular path of radius r with a centripetal acceleration a_n changing with time t as a_n = kt² , where k is a positive constant. The average power developed by all the forces acting on the particle during the first t₀ seconds is",
+        "options": ["mk r t₀", "(mk r t₀²) / 2", "(mk r t₀) / 2", "(mk r t₀) / 4"],
+        "answer": "(mk r t₀²) / 2",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-23",
+        "questionText": "A bullet of mass 0.012 kg and horizontal speed 70 m s⁻¹ strikes a block of wood of mass 0.4 kg and instantly comes to rest w.r.t. block. The block is suspended from the ceiling by means of thin wires. Calculate the height to which the block rises about",
+        "options": ["15 cm", "20 cm", "25 cm", "28 cm"],
+        "answer": "20 cm",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-24",
+        "questionText": "A particle is suspended from a string of length R. It is given a velocity u = 3√(gR) at the bottom.\nColumn-I:\n(A) Velocity at B\n(B) Velocity at C\n(C) Tension in string at B\n(D) Tension in string at C\nColumn-II:\n(P) 7 mg\n(Q) √(5gR)\n(R) √(7gR)\n(S) 5 mg\n(T) None",
+        "options": ["(A)-(R) ; B-(Q) ; C-(S) ; D-(T)", "(A)-(R) ; B-(Q) ; C-(P) ; D-(S)", "(A)-(R) ; B-(Q) ; C-(T) ; D-(P)", "(A)-(R) ; B-(Q) ; C-(P) ; D-(T)"],
+        "answer": "(A)-(R) ; B-(Q) ; C-(P) ; D-(S)",
+        "level": "medium",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778622685986.png",
+        "diagramCrop": [600, 500, 950, 750]
+    },
+    {
+        "questionId": "Q-PHY-WPE-25",
+        "questionText": "A bucket at the end of a 1.6m long string is whirled in a vertical circle with constant speed. What should be the minimum speed at top most point so that the water from the bucket does not split when the bucket is at the highest position? (Take g = 10m/s² )",
+        "options": ["4m/s", "6.25m/s", "16m/s", "√80m/s"],
+        "answer": "4m/s",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-26",
+        "questionText": "A particle is kept at rest at the top of a sphere of diameter 42 m. When disturbed slightly, its slides down. At what height h from the bottom, the particle will leave the sphere",
+        "options": ["14 m", "28 m", "35 m", "7 m"],
+        "answer": "35 m",
+        "level": "medium",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-27",
+        "questionText": "A small body slides down a frictionless track after being released from rest from a point at a vertical height h. The track ends in a vertical circular hoop which is in the form of a vertical circle of diameter D. The body remains in contact with the hoop as it moves along it and completes the circle. The minimum height h in terms of the diameter D of the hoop is",
+        "options": ["4D/4", "3D/4", "5D/4", "6D/4"],
+        "answer": "5D/4",
+        "level": "hard",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-28",
+        "questionText": "The banking angle for a curved road of radius 490m for a vehicle moving at 35m s⁻¹ is :",
+        "options": ["tan⁻¹(0.25)", "tan⁻¹(0.55)", "tan⁻¹(0.45)", "tan⁻¹(0.75)"],
+        "answer": "tan⁻¹(0.25)",
+        "level": "easy",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-29",
+        "questionText": "The velocity of a body revolving in a vertical circle of radius ' r ' at the lowest point √(7gr). The ratio of maximum to minimum tensions in the string is",
+        "options": ["8 : 1", "4 : 1", "√7 : 1", "1 : √7"],
+        "answer": "4 : 1",
+        "level": "hard",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-30",
+        "questionText": "A body of weight 10N attached to one end of a string of length 1m is rotated in a vertical plane. At the instant when the string makes an angle of 60° with the downward vertical, the speed of the bob is √(9.8) m s⁻¹. The tension in the string at that instant is equal to",
+        "options": ["10N", "15N", "20N", "25N"],
+        "answer": "15N",
+        "level": "hard",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-31",
+        "questionText": "Three balls A, B and C of masses 2 kg, 4 kg and 8 kg, respectively, move along the same straight line and in the same direction, with velocities 4 m/s, 1 m/s and 3/4 m/s. If A collides with B and subsequently B collides with C, find the velocity of ball A and ball B after collision respectively, taking the coefficient of restitution as unity.",
+        "options": ["3 m/s , 9/4 m/s", "0 m/s , 3 m/s", "3 m/s , 0 m/s", "0 m/s , 0 m/s"],
+        "answer": "0 m/s , 3 m/s",
+        "level": "hard",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778622704520.png",
+        "diagramCrop": [650, 350, 950, 450]
+    },
+    {
+        "questionId": "Q-PHY-WPE-32",
+        "questionText": "A particle of mass 'm' is moving with speed '2v' and collides with a mass '2m' moving with speed 'v' in the same direction. After collision, the first mass is stopped completely while the second one splits into two particles each of mass 'm', which move at angle 45° with respect to the origianl direction. The speed of each of the moving particle will be :",
+        "options": ["v/(2√2)", "2√2v", "√2v", "v/√2"],
+        "answer": "2√2v",
+        "level": "hard",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-33",
+        "questionText": "The figure shows two blocks of mass m each, connected by an ideal unstretched spring and then placed on a frictionless floor. If the blocks are given velocities v₀ and 2v₀ as shown, then the maximum extension in the spring is",
+        "options": ["√(mv₀²/k)", "√(mv₀²/2k)", "√(9mv₀²/2k)", "None of these"],
+        "answer": "√(mv₀²/2k)",
+        "level": "hard",
+        "type": "MCQ",
+        "diagramSourceImage": "media__1778622704520.png",
+        "diagramCrop": [550, 650, 950, 750]
+    },
+    {
+        "questionId": "Q-PHY-WPE-34",
+        "questionText": "A body of mass m₁ moving with an unknown velocity of v₁î, undergoes a collinear collision with a body of mass m₂ moving with a velocity v₂î . After collision, m₁ and m₂ move with velocities of v₃î and v₄î , respectively. If m₂ = 0.5 m₁ and v₃ = 0.5v₁ , then v₁ is :-",
+        "options": ["v₄ - v₂/4", "v₄ - v₂/2", "v₄ - v₂", "v₄ + v₂"],
+        "answer": "v₄ - v₂",
+        "level": "hard",
+        "type": "MCQ"
+    },
+    {
+        "questionId": "Q-PHY-WPE-35",
+        "questionText": "A projectile of mass M is fired so that the horizontal range is 4 km. At the highest point the projectile explodes in two parts of masses M/4 and 3M/4 respectively and the heavier part starts falling down vertically with zero initial speed. The horizontal range (distance from point of firing) of the lighter part is :",
+        "options": ["16 km", "1 km", "10 km", "2 km"],
+        "answer": "16 km",
+        "level": "hard",
+        "type": "MCQ"
+    }
+]
