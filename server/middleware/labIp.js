@@ -32,12 +32,8 @@ const labIpOnly = (req, res, next) => {
     next();
 };
 
-/**
- * detectLabIp middleware — attaches isLabIp flag WITHOUT blocking.
- * Used in scorecard routes to conditionally show/hide answer key.
- */
 const detectLabIp = (req, res, next) => {
-    const labIps = (process.env.LAB_IP || '*')
+    const labIps = (process.env.LAB_IP || '127.0.0.1')
         .split(',')
         .map(ip => ip.trim());
 
@@ -48,7 +44,7 @@ const detectLabIp = (req, res, next) => {
         '';
 
     const normalizedIp = clientIp.replace('::ffff:', '');
-    req.isLabIp = labIps.includes(normalizedIp) || labIps.includes('*');
+    req.isLabIp = labIps.includes(normalizedIp);
     req.clientIp = normalizedIp;
     next();
 };

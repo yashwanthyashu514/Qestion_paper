@@ -373,7 +373,7 @@ router.get('/:id/scorecard/:sessionId', detectLabIp, async (req, res) => {
         const exam = await OnlineExam.findById(req.params.id);
         if (!exam) return res.status(404).json({ msg: 'Exam not found' });
 
-        const isLab = session.fromLabIp || req.isLabIp;
+        const isLab = (session.fromLabIp || req.isLabIp) && process.env.LAB_IP !== '*';
 
         // Build question-level breakdown
         const originalQuestionIds = exam.questions.map(q => q.questionId).filter(Boolean);
