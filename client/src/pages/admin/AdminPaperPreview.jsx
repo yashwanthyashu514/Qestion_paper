@@ -11,6 +11,29 @@ const AdminPaperPreview = () => {
     const [selectedPaper, setSelectedPaper] = useState(null);
     const [activeTemplate, setActiveTemplate] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showAnswerKey, setShowAnswerKey] = useState(false);
+    const [generatingSolutions, setGeneratingSolutions] = useState({});
+
+    const handleGenerateSolution = async (qId) => {
+        setGeneratingSolutions(prev => ({ ...prev, [qId]: true }));
+        try {
+            const res = await api.post(`/api/questions/${qId}/solve`);
+            setSelectedPaper(prev => {
+                const updatedQuestions = prev.questions.map(q => {
+                    if (q._id === qId) {
+                        return { ...q, solutionText: res.data.solutionText };
+                    }
+                    return q;
+                });
+                return { ...prev, questions: updatedQuestions };
+            });
+        } catch (err) {
+            console.error('Failed to generate solution:', err);
+            alert('Error generating solution. Please try again.');
+        } finally {
+            setGeneratingSolutions(prev => ({ ...prev, [qId]: false }));
+        }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -74,6 +97,12 @@ const AdminPaperPreview = () => {
             <div className="flex justify-between items-center mb-10 no-print p-6 bg-white border border-gray-100 shadow-xl rounded-[2rem] max-w-5xl mx-auto">
                 <button onClick={() => navigate(-1)} className="bg-gray-100 text-slate/50 px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-gray-200 transition">← Back</button>
                 <div className="flex gap-4">
+                    <button 
+                        onClick={() => setShowAnswerKey(!showAnswerKey)} 
+                        className={`px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg ${showAnswerKey ? 'bg-indigo-600 text-white' : 'bg-indigo-100 text-indigo-700'}`}
+                    >
+                        {showAnswerKey ? 'Hide Answer Key' : 'Show Answer Key'}
+                    </button>
                     <button onClick={handlePrint} className="bg-navy text-gold px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg">Print Archive</button>
                     <button onClick={() => exportToWord('.print-area', `${selectedPaper.title.replace(/\s+/g, '_')}.doc`)} className="bg-gold text-navy px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg">Export Doc</button>
                 </div>
@@ -152,6 +181,14 @@ const AdminPaperPreview = () => {
                                                             ))}
                                                         </div>
                                                     )}
+                                                    
+                                                    {showAnswerKey && (
+                                                        <QuestionSolution 
+                                                            q={q} 
+                                                            onGenerateSolution={handleGenerateSolution} 
+                                                            isGenerating={generatingSolutions[q._id]} 
+                                                        />
+                                                    )}
                                                 </div>
                                             ))}
                                         </div>
@@ -186,6 +223,14 @@ const AdminPaperPreview = () => {
                                         ))}
                                     </div>
                                 )}
+
+                                {showAnswerKey && (
+                                    <QuestionSolution 
+                                        q={q} 
+                                        onGenerateSolution={handleGenerateSolution} 
+                                        isGenerating={generatingSolutions[q._id]} 
+                                    />
+                                )}
                             </div>
                         ))
                     )}
@@ -214,6 +259,43 @@ const AdminPaperPreview = () => {
                     @page { margin: 20mm; }
                 }
             `}</style>
+        </div>
+    );
+};
+
+const QuestionSolution = ({ q, onGenerateSolution, isGenerating }) => {
+    return (
+        <div className="mt-5 p-5 bg-indigo-50/60 rounded-2xl border border-indigo-100 text-sm no-print font-sans">
+            <div className="font-black text-indigo-900 mb-3 flex items-center gap-2 text-base">
+                <span>💡</span> Scheme of Evaluation & Hint
+            </div>
+            {q.answer && (
+                <div className="mb-3 text-base">
+                    <strong className="text-gray-700">Correct Answer / Key:</strong> <span className="text-green-700 font-extrabold ml-1 bg-green-50 px-2 py-0.5 rounded border border-green-200">{q.answer}</span>
+                </div>
+            )}
+            {q.solutionText ? (
+                <div className="text-gray-800 text-base whitespace-pre-wrap leading-relaxed bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                    {q.solutionText}
+                </div>
+            ) : (
+                <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                    <span className="text-gray-500 italic block mb-3 text-base">No detailed solution has been created for this question yet.</span>
+                    <button
+                        onClick={() => onGenerateSolution(q._id)}
+                        disabled={isGenerating}
+                        className="bg-indigo-600 hover:bg-indigo-700 text-white font-black px-5 py-2.5 rounded-xl text-xs uppercase tracking-widest transition-all disabled:opacity-50 active:scale-95 shadow-md shadow-indigo-200"
+                    >
+                        {isGenerating ? '🤖 Generating Solution...' : '🤖 Solve with Gemini AI'}
+                    </button>
+                </div>
+            )}
+            {q.solutionImageUrl && (
+                <div className="mt-4">
+                    <div className="text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Diagrammatic Solution</div>
+                    <img src={q.solutionImageUrl} alt="Solution Diagram" className="max-h-56 rounded-xl border border-gray-200 object-contain shadow-sm bg-white p-2" />
+                </div>
+            )}
         </div>
     );
 };

@@ -266,6 +266,34 @@ const toDateStr = (date) => {
 /* ═══════════════════════════════════════════════════════════════════════ */
 const PaperView = ({ paper, activeTemplate, onBack }) => {
     const totalMarks = calcTotal(paper);
+    const [paperData, setPaperData] = useState(paper);
+    const [showAnswerKey, setShowAnswerKey] = useState(false);
+    const [generatingSolutions, setGeneratingSolutions] = useState({});
+
+    useEffect(() => {
+        setPaperData(paper);
+    }, [paper]);
+
+    const handleGenerateSolution = async (qId) => {
+        setGeneratingSolutions(prev => ({ ...prev, [qId]: true }));
+        try {
+            const res = await api.post(`/api/questions/${qId}/solve`);
+            setPaperData(prev => {
+                const updatedQuestions = prev.questions.map(q => {
+                    if (q._id === qId) {
+                        return { ...q, solutionText: res.data.solutionText };
+                    }
+                    return q;
+                });
+                return { ...prev, questions: updatedQuestions };
+            });
+        } catch (err) {
+            console.error('Failed to generate solution:', err);
+            alert('Error generating solution. Please try again.');
+        } finally {
+            setGeneratingSolutions(prev => ({ ...prev, [qId]: false }));
+        }
+    };
     
     // Paper Settings State
     const [settings, setSettings] = useState({
@@ -278,9 +306,9 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
     });
 
     const renderQuestions = () => {
-        if (paper.pattern?.length) {
-            let pool = [...paper.questions];
-            return paper.pattern.map((sec, secIdx) => {
+        if (paperData.pattern?.length) {
+            let pool = [...paperData.questions];
+            return paperData.pattern.map((sec, secIdx) => {
                 const num = sec.numQuestions || 0;
                 let secQs = sec.type
                     ? pool.filter(q => q.type === sec.type).slice(0, num)
@@ -294,12 +322,30 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
                             <div style={{ fontWeight: 700, fontSize: '17px', textDecoration: 'underline' }}>{sec.sectionName}</div>
                             {sec.description && <div style={{ fontSize: '13px', color: '#555', fontStyle: 'italic', marginTop: '4px' }}>{sec.description}</div>}
                         </div>
-                        <QuestionList questions={secQs} fontSize={settings.fontSize} showMarks={settings.showMarks} classes={paper.classes} />
+                        <QuestionList 
+                            questions={secQs} 
+                            fontSize={settings.fontSize} 
+                            showMarks={settings.showMarks} 
+                            classes={paperData.classes} 
+                            showAnswerKey={showAnswerKey}
+                            onGenerateSolution={handleGenerateSolution}
+                            generatingSolutions={generatingSolutions}
+                        />
                     </div>
                 );
             });
         }
-        return <QuestionList questions={paper.questions} fontSize={settings.fontSize} showMarks={settings.showMarks} classes={paper.classes} />;
+        return (
+            <QuestionList 
+                questions={paperData.questions} 
+                fontSize={settings.fontSize} 
+                showMarks={settings.showMarks} 
+                classes={paperData.classes} 
+                showAnswerKey={showAnswerKey}
+                onGenerateSolution={handleGenerateSolution}
+                generatingSolutions={generatingSolutions}
+            />
+        );
     };
 
     return (
@@ -309,15 +355,21 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
                     <button style={S.btnBack} onClick={onBack}>← Back to Papers</button>
                     <div style={S.viewBtns}>
                         <button 
+                            style={{ ...S.btnBack, background: showAnswerKey ? '#4f46e5' : '#f1f5f9', color: showAnswerKey ? '#fff' : '#001f6d' }} 
+                            onClick={() => setShowAnswerKey(!showAnswerKey)}
+                        >
+                            💡 {showAnswerKey ? 'Hide Answer Key' : 'Show Answer Key'}
+                        </button>
+                        <button 
                             style={{ ...S.btnBack, background: settings.showSettings ? '#001f6d' : '#f1f5f9', color: settings.showSettings ? '#fff' : '#001f6d' }} 
                             onClick={() => setSettings(s => ({ ...s, showSettings: !s.showSettings }))}
                         >
                             ⚙️ Paper Settings
                         </button>
-                        {paper.status?.toLowerCase() === 'approved' ? (
+                        {paperData.status?.toLowerCase() === 'approved' ? (
                             <>
                                 <button style={S.btnPrint} onClick={() => window.print()}>🖨 Print Paper</button>
-                                <button style={S.btnPdf} onClick={() => exportToWord('.print-area', `${paper.title.replace(/\s+/g, '_')}.doc`, settings)}>⬇ Export Word</button>
+                                <button style={S.btnPdf} onClick={() => exportToWord('.print-area', `${paperData.title.replace(/\s+/g, '_')}.doc`, settings)}>⬇ Export Word</button>
                             </>
                         ) : (
                             <span style={{ color: '#dc2626', fontSize: '13px', fontWeight: 600, display: 'flex', alignItems: 'center', padding: '0 10px' }}>
@@ -447,7 +499,7 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
     );
 };
 
-const QuestionList = ({ questions, fontSize, showMarks, classes }) => (
+const QuestionList = ({ questions, fontSize, showMarks, classes, showAnswerKey, onGenerateSolution, generatingSolutions }) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         {questions.map((q, idx) => (
             <div key={q._id} style={{ color: '#111', breakInside: 'avoid-column' }}>
@@ -480,6 +532,81 @@ const QuestionList = ({ questions, fontSize, showMarks, classes }) => (
                                 <span dangerouslySetInnerHTML={{ __html: opt }}></span>
                             </div>
                         ))}
+                    </div>
+                )}
+                {showAnswerKey && (
+                    <div className="no-print" style={{
+                        marginTop: '16px',
+                        padding: '16px',
+                        background: '#f5f7ff',
+                        border: '1px solid #c7d2fe',
+                        borderRadius: '12px',
+                        fontFamily: "system-ui, -apple-system, sans-serif",
+                        fontSize: '13px'
+                    }}>
+                        <div style={{ fontWeight: 800, color: '#312e81', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <span>💡</span> Scheme of Evaluation & Hint
+                        </div>
+                        {q.answer && (
+                            <div style={{ marginBottom: '10px', fontSize: '14px' }}>
+                                <strong style={{ color: '#4b5563' }}>Correct Answer / Key:</strong>{' '}
+                                <span style={{ color: '#15803d', fontWeight: 800, background: '#f0fdf4', padding: '2px 8px', borderRadius: '4px', border: '1px solid #bbf7d0' }}>
+                                    {q.answer}
+                                </span>
+                            </div>
+                        )}
+                        {q.solutionText ? (
+                            <div style={{ 
+                                color: '#1e1b4b', 
+                                whiteSpace: 'pre-wrap', 
+                                lineHeight: '1.6', 
+                                background: '#fff', 
+                                padding: '12px', 
+                                borderRadius: '8px', 
+                                border: '1px solid #e0e7ff',
+                                fontSize: '13px'
+                            }}>
+                                {q.solutionText}
+                            </div>
+                        ) : (
+                            <div style={{ background: '#fff', padding: '12px', borderRadius: '8px', border: '1px solid #e0e7ff' }}>
+                                <span style={{ color: '#6b7280', fontStyle: 'italic', display: 'block', marginBottom: '10px' }}>
+                                    No detailed solution has been created for this question yet.
+                                </span>
+                                <button
+                                    onClick={() => onGenerateSolution(q._id)}
+                                    disabled={generatingSolutions[q._id]}
+                                    style={{
+                                        background: '#4f46e5',
+                                        color: '#fff',
+                                        border: 'none',
+                                        borderRadius: '8px',
+                                        padding: '8px 16px',
+                                        fontSize: '11px',
+                                        fontWeight: 700,
+                                        cursor: 'pointer',
+                                        textTransform: 'uppercase',
+                                        letterSpacing: '0.05em',
+                                        transition: 'all 0.2s',
+                                        opacity: generatingSolutions[q._id] ? 0.5 : 1
+                                    }}
+                                >
+                                    {generatingSolutions[q._id] ? '🤖 Generating Solution...' : '🤖 Solve with Gemini AI'}
+                                </button>
+                            </div>
+                        )}
+                        {q.solutionImageUrl && (
+                            <div style={{ marginTop: '12px' }}>
+                                <div style={{ fontSize: '11px', fontWeight: 700, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px' }}>
+                                    Diagrammatic Solution
+                                </div>
+                                <img 
+                                    src={q.solutionImageUrl} 
+                                    alt="Solution Diagram" 
+                                    style={{ maxHeight: '180px', borderRadius: '8px', border: '1px solid #e5e7eb', background: '#fff', padding: '6px', objectFit: 'contain' }} 
+                                />
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
