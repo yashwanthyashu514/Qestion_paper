@@ -5,6 +5,8 @@ import UploadTemplate from './UploadTemplate';
 import CreateTeacher from './CreateTeacher';
 import SubjectDetails from './SubjectDetails';
 import AdminPaperPreview from './AdminPaperPreview';
+import ExamManagement from './ExamManagement';
+import AdminResults from './AdminResults';
 
 const DashboardHome = () => {
     const subjects = ['Physics', 'Chemistry', 'Biology', 'Maths', 'Computer Science', 'Kannada', 'English', 'Hindi'];
@@ -82,6 +84,18 @@ const AdminDashboard = () => {
                 
                 <div className="space-x-4 flex items-center mr-4">
                     <Link 
+                        to="/admin/dashboard/exams" 
+                        className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition flex items-center gap-2 ${location.pathname.includes('/exams') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
+                    >
+                        Exams
+                    </Link>
+                    <Link 
+                        to="/admin/dashboard/results" 
+                        className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition flex items-center gap-2 ${location.pathname.includes('/results') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
+                    >
+                        Results
+                    </Link>
+                    <Link 
                         to="/admin/dashboard/upload-template" 
                         className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition flex items-center gap-2 ${location.pathname.includes('upload-template') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
                     >
@@ -110,6 +124,8 @@ const AdminDashboard = () => {
                     <Route path="/create-teacher" element={<CreateTeacher />} />
                     <Route path="/subject/:subject" element={<SubjectDetails />} />
                     <Route path="/preview/:paperId" element={<AdminPaperPreview />} />
+                    <Route path="/exams" element={<ExamManagement />} />
+                    <Route path="/results" element={<AdminResults />} />
                 </Routes>
             </div>
         </div>

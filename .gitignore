@@ -4,3 +4,4 @@ dist
 build
 # uploads/ removed to allow production images
 .DS_Store
+qpg-clone/

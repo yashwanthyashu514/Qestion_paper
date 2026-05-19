@@ -4,7 +4,7 @@ import axios from 'axios';
 // In LOCAL DEV: leave empty — Vite's proxy forwards /api/* to localhost:5000
 // In PRODUCTION (Vercel): set VITE_API_URL in Vercel dashboard OR in .env file
 //   to your Render backend URL e.g. https://qpg-backend-5h72.onrender.com
-const API_URL = import.meta.env.VITE_API_URL || 'https://qpg-backend-5h72.onrender.com';
+const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '' : 'https://qpg-backend-5h72.onrender.com');
 
 const api = axios.create({
     baseURL: API_URL

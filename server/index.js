@@ -1,3 +1,11 @@
+const dns = require('dns');
+// Set DNS servers to resolve MongoDB SRV records reliably
+try {
+    dns.setServers(['8.8.8.8', '1.1.1.1']);
+} catch (err) {
+    console.warn('⚠️ Warning: Failed to set custom DNS servers for MongoDB connection:', err.message);
+}
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -9,6 +17,8 @@ const adminRoutes = require('./routes/admin.js');
 const questionRoutes = require('./routes/questions.js');
 const paperRoutes = require('./routes/papers.js');
 const templateRoutes = require('./routes/templates.js');
+const examRoutes = require('./routes/exams.js');
+const labRoutes = require('./routes/lab.js');
 
 dotenv.config();
 
@@ -50,6 +60,8 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/questions', questionRoutes);
 app.use('/api/papers', paperRoutes);
 app.use('/api/templates', templateRoutes);
+app.use('/api/exams', examRoutes);
+app.use('/api/lab', labRoutes);
 
 // ── Global error handler
 app.use((err, req, res, next) => {

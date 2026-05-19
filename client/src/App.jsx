@@ -8,8 +8,16 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import TeacherDashboard from './pages/teacher/TeacherDashboard';
 import CreatePaper from './pages/teacher/CreatePaper';
 
+// New exam & lab pages
+import LabLogin from './pages/lab/LabLogin';
+import LabExamList from './pages/lab/LabExamList';
+import ExamInstructions from './pages/exam/ExamInstructions';
+import ExamEngine from './pages/exam/ExamEngine';
+import Scorecard from './pages/exam/Scorecard';
+import Disqualified from './pages/exam/Disqualified';
+import BridgeApp from './pages/admin/BridgeApp';
+
 // ── App Loader Linker ────────────────────────────────────────────────────────
-// This small component connects the LoadingContext with the Axios instance
 const ApiLoaderLinker = ({ children }) => {
     const { showLoader, hideLoader } = useLoading();
 
@@ -18,8 +26,6 @@ const ApiLoaderLinker = ({ children }) => {
             if (isLoading) showLoader();
             else hideLoader();
         });
-        
-        // Cleanup: remove callback when app unmounts
         return () => setLoadingCallback(() => {});
     }, [showLoader, hideLoader]);
 
@@ -28,15 +34,9 @@ const ApiLoaderLinker = ({ children }) => {
 
 const ProtectedRoute = ({ children, role }) => {
     const { user, loading } = useContext(AuthContext);
-    
-    if (loading) return null; // Let global loader handle initial auth
-    
+    if (loading) return null;
     if (!user) return <Navigate to="/" />;
-    
-    if (role && user.role !== role) {
-        return <Navigate to="/" />;
-    }
-
+    if (role && user.role !== role) return <Navigate to="/" />;
     return children;
 };
 
@@ -47,7 +47,7 @@ function App() {
             <ApiLoaderLinker>
                 <Router>
                     <Routes>
-                        {/* Unified Public Login Route */}
+                        {/* Unified Public Login */}
                         <Route path="/" element={<UnifiedLogin />} />
 
                         {/* Admin Routes */}
@@ -68,6 +68,22 @@ function App() {
                                 <CreatePaper />
                             </ProtectedRoute>
                         } />
+
+                        {/* ── Lab Portal ── */}
+                        <Route path="/lab-login" element={<LabLogin />} />
+                        <Route path="/lab/exams" element={<LabExamList />} />
+
+                        {/* ── Exam Flow (Public — accessible via shared link or lab) ── */}
+                        <Route path="/exam/:examId/instructions" element={<ExamInstructions />} />
+                        <Route path="/exam/:examId" element={<ExamEngine />} />
+                        <Route path="/exam/:examId/scorecard/:sessionId" element={<Scorecard />} />
+                        <Route path="/exam/disqualified" element={<Disqualified />} />
+
+                        {/* ── Bridge App ── */}
+                        <Route path="/bridge-app" element={<BridgeApp />} />
+
+                        {/* Fallback */}
+                        <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                 </Router>
             </ApiLoaderLinker>
