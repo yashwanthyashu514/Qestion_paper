@@ -21,7 +21,7 @@ const upload = multer({
 // @route   POST /api/questions
 // @desc    Add a question
 // @access  Teacher / Admin
-router.post('/', [auth, checkRole(['admin', 'teacher']), upload.single('image')], async (req, res) => {
+router.post('/', [auth, checkRole(['admin', 'teacher']), upload.fields([{ name: 'image', maxCount: 1 }, { name: 'solutionImage', maxCount: 1 }])], async (req, res) => {
     try {
         // Teacher can only add question for their assigned subject. Admin sets subject from request or defaults.
         const subject = req.user.role === 'admin' ? (req.body.subject || 'Chemistry') : req.user.subject;
@@ -45,9 +45,13 @@ router.post('/', [auth, checkRole(['admin', 'teacher']), upload.single('image')]
             questionData.classes = [req.body.classes];
         }
 
-        if (req.file) {
-            // Cloudinary returns the full URL in req.file.path
-            questionData.imageUrl = req.file.path;
+        if (req.files) {
+            if (req.files.image && req.files.image[0]) {
+                questionData.imageUrl = req.files.image[0].path;
+            }
+            if (req.files.solutionImage && req.files.solutionImage[0]) {
+                questionData.solutionImageUrl = req.files.solutionImage[0].path;
+            }
         }
 
         const question = new Question(questionData);
@@ -112,7 +116,7 @@ router.delete('/:id', [auth, checkRole(['admin', 'teacher'])], async (req, res) 
 // @route   POST /api/questions/update/:id
 // @desc    Update a question
 // @access  Teacher / Admin
-router.post('/update/:id', [auth, checkRole(['admin', 'teacher']), upload.single('image')], async (req, res) => {
+router.post('/update/:id', [auth, checkRole(['admin', 'teacher']), upload.fields([{ name: 'image', maxCount: 1 }, { name: 'solutionImage', maxCount: 1 }])], async (req, res) => {
     try {
         let question = await Question.findById(req.params.id);
         if (!question) return res.status(404).json({ msg: 'Question not found' });
@@ -135,8 +139,13 @@ router.post('/update/:id', [auth, checkRole(['admin', 'teacher']), upload.single
             questionData.classes = [req.body.classes];
         }
 
-        if (req.file) {
-            questionData.imageUrl = req.file.path;
+        if (req.files) {
+            if (req.files.image && req.files.image[0]) {
+                questionData.imageUrl = req.files.image[0].path;
+            }
+            if (req.files.solutionImage && req.files.solutionImage[0]) {
+                questionData.solutionImageUrl = req.files.solutionImage[0].path;
+            }
         }
 
         question = await Question.findByIdAndUpdate(

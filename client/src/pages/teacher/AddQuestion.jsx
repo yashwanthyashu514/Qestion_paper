@@ -11,9 +11,11 @@ const AddQuestion = () => {
         type: 'MCQ',
         questionText: '',
         options: ['', '', '', ''],
-        answer: ''
+        answer: '',
+        solutionText: ''
     });
     const [imageFile, setImageFile] = useState(null);
+    const [solutionImageFile, setSolutionImageFile] = useState(null);
     const [editId, setEditId] = useState(null);
 
     const fetchQuestions = async () => {
@@ -40,12 +42,18 @@ const AddQuestion = () => {
             submitData.append('type', formData.type);
             submitData.append('questionText', formData.questionText);
             submitData.append('answer', formData.answer);
+            if (formData.solutionText) {
+                submitData.append('solutionText', formData.solutionText);
+            }
             
             if (formData.type === 'MCQ') {
                 submitData.append('options', JSON.stringify(formData.options));
             }
             if (imageFile) {
                 submitData.append('image', imageFile);
+            }
+            if (solutionImageFile) {
+                submitData.append('solutionImage', solutionImageFile);
             }
 
             if (editId) {
@@ -60,8 +68,9 @@ const AddQuestion = () => {
                 alert('Question added successfully!');
             }
             
-            setFormData({ chapter: '', concept: '', level: 'easy', classes: '11', type: 'MCQ', questionText: '', answer: '', options: ['', '', '', ''] });
+            setFormData({ chapter: '', concept: '', level: 'easy', classes: '11', type: 'MCQ', questionText: '', answer: '', solutionText: '', options: ['', '', '', ''] });
             setImageFile(null);
+            setSolutionImageFile(null);
             setEditId(null);
             fetchQuestions();
             setShowForm(false);
@@ -82,7 +91,8 @@ const AddQuestion = () => {
             type: q.type || 'MCQ',
             questionText: q.questionText || '',
             options: q.options && q.options.length === 4 ? q.options : ['', '', '', ''],
-            answer: q.answer || ''
+            answer: q.answer || '',
+            solutionText: q.solutionText || ''
         });
         setEditId(q._id);
         setShowForm(true);
@@ -113,7 +123,9 @@ const AddQuestion = () => {
                         if (showForm) {
                             setShowForm(false);
                             setEditId(null);
-                            setFormData({ chapter: '', concept: '', level: 'easy', classes: '11', type: 'MCQ', questionText: '', answer: '', options: ['', '', '', ''] });
+                            setFormData({ chapter: '', concept: '', level: 'easy', classes: '11', type: 'MCQ', questionText: '', answer: '', solutionText: '', options: ['', '', '', ''] });
+                            setImageFile(null);
+                            setSolutionImageFile(null);
                         } else {
                             setShowForm(true);
                         }
@@ -252,6 +264,45 @@ const AddQuestion = () => {
                             <label className="block text-sm font-bold text-gray-700 mb-1">Correct Answer / Marking Scheme (Optional)</label>
                             <input type="text" placeholder="Enter answer or hints..." className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-green-500" value={formData.answer} onChange={e=>setFormData({...formData, answer: e.target.value})} />
                         </div>
+
+                        <div className="bg-gray-50/50 p-6 rounded-2xl border border-gray-200">
+                            <h4 className="font-black text-navy mb-4 border-b border-gray-200 pb-2">Detailed Solution (Optional)</h4>
+                            
+                            <label className="block text-sm font-bold text-gray-700 mb-1">Solution Description</label>
+                            <textarea placeholder="Enter detailed step-by-step solution here..." className="w-full border border-gray-300 p-3 rounded-lg h-24 focus:ring-2 focus:ring-green-500 mb-4" value={formData.solutionText} onChange={e=>setFormData({...formData, solutionText: e.target.value})}></textarea>
+                            
+                            <label className="block text-sm font-bold text-gray-700 mb-1 mt-2">Diagramatic Solution / Reference Image</label>
+                            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center bg-white hover:bg-green-50 hover:border-green-400 transition cursor-pointer relative"
+                                 onDragOver={(e) => { e.preventDefault(); e.currentTarget.classList.add('bg-green-50', 'border-green-400'); }}
+                                 onDragLeave={(e) => { e.preventDefault(); e.currentTarget.classList.remove('bg-green-50', 'border-green-400'); }}
+                                 onDrop={(e) => {
+                                     e.preventDefault();
+                                     e.currentTarget.classList.remove('bg-green-50', 'border-green-400');
+                                     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                                         setSolutionImageFile(e.dataTransfer.files[0]);
+                                     }
+                                 }}
+                            >
+                                <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => {
+                                    if (e.target.files && e.target.files[0]) setSolutionImageFile(e.target.files[0]);
+                                }} />
+                                {solutionImageFile ? (
+                                    <div className="flex flex-col items-center">
+                                        <div className="text-green-600 mb-2">
+                                            <svg className="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                                        </div>
+                                        <span className="font-medium text-gray-800">{solutionImageFile.name}</span>
+                                        <span className="text-xs text-gray-500 mt-1">Click or drag to replace</span>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <div className="text-gray-400 mb-2 text-3xl">📐</div>
+                                        <span className="font-medium text-gray-600 block">Drag and drop solution image here</span>
+                                        <span className="text-xs text-gray-500">or click to browse from your computer</span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                         
                         <button type="submit" className="w-full bg-navy text-gold font-black py-5 rounded-2xl hover:scale-[1.01] shadow-2xl transition-all transform active:scale-95 mt-6 uppercase tracking-[0.2em] text-xs">
                             {editId ? 'Update Repository Entry' : 'Finalize Repository Entry'}
@@ -287,6 +338,22 @@ const AddQuestion = () => {
                                     {q.options.map((opt, idx) => (
                                         <div key={idx} className="flex"><strong className="mr-1">{String.fromCharCode(65+idx)})</strong> <span dangerouslySetInnerHTML={{ __html: opt }}></span></div>
                                     ))}
+                                </div>
+                            )}
+
+                            {(q.solutionText || q.solutionImageUrl) && (
+                                <div className="mt-4 bg-green-50/50 p-4 rounded-lg border border-green-100">
+                                    <h5 className="font-bold text-green-800 text-sm mb-2 flex items-center gap-2">
+                                        <span>💡</span> Detailed Solution
+                                    </h5>
+                                    {q.solutionText && (
+                                        <p className="text-sm text-gray-700 whitespace-pre-wrap mb-2" dangerouslySetInnerHTML={{ __html: q.solutionText }}></p>
+                                    )}
+                                    {q.solutionImageUrl && (
+                                        <div className="mt-2">
+                                            <img src={q.solutionImageUrl} alt="Solution Diagram" className="max-h-48 rounded border border-gray-200" />
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>
