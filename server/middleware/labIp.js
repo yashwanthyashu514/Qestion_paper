@@ -3,7 +3,7 @@
  * LAB_IP is stored in .env (supports comma-separated list for multiple labs).
  */
 const labIpOnly = (req, res, next) => {
-    const labIps = (process.env.LAB_IP || '127.0.0.1')
+    const labIps = (process.env.LAB_IP || '*')
         .split(',')
         .map(ip => ip.trim());
 
@@ -37,7 +37,7 @@ const labIpOnly = (req, res, next) => {
  * Used in scorecard routes to conditionally show/hide answer key.
  */
 const detectLabIp = (req, res, next) => {
-    const labIps = (process.env.LAB_IP || '127.0.0.1')
+    const labIps = (process.env.LAB_IP || '*')
         .split(',')
         .map(ip => ip.trim());
 
