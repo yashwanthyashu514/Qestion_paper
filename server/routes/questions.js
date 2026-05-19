@@ -161,4 +161,76 @@ router.post('/update/:id', [auth, checkRole(['admin', 'teacher']), upload.fields
     }
 });
 
+// @route   POST /api/questions/:id/solve
+// @desc    Solve a question using Gemini AI if no solution is saved, otherwise return saved solution
+// @access  Public
+router.post('/:id/solve', async (req, res) => {
+    try {
+        const Question = require('../models/Question');
+        const question = await Question.findById(req.params.id);
+        if (!question) return res.status(404).json({ msg: 'Question not found' });
+
+        if (question.solutionText) {
+            return res.json({
+                solutionText: question.solutionText,
+                solutionImageUrl: question.solutionImageUrl,
+                source: 'database'
+            });
+        }
+
+        // Call Gemini API
+        const apiKey = process.env.GEMINI_API_KEY;
+        if (!apiKey) {
+            return res.status(500).json({ msg: 'Gemini API Key is not configured on the server.' });
+        }
+
+        const prompt = `Solve the following question step-by-step. Provide a clear, detailed explanation/hint for the correct answer.
+        
+Question: ${question.questionText}
+Options:
+${question.options && question.options.length > 0 ? question.options.map((opt, i) => `${String.fromCharCode(65+i)}. ${opt}`).join('\n') : 'No options provided'}
+Correct Answer: ${question.answer || 'Not specified'}
+
+Format the solution beautifully using markdown. Keep the tone helpful and academic. Provide step-by-step calculation or reasoning.`;
+
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{ text: prompt }]
+                }]
+            })
+        });
+
+        if (!response.ok) {
+            const errData = await response.json();
+            console.error('Gemini API Error:', errData);
+            return res.status(502).json({ msg: 'Failed to generate solution from Gemini AI', error: errData });
+        }
+
+        const data = await response.json();
+        const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        
+        if (!generatedText) {
+            return res.status(502).json({ msg: 'Empty response from Gemini AI' });
+        }
+
+        // Save solution to database for future requests
+        question.solutionText = generatedText;
+        await question.save();
+
+        res.json({
+            solutionText: generatedText,
+            solutionImageUrl: question.solutionImageUrl,
+            source: 'gemini'
+        });
+    } catch (err) {
+        console.error('Solve question error:', err.message);
+        res.status(500).json({ msg: 'Server Error', error: err.message });
+    }
+});
+
 module.exports = router;

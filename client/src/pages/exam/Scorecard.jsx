@@ -8,6 +8,38 @@ export default function Scorecard() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('summary');
+    const [expandedSolutions, setExpandedSolutions] = useState({});
+    const [expandedSolutionsData, setExpandedSolutionsData] = useState({});
+    const [loadingSolutions, setLoadingSolutions] = useState({});
+
+    const toggleSolution = async (qIndex, questionId, savedSolutionText) => {
+        if (expandedSolutions[qIndex]) {
+            setExpandedSolutions(prev => ({ ...prev, [qIndex]: false }));
+            return;
+        }
+
+        if (savedSolutionText || expandedSolutionsData[qIndex]) {
+            setExpandedSolutions(prev => ({ ...prev, [qIndex]: true }));
+            return;
+        }
+
+        if (!questionId) {
+            alert('Cannot generate solution: Original question ID is missing.');
+            return;
+        }
+
+        setLoadingSolutions(prev => ({ ...prev, [qIndex]: true }));
+        try {
+            const res = await api.post(`/api/questions/${questionId}/solve`);
+            setExpandedSolutionsData(prev => ({ ...prev, [qIndex]: res.data }));
+            setExpandedSolutions(prev => ({ ...prev, [qIndex]: true }));
+        } catch (err) {
+            console.error('Failed to load solution:', err);
+            alert('Could not retrieve solution. Please try again.');
+        } finally {
+            setLoadingSolutions(prev => ({ ...prev, [qIndex]: false }));
+        }
+    };
 
     useEffect(() => {
         api.get(`/api/exams/${examId}/scorecard/${sessionId}`)
@@ -185,6 +217,50 @@ export default function Scorecard() {
                                             })}
                                         </div>
                                         {q.markedForReview && <div style={styles.markedTag}>🔖 Marked for Review</div>}
+
+                                        {/* Solution Section */}
+                                        <div style={{ marginTop: 14 }}>
+                                            <button 
+                                                style={styles.solutionBtn}
+                                                onClick={() => toggleSolution(i, q.questionId, q.solutionText)}
+                                                disabled={loadingSolutions[i]}
+                                            >
+                                                {loadingSolutions[i] 
+                                                    ? '🤖 Generating Solution...' 
+                                                    : expandedSolutions[i] 
+                                                        ? '💡 Hide Scheme & Solution' 
+                                                        : '💡 View Scheme & Solution'}
+                                            </button>
+
+                                            {expandedSolutions[i] && (
+                                                <div style={styles.solutionBox}>
+                                                    <h5 style={styles.solutionBoxTitle}>📋 Scheme of Evaluation & Hint</h5>
+                                                    <div style={styles.solutionContent}>
+                                                        {(() => {
+                                                            const sol = expandedSolutionsData[i] || { solutionText: q.solutionText, solutionImageUrl: q.solutionImageUrl };
+                                                            return (
+                                                                <>
+                                                                    {sol.solutionText ? (
+                                                                        <p style={{ margin: 0, whiteSpace: 'pre-wrap' }}>
+                                                                            {sol.solutionText}
+                                                                        </p>
+                                                                    ) : (
+                                                                        <p style={{ margin: 0, color: '#ef4444' }}>
+                                                                            No solution found.
+                                                                        </p>
+                                                                    )}
+                                                                    {sol.solutionImageUrl && (
+                                                                        <div style={{ marginTop: 12 }}>
+                                                                            <img src={sol.solutionImageUrl} alt="Solution Diagram" style={{ maxWidth: '100%', maxHeight: 200, borderRadius: 8, border: '1px solid #e5e7eb' }} />
+                                                                        </div>
+                                                                    )}
+                                                                </>
+                                                            );
+                                                        })()}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 );
                             })}
@@ -262,5 +338,41 @@ const styles = {
     reviewOption: { borderRadius: 8, padding: '9px 14px', fontSize: 14, display: 'flex', alignItems: 'center' },
     reviewOptLabel: { fontWeight: 700, marginRight: 8 },
     markedTag: { fontSize: 12, color: '#8b5cf6', marginTop: 10 },
-    center: { display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', fontFamily: 'Inter, sans-serif', color: '#6b7280' }
+    center: { display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', fontFamily: 'Inter, sans-serif', color: '#6b7280' },
+    solutionBtn: {
+        background: '#e0e7ff',
+        color: '#4338ca',
+        border: 'none',
+        borderRadius: 8,
+        padding: '8px 14px',
+        fontSize: 12,
+        fontWeight: 700,
+        cursor: 'pointer',
+        marginTop: 10,
+        transition: 'all 0.2s',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 6
+    },
+    solutionBox: {
+        background: '#f5f7ff',
+        border: '1px solid #c7d2fe',
+        borderRadius: 10,
+        padding: '14px 16px',
+        marginTop: 10,
+        animation: 'fadeIn 0.3s ease-out'
+    },
+    solutionBoxTitle: {
+        margin: '0 0 8px 0',
+        fontSize: 13,
+        fontWeight: 800,
+        color: '#312e81',
+        textTransform: 'uppercase',
+        letterSpacing: '0.05em'
+    },
+    solutionContent: {
+        fontSize: 13,
+        color: '#1e1b4b',
+        lineHeight: 1.6
+    }
 };

@@ -195,18 +195,6 @@ function ExamPrintView({ exam, templates, settings, setSettings, onBack }) {
                                 ))}
                             </select>
                         </div>
-                        <div>
-                            <label style={printViewStyles.label}>Evaluation Scheme</label>
-                            <select 
-                                style={styles.input} 
-                                value={settings.showAnswers || 'none'}
-                                onChange={e => setSettings(s => ({ ...s, showAnswers: e.target.value }))}
-                            >
-                                <option value="none">Questions Only</option>
-                                <option value="keys">Show Answer Keys</option>
-                                <option value="solutions">Answer Keys + Detailed Solutions</option>
-                            </select>
-                        </div>
                         <div style={{ gridColumn: 'span 3', marginTop: '12px' }}>
                             <label style={printViewStyles.label}>Print Sheet Instructions</label>
                             <textarea 
@@ -292,47 +280,6 @@ function ExamPrintView({ exam, templates, settings, setSettings, onBack }) {
                                         ))}
                                     </div>
                                 )}
-                                
-                                {settings.showAnswers !== 'none' && q.answer && (
-                                    <div style={{ 
-                                        marginTop: '10px', 
-                                        marginLeft: '24px', 
-                                        fontSize: '0.9em',
-                                        color: '#b91c1c', 
-                                        fontWeight: 'bold',
-                                        backgroundColor: '#fef2f2',
-                                        padding: '4px 10px',
-                                        borderRadius: '4px',
-                                        display: 'inline-block',
-                                        breakInside: 'avoid'
-                                    }}>
-                                        Correct Answer: {q.answer}
-                                    </div>
-                                )}
-
-                                {settings.showAnswers === 'solutions' && (q.solutionText || q.solutionImageUrl) && (
-                                    <div style={{ 
-                                        marginTop: '8px', 
-                                        marginLeft: '24px', 
-                                        fontSize: '0.85em',
-                                        color: '#374151',
-                                        backgroundColor: '#f0fdf4',
-                                        border: '1px dashed #bbf7d0',
-                                        padding: '8px 12px',
-                                        borderRadius: '6px',
-                                        breakInside: 'avoid'
-                                    }}>
-                                        <div style={{ fontWeight: 700, color: '#166534', marginBottom: '2px' }}>💡 Solution & Scheme of Evaluation:</div>
-                                        {q.solutionText && (
-                                            <p style={{ margin: 0, whiteSpace: 'pre-wrap' }} dangerouslySetInnerHTML={{ __html: q.solutionText }}></p>
-                                        )}
-                                        {q.solutionImageUrl && (
-                                            <div style={{ marginTop: '6px' }}>
-                                                <img src={q.solutionImageUrl} alt="Solution Diagram" style={{ maxWidth: '100%', maxHeight: '180px', objectFit: 'contain' }} />
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
                             </div>
                         ))}
                     </div>
@@ -403,8 +350,7 @@ export default function ExamManagement() {
         columns: 1,
         showMarks: true,
         selectedTemplateId: '',
-        showSettings: true,
-        showAnswers: 'none'
+        showSettings: true
     });
 
     useEffect(() => { 

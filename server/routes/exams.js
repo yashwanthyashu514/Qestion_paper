@@ -77,8 +77,6 @@ router.post('/merge', [auth, checkRole(['admin'])], async (req, res) => {
                         options: q.options || [],
                         answer: q.answer,
                         imageUrl: q.imageUrl,
-                        solutionText: q.solutionText || '',
-                        solutionImageUrl: q.solutionImageUrl || '',
                         marks: 4
                     });
                 }
@@ -378,16 +376,27 @@ router.get('/:id/scorecard/:sessionId', detectLabIp, async (req, res) => {
         const isLab = session.fromLabIp || req.isLabIp;
 
         // Build question-level breakdown
+        const originalQuestionIds = exam.questions.map(q => q.questionId).filter(Boolean);
+        const originalQuestions = await Question.find({ _id: { $in: originalQuestionIds } });
+        const originalQuestionsMap = {};
+        originalQuestions.forEach(oq => {
+            originalQuestionsMap[oq._id.toString()] = oq;
+        });
+
         const breakdown = exam.questions.map(q => {
             const ans = session.answers.find(a => a.questionId?.toString() === q._id?.toString());
+            const origQ = q.questionId ? originalQuestionsMap[q.questionId.toString()] : null;
             const entry = {
                 _id: q._id,
+                questionId: q.questionId,
                 questionText: q.questionText,
                 subject: q.subject,
                 chapter: q.chapter,
                 options: q.options,
                 selectedOption: ans?.selectedOption || null,
-                markedForReview: ans?.markedForReview || false
+                markedForReview: ans?.markedForReview || false,
+                solutionText: origQ?.solutionText || '',
+                solutionImageUrl: origQ?.solutionImageUrl || ''
             };
 
             // Conditionally expose correct answer
