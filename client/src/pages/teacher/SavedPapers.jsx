@@ -274,7 +274,8 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
         lineHeight: '1.5',
         columns: 1,
         showMarks: true,
-        showSettings: false
+        showSettings: false,
+        showAnswers: 'none'
     });
 
     const renderQuestions = () => {
@@ -294,12 +295,12 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
                             <div style={{ fontWeight: 700, fontSize: '17px', textDecoration: 'underline' }}>{sec.sectionName}</div>
                             {sec.description && <div style={{ fontSize: '13px', color: '#555', fontStyle: 'italic', marginTop: '4px' }}>{sec.description}</div>}
                         </div>
-                        <QuestionList questions={secQs} fontSize={settings.fontSize} showMarks={settings.showMarks} classes={paper.classes} />
+                        <QuestionList questions={secQs} fontSize={settings.fontSize} showMarks={settings.showMarks} classes={paper.classes} showAnswers={settings.showAnswers} />
                     </div>
                 );
             });
         }
-        return <QuestionList questions={paper.questions} fontSize={settings.fontSize} showMarks={settings.showMarks} classes={paper.classes} />;
+        return <QuestionList questions={paper.questions} fontSize={settings.fontSize} showMarks={settings.showMarks} classes={paper.classes} showAnswers={settings.showAnswers} />;
     };
 
     return (
@@ -392,6 +393,18 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
                                 <option value="no">No (Hide)</option>
                             </select>
                         </div>
+                        <div>
+                            <label style={{ ...S.filterLabel, display: 'block', marginBottom: '8px' }}>Evaluation Scheme</label>
+                            <select 
+                                style={S.filterSelect} 
+                                value={settings.showAnswers || 'none'}
+                                onChange={e => setSettings(s => ({ ...s, showAnswers: e.target.value }))}
+                            >
+                                <option value="none">Questions Only</option>
+                                <option value="keys">Show Answer Keys</option>
+                                <option value="solutions">Answer Keys + Detailed Solutions</option>
+                            </select>
+                        </div>
                     </div>
                 )}
             </div>
@@ -447,7 +460,7 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
     );
 };
 
-const QuestionList = ({ questions, fontSize, showMarks, classes }) => (
+const QuestionList = ({ questions, fontSize, showMarks, classes, showAnswers }) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         {questions.map((q, idx) => (
             <div key={q._id} style={{ color: '#111', breakInside: 'avoid-column' }}>
@@ -480,6 +493,47 @@ const QuestionList = ({ questions, fontSize, showMarks, classes }) => (
                                 <span dangerouslySetInnerHTML={{ __html: opt }}></span>
                             </div>
                         ))}
+                    </div>
+                )}
+                
+                {showAnswers !== 'none' && q.answer && (
+                    <div style={{ 
+                        marginTop: '10px', 
+                        marginLeft: '24px', 
+                        fontSize: '0.9em',
+                        color: '#b91c1c', 
+                        fontWeight: 'bold',
+                        backgroundColor: '#fef2f2',
+                        padding: '4px 10px',
+                        borderRadius: '4px',
+                        display: 'inline-block',
+                        breakInside: 'avoid'
+                    }}>
+                        Correct Answer: {q.answer}
+                    </div>
+                )}
+
+                {showAnswers === 'solutions' && (q.solutionText || q.solutionImageUrl) && (
+                    <div style={{ 
+                        marginTop: '8px', 
+                        marginLeft: '24px', 
+                        fontSize: '0.85em',
+                        color: '#374151',
+                        backgroundColor: '#f0fdf4',
+                        border: '1px dashed #bbf7d0',
+                        padding: '8px 12px',
+                        borderRadius: '6px',
+                        breakInside: 'avoid'
+                    }}>
+                        <div style={{ fontWeight: 700, color: '#166534', marginBottom: '2px' }}>💡 Solution & Scheme of Evaluation:</div>
+                        {q.solutionText && (
+                            <p style={{ margin: 0, whiteSpace: 'pre-wrap' }} dangerouslySetInnerHTML={{ __html: q.solutionText }}></p>
+                        )}
+                        {q.solutionImageUrl && (
+                            <div style={{ marginTop: '6px' }}>
+                                <img src={q.solutionImageUrl} alt="Solution Diagram" style={{ maxWidth: '100%', maxHeight: '180px', objectFit: 'contain' }} />
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

@@ -11,6 +11,9 @@ const AdminPaperPreview = () => {
     const [selectedPaper, setSelectedPaper] = useState(null);
     const [activeTemplate, setActiveTemplate] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [settings, setSettings] = useState({
+        showAnswers: 'none'
+    });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -73,9 +76,21 @@ const AdminPaperPreview = () => {
         <div className="animate-fade-in-up px-4 py-8">
             <div className="flex justify-between items-center mb-10 no-print p-6 bg-white border border-gray-100 shadow-xl rounded-[2rem] max-w-5xl mx-auto">
                 <button onClick={() => navigate(-1)} className="bg-gray-100 text-slate/50 px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-gray-200 transition">← Back</button>
-                <div className="flex gap-4">
+                <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                        <label className="text-xs font-bold text-gray-505 uppercase tracking-wider">Evaluation Scheme:</label>
+                        <select 
+                            className="bg-gray-50 border border-gray-200 rounded-lg p-2 text-xs font-bold text-navy outline-none"
+                            value={settings.showAnswers}
+                            onChange={e => setSettings({ showAnswers: e.target.value })}
+                        >
+                            <option value="none">Questions Only</option>
+                            <option value="keys">Show Answer Keys</option>
+                            <option value="solutions">Answer Keys + Detailed Solutions</option>
+                        </select>
+                    </div>
                     <button onClick={handlePrint} className="bg-navy text-gold px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg">Print Archive</button>
-                    <button onClick={() => exportToWord('.print-area', `${selectedPaper.title.replace(/\s+/g, '_')}.doc`)} className="bg-gold text-navy px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg">Export Doc</button>
+                    <button onClick={() => exportToWord('.print-area', `${selectedPaper.title.replace(/\s+/g, '_')}.doc`, { ...settings, fontFamily: 'Georgia, serif', fontSize: '14px', lineHeight: '1.5' })} className="bg-gold text-navy px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg">Export Doc</button>
                 </div>
             </div>
 
@@ -152,6 +167,20 @@ const AdminPaperPreview = () => {
                                                             ))}
                                                         </div>
                                                     )}
+                                                    
+                                                    {settings.showAnswers !== 'none' && q.answer && (
+                                                        <div className="mt-3 ml-8 text-sm font-bold text-red-600 bg-red-50 px-3 py-1.5 rounded-lg inline-block break-inside-avoid">
+                                                            Correct Answer: {q.answer}
+                                                        </div>
+                                                    )}
+                                                    
+                                                    {settings.showAnswers === 'solutions' && (q.solutionText || q.solutionImageUrl) && (
+                                                        <div className="mt-3 ml-8 p-3 bg-green-50 border border-dashed border-green-200 rounded-lg text-sm text-gray-800 break-inside-avoid">
+                                                            <div className="font-bold text-green-800 mb-1">💡 Solution & Evaluation Scheme:</div>
+                                                            {q.solutionText && <p className="margin-0 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: q.solutionText }}></p>}
+                                                            {q.solutionImageUrl && <img src={q.solutionImageUrl} alt="Solution Diagram" className="mt-2 max-w-full max-h-48 object-contain" />}
+                                                        </div>
+                                                    )}
                                                 </div>
                                             ))}
                                         </div>
@@ -184,6 +213,20 @@ const AdminPaperPreview = () => {
                                                 <span dangerouslySetInnerHTML={{ __html: opt }}></span>
                                             </div>
                                         ))}
+                                    </div>
+                                )}
+                                
+                                {settings.showAnswers !== 'none' && q.answer && (
+                                    <div className="mt-3 ml-8 text-sm font-bold text-red-600 bg-red-50 px-3 py-1.5 rounded-lg inline-block break-inside-avoid">
+                                        Correct Answer: {q.answer}
+                                    </div>
+                                )}
+                                
+                                {settings.showAnswers === 'solutions' && (q.solutionText || q.solutionImageUrl) && (
+                                    <div className="mt-3 ml-8 p-3 bg-green-50 border border-dashed border-green-200 rounded-lg text-sm text-gray-800 break-inside-avoid">
+                                        <div className="font-bold text-green-800 mb-1">💡 Solution & Evaluation Scheme:</div>
+                                        {q.solutionText && <p className="margin-0 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: q.solutionText }}></p>}
+                                        {q.solutionImageUrl && <img src={q.solutionImageUrl} alt="Solution Diagram" className="mt-2 max-w-full max-h-48 object-contain" />}
                                     </div>
                                 )}
                             </div>

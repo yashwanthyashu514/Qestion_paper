@@ -77,6 +77,8 @@ router.post('/merge', [auth, checkRole(['admin'])], async (req, res) => {
                         options: q.options || [],
                         answer: q.answer,
                         imageUrl: q.imageUrl,
+                        solutionText: q.solutionText || '',
+                        solutionImageUrl: q.solutionImageUrl || '',
                         marks: 4
                     });
                 }
