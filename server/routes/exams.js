@@ -16,7 +16,7 @@ const { detectLabIp } = require('../middleware/labIp');
 // ─────────────────────────────────────────────────────────────────
 router.post('/merge', [auth, checkRole(['admin'])], async (req, res) => {
     try {
-        const { title, examType, paperIds, instructions, start_time, end_time, duration_minutes } = req.body;
+        const { title, examType, paperIds, instructions, start_time, end_time, duration_minutes, allowedStudents } = req.body;
 
         if (!['JEE', 'NEET', 'CET'].includes(examType)) {
             return res.status(400).json({ msg: 'Invalid exam type. Must be JEE, NEET, or CET.' });
@@ -94,6 +94,7 @@ router.post('/merge', [auth, checkRole(['admin'])], async (req, res) => {
             end_time: end_time || null,
             duration_minutes: duration_minutes || 180,
             status: start_time ? 'scheduled' : 'draft',
+            allowedStudents: Array.isArray(allowedStudents) ? allowedStudents : [],
             createdBy: req.user.id
         });
 
@@ -161,13 +162,14 @@ router.get('/admin/:id', [auth, checkRole(['admin'])], async (req, res) => {
 // ─────────────────────────────────────────────────────────────────
 router.put('/:id/config', [auth, checkRole(['admin'])], async (req, res) => {
     try {
-        const { start_time, end_time, duration_minutes, instructions, status } = req.body;
+        const { start_time, end_time, duration_minutes, instructions, status, allowedStudents } = req.body;
         const update = {};
         if (start_time !== undefined) update.start_time = start_time;
         if (end_time !== undefined) update.end_time = end_time;
         if (duration_minutes !== undefined) update.duration_minutes = duration_minutes;
         if (instructions !== undefined) update.instructions = instructions;
         if (status !== undefined) update.status = status;
+        if (allowedStudents !== undefined) update.allowedStudents = Array.isArray(allowedStudents) ? allowedStudents : [];
         update.updatedAt = new Date();
 
         const exam = await OnlineExam.findByIdAndUpdate(req.params.id, { $set: update }, { new: true });
@@ -253,6 +255,12 @@ router.post('/:id/start', detectLabIp, async (req, res) => {
         if (!exam) return res.status(404).json({ msg: 'Exam not found' });
 
         const { studentName, studentEmail, rollNumber } = req.body;
+
+        if (exam.allowedStudents && exam.allowedStudents.length > 0) {
+            if (!exam.allowedStudents.includes(rollNumber)) {
+                return res.status(403).json({ msg: 'You are not authorized to take this exam.' });
+            }
+        }
 
         // Check for existing active session
         const existing = await ExamSession.findOne({
@@ -407,10 +415,8 @@ router.get('/:id/scorecard/:sessionId', detectLabIp, async (req, res) => {
                 type: q.type || 'MCQ'
             };
 
-            // Conditionally expose correct answer
-            if (!isLab) {
-                entry.correctAnswer = q.answer;
-            }
+            // Always expose correct answer since answerKeyHidden is false
+            entry.correctAnswer = q.answer;
 
             return entry;
         });
@@ -430,7 +436,7 @@ router.get('/:id/scorecard/:sessionId', detectLabIp, async (req, res) => {
             unattempted: session.unattempted,
             weakAreas: session.weakAreas,
             isLabSession: isLab,
-            answerKeyHidden: isLab,
+            answerKeyHidden: false, // User requested answers to be shown after submission
             breakdown
         });
     } catch (err) {

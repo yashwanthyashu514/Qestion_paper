@@ -21,6 +21,7 @@ const OnlineExamSchema = new mongoose.Schema({
     end_time: { type: Date },
     duration_minutes: { type: Number, default: 180 },
     status: { type: String, enum: ['draft', 'scheduled', 'live', 'ended'], default: 'draft' },
+    allowedStudents: { type: [String], default: [] },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }

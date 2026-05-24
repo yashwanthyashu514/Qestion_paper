@@ -193,7 +193,7 @@ Correct Answer: ${question.answer || 'Not specified'}
 
 Format the solution beautifully using markdown. Keep the tone helpful and academic. Provide step-by-step calculation or reasoning.`;
 
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

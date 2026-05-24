@@ -4,6 +4,29 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { labIpOnly } = require('../middleware/labIp');
 const OnlineExam = require('../models/OnlineExam');
+const Student = require('../models/Student');
+
+// ─────────────────────────────────────────────────────────────────
+// STUDENT: Look up student by roll number
+// GET /api/lab/student/:rollNumber
+// ─────────────────────────────────────────────────────────────────
+router.get('/student/:rollNumber', async (req, res) => {
+    try {
+        const student = await Student.findOne({ rollNumber: req.params.rollNumber });
+        if (!student) {
+            return res.status(404).json({ msg: 'Student not found. Please check your roll number.' });
+        }
+        res.json({
+            name: student.name,
+            rollNumber: student.rollNumber,
+            section: student.section,
+            email: student.email || ''
+        });
+    } catch (err) {
+        console.error('Error fetching student:', err);
+        res.status(500).json({ msg: 'Server error' });
+    }
+});
 
 // ─────────────────────────────────────────────────────────────────
 // LAB LOGIN — IP restricted
@@ -62,13 +85,29 @@ router.get('/exams', labIpOnly, async (req, res) => {
             { $set: { status: 'ended' } }
         );
 
-        const exams = await OnlineExam.find({
+        const { rollNumber } = req.query;
+
+        const query = {
             status: { $in: ['live', 'scheduled'] },
             $or: [
                 { end_time: null },
                 { end_time: { $gt: now } }
             ]
-        })
+        };
+
+        if (rollNumber) {
+            query.$and = [
+                {
+                    $or: [
+                        { allowedStudents: { $exists: false } },
+                        { allowedStudents: { $size: 0 } },
+                        { allowedStudents: rollNumber }
+                    ]
+                }
+            ];
+        }
+
+        const exams = await OnlineExam.find(query)
             .select('title examType duration_minutes start_time end_time instructions status')
             .sort({ start_time: 1 });
         res.json(exams);

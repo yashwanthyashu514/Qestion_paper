@@ -417,43 +417,55 @@ export default function ExamEngine() {
                                 </div>
                             </div>
                         ) : (
-                            <div style={styles.options}>
-                                {currentQ.options?.map((opt, i) => {
-                                    const label = String.fromCharCode(65 + i);
-                                    const selected = currentA.selectedOption === opt;
-                                    return (
-                                        <div key={i}
-                                            style={{ ...styles.option, ...(selected ? styles.optionSelected : {}) }}
-                                            onClick={() => handleOptionSelect(opt)}
-                                        >
-                                            <span style={{ ...styles.optionLabel, ...(selected ? styles.optionLabelSelected : {}) }}>{label}</span>
-                                            <span style={styles.optionText} dangerouslySetInnerHTML={{ __html: opt }} />
-                                        </div>
-                                    );
-                                })}
+                            <div>
+                                <div style={styles.optionsTextContainer}>
+                                    {currentQ.options?.map((opt, i) => {
+                                        const label = (i + 1).toString();
+                                        return (
+                                            <div key={i} style={styles.optionTextLine}>
+                                                <span style={styles.optionTextLabel}>{label}.</span>
+                                                <span style={styles.optionTextContent} dangerouslySetInnerHTML={{ __html: opt }} />
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                <hr style={styles.divider} />
+                                <div style={styles.radioContainer}>
+                                    {currentQ.options?.map((opt, i) => {
+                                        const label = (i + 1).toString();
+                                        const selected = currentA.selectedOption === opt;
+                                        return (
+                                            <label key={`radio-${i}`} style={styles.radioLabel}>
+                                                <input 
+                                                    type="radio" 
+                                                    name="jee_option" 
+                                                    checked={selected} 
+                                                    onChange={() => handleOptionSelect(opt)} 
+                                                    style={styles.radioInput}
+                                                />
+                                                {label})
+                                            </label>
+                                        );
+                                    })}
+                                </div>
                             </div>
                         )}
 
                         {/* Action Buttons - placed below the options */}
-                        <div style={{ ...styles.actionBar, marginTop: 24, borderTop: 'none', background: 'transparent', padding: '12px 0' }}>
-                            <div style={styles.actionLeft}>
-                                <button style={styles.btnMarkReview} onClick={handleMarkForReview}>
-                                    🔖 Mark for Review & Next
-                                </button>
-                                <button style={styles.btnClear} onClick={handleClear}>
-                                    🗑 Clear Response
-                                </button>
+                        <div style={styles.actionBarContainer}>
+                            <hr style={styles.dividerBlue} />
+                            <div style={styles.actionBarRow1}>
+                                <button style={styles.btnSaveNextJEE} onClick={handleSaveNext}>SAVE & NEXT</button>
+                                <button style={styles.btnClearJEE} onClick={handleClear}>CLEAR</button>
+                                <button style={styles.btnSaveMarkReviewJEE} onClick={handleSaveAndMarkForReview}>SAVE & MARK FOR REVIEW</button>
+                                <button style={styles.btnMarkReviewJEE} onClick={handleMarkForReview}>MARK FOR REVIEW & NEXT</button>
                             </div>
-                            <div style={styles.actionRight}>
-                                <button style={styles.btnSaveMarkReview} onClick={handleSaveAndMarkForReview}>
-                                    💾 Save & Mark for Review
-                                </button>
-                                <button style={styles.btnPrev} onClick={() => goTo(current - 1)} disabled={current === 0}>
-                                    ◀ Previous
-                                </button>
-                                <button style={styles.btnSaveNext} onClick={handleSaveNext}>
-                                    Save & Next ▶
-                                </button>
+                            <div style={styles.actionBarRow2}>
+                                <div style={styles.navBtns}>
+                                    <button style={styles.btnNavJEE} onClick={() => goTo(current - 1)} disabled={current === 0}>&lt;&lt; BACK</button>
+                                    <button style={styles.btnNavJEE} onClick={() => goTo(current + 1)} disabled={current === exam.questions?.length - 1}>NEXT &gt;&gt;</button>
+                                </div>
+                                <button style={styles.btnSubmitJEE} onClick={() => setShowSubmitConfirm(true)}>SUBMIT</button>
                             </div>
                         </div>
                     </div>
@@ -471,24 +483,39 @@ export default function ExamEngine() {
                     </div>
 
                     {/* Status Counts */}
-                    <div style={styles.statusRow}>
-                        <div style={styles.statusItem}>
-                            <span style={{ ...styles.statusDot, background: '#10b981' }}>{counts[STATE.ANSWERED] || 0}</span>
-                            <span style={styles.statusLabel}>Answered</span>
+                    <div style={styles.statusRowJEE}>
+                        <div style={styles.statusItemJEE}>
+                            <div style={styles.paletteShapeWrap}>
+                                <span style={{ ...styles.statusSquare, background: '#f5f5f5', border: '1px solid #ccc', color: '#000' }}>{counts[STATE.NOT_VISITED] || 0}</span>
+                            </div>
+                            <span style={styles.statusLabelJEE}>Not Visited</span>
                         </div>
-                        <div style={styles.statusItem}>
-                            <span style={{ ...styles.statusDot, background: '#ef4444' }}>{counts[STATE.NOT_ANSWERED] || 0}</span>
-                            <span style={styles.statusLabel}>Not Answered</span>
+                        <div style={styles.statusItemJEE}>
+                            <div style={styles.paletteShapeWrap}>
+                                <span style={{ ...styles.statusPolyRed }}>{counts[STATE.NOT_ANSWERED] || 0}</span>
+                            </div>
+                            <span style={styles.statusLabelJEE}>Not Answered</span>
                         </div>
-                        <div style={styles.statusItem}>
-                            <span style={{ ...styles.statusDot, background: '#6b7280' }}>{counts[STATE.NOT_VISITED] || 0}</span>
-                            <span style={styles.statusLabel}>Not Visited</span>
+                        <div style={styles.statusItemJEE}>
+                            <div style={styles.paletteShapeWrap}>
+                                <span style={{ ...styles.statusPolyGreen }}>{counts[STATE.ANSWERED] || 0}</span>
+                            </div>
+                            <span style={styles.statusLabelJEE}>Answered</span>
                         </div>
-                        <div style={styles.statusItem}>
-                            <span style={{ ...styles.statusDot, background: '#8b5cf6' }}>
-                                {(counts[STATE.MARKED] || 0) + (counts[STATE.ANSWERED_MARKED] || 0)}
-                            </span>
-                            <span style={styles.statusLabel}>Marked</span>
+                        <div style={styles.statusItemJEE}>
+                            <div style={styles.paletteShapeWrap}>
+                                <span style={{ ...styles.statusCirclePurple }}>{counts[STATE.MARKED] || 0}</span>
+                            </div>
+                            <span style={styles.statusLabelJEE}>Marked for Review</span>
+                        </div>
+                        <div style={{...styles.statusItemJEE, gridColumn: 'span 2', marginTop: 5}}>
+                            <div style={styles.paletteShapeWrap}>
+                                <span style={{ ...styles.statusCirclePurple, position: 'relative' }}>
+                                    {(counts[STATE.ANSWERED_MARKED] || 0)}
+                                    <span style={styles.statusDotGreenSmall} />
+                                </span>
+                            </div>
+                            <span style={styles.statusLabelJEE}>Answered & Marked for Review<br/>(will be considered for evaluation)</span>
                         </div>
                     </div>
 
@@ -499,24 +526,32 @@ export default function ExamEngine() {
                     <div style={styles.paletteGrid}>
                         {answers.map((a, i) => {
                             const state = getState(a);
-                            const color = STATE_COLORS[state];
-                            const isAnsweredMarked = state === STATE.ANSWERED_MARKED;
                             const isCurrent = i === current;
+                            
+                            let shapeStyle = {};
+                            let textStyle = { color: '#fff' };
+                            
+                            if (state === STATE.NOT_VISITED) {
+                                shapeStyle = { ...styles.statusSquare, background: '#f5f5f5', border: '1px solid #ccc', color: '#000' };
+                                textStyle = { color: '#000' };
+                            } else if (state === STATE.NOT_ANSWERED) {
+                                shapeStyle = styles.statusPolyRed;
+                            } else if (state === STATE.ANSWERED) {
+                                shapeStyle = styles.statusPolyGreen;
+                            } else if (state === STATE.MARKED || state === STATE.ANSWERED_MARKED) {
+                                shapeStyle = styles.statusCirclePurple;
+                            }
+
                             return (
-                                <div key={i} style={{ position: 'relative', display: 'inline-block' }}>
-                                    <button
-                                        style={{
-                                            ...styles.paletteBtn,
-                                            background: color,
-                                            border: isCurrent ? '3px solid #1e3a5f' : '2px solid transparent',
-                                            boxShadow: isCurrent ? '0 0 0 2px #fff inset' : 'none'
-                                        }}
+                                <div key={i} style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <div 
+                                        style={{ ...shapeStyle, cursor: 'pointer', opacity: isCurrent ? 0.7 : 1 }}
                                         onClick={() => goTo(i)}
                                     >
-                                        {i + 1}
-                                    </button>
-                                    {isAnsweredMarked && (
-                                        <span style={styles.greenDotPalette} />
+                                        <span style={textStyle}>{String(i + 1).padStart(2, '0')}</span>
+                                    </div>
+                                    {state === STATE.ANSWERED_MARKED && (
+                                        <span style={styles.statusDotGreenSmall} />
                                     )}
                                 </div>
                             );
@@ -575,35 +610,50 @@ const styles = {
     qBody: { flex: 1, padding: '24px 28px', overflowY: 'auto' },
     qText: { fontSize: 15, color: '#1e293b', lineHeight: 1.7, marginBottom: 20, fontWeight: 500 },
     qImage: { maxWidth: '100%', borderRadius: 8, marginBottom: 16, border: '1px solid #e5e7eb' },
-    options: { display: 'flex', flexDirection: 'column', gap: 12 },
-    option: { display: 'flex', alignItems: 'center', gap: 14, padding: '12px 16px', border: '2px solid #e5e7eb', borderRadius: 10, cursor: 'pointer', transition: 'all 0.15s' },
-    optionSelected: { border: '2px solid #4f46e5', background: '#ede9fe' },
-    optionLabel: { width: 32, height: 32, borderRadius: '50%', background: '#e5e7eb', color: '#374151', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 14, flexShrink: 0 },
-    optionLabelSelected: { background: '#4f46e5', color: '#fff' },
-    optionText: { fontSize: 14, color: '#374151', lineHeight: 1.5 },
-    actionBar: { borderTop: '1px solid #e5e7eb', padding: '12px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, background: '#f8fafc' },
-    actionLeft: { display: 'flex', gap: 8 },
-    actionRight: { display: 'flex', gap: 8 },
-    btnMarkReview: { background: '#8b5cf6', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 14px', cursor: 'pointer', fontWeight: 600, fontSize: 13 },
-    btnClear: { background: '#f3f4f6', color: '#374151', border: '1px solid #d1d5db', borderRadius: 8, padding: '9px 14px', cursor: 'pointer', fontSize: 13 },
-    btnSaveMarkReview: { background: '#7c3aed', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 14px', cursor: 'pointer', fontWeight: 600, fontSize: 13 },
-    btnPrev: { background: '#e5e7eb', color: '#374151', border: 'none', borderRadius: 8, padding: '9px 14px', cursor: 'pointer', fontSize: 13 },
-    btnSaveNext: { background: '#1e3a5f', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 18px', cursor: 'pointer', fontWeight: 700, fontSize: 13 },
+    optionsTextContainer: { display: 'flex', flexDirection: 'column', gap: '20px', margin: '20px 0' },
+    optionTextLine: { display: 'flex', gap: '10px', fontSize: '15px' },
+    optionTextLabel: { fontWeight: 'bold' },
+    optionTextContent: { flex: 1 },
+    divider: { border: '0', borderTop: '1px solid #ccc', margin: '20px 0' },
+    dividerBlue: { border: '0', borderTop: '1px solid #4f46e5', margin: '10px 0', opacity: 0.3 },
+    radioContainer: { display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', marginBottom: '20px' },
+    radioLabel: { display: 'flex', alignItems: 'center', cursor: 'pointer', fontSize: '16px', color: '#555' },
+    radioInput: { marginRight: '8px', width: '16px', height: '16px', accentColor: '#4f46e5' },
+    
+    actionBarContainer: { display: 'flex', flexDirection: 'column' },
+    actionBarRow1: { display: 'flex', gap: '5px', padding: '10px 0', flexWrap: 'wrap', borderBottom: '1px solid #eee' },
+    actionBarRow2: { display: 'flex', justifyContent: 'space-between', padding: '10px 0', background: '#f9f9f9' },
+    navBtns: { display: 'flex', gap: '5px' },
+    
+    btnSaveNextJEE: { background: '#5cb85c', color: '#fff', border: 'none', padding: '8px 12px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' },
+    btnClearJEE: { background: '#fff', color: '#333', border: '1px solid #ccc', padding: '8px 12px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' },
+    btnSaveMarkReviewJEE: { background: '#f0ad4e', color: '#fff', border: 'none', padding: '8px 12px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' },
+    btnMarkReviewJEE: { background: '#337ab7', color: '#fff', border: 'none', padding: '8px 12px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' },
+    btnNavJEE: { background: '#fff', color: '#666', border: '1px solid #ccc', padding: '8px 12px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' },
+    btnSubmitJEE: { background: '#5cb85c', color: '#fff', border: 'none', padding: '8px 20px', fontSize: '12px', fontWeight: 'bold', cursor: 'pointer' },
+    
     // Palette Panel
-    palettePanel: { width: 280, flexShrink: 0, background: '#fff', margin: '16px 16px 16px 0', borderRadius: 12, border: '1px solid #e5e7eb', display: 'flex', flexDirection: 'column', padding: 16, gap: 12, overflowY: 'auto' },
-    candidateBlock: { display: 'flex', gap: 10, alignItems: 'center', background: '#1e3a5f', borderRadius: 10, padding: '10px 14px', color: '#fff' },
-    candidateAvatar: { fontSize: 24 },
-    candidateNameRight: { fontSize: 13, fontWeight: 700 },
-    candidateRoll: { fontSize: 11, color: '#93c5fd' },
-    statusRow: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 },
-    statusItem: { display: 'flex', alignItems: 'center', gap: 6, fontSize: 12 },
-    statusDot: { color: '#fff', borderRadius: '50%', width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 11, flexShrink: 0 },
-    statusLabel: { color: '#6b7280' },
-    paletteTitle: { fontSize: 13, fontWeight: 700, color: '#1e293b', borderBottom: '1px solid #e5e7eb', paddingBottom: 8 },
-    paletteGrid: { display: 'flex', flexWrap: 'wrap', gap: 6 },
-    paletteBtn: { width: 36, height: 36, borderRadius: '50%', color: '#fff', fontWeight: 700, fontSize: 12, cursor: 'pointer', transition: 'all 0.1s', display: 'flex', alignItems: 'center', justifyContent: 'center' },
-    greenDotPalette: { position: 'absolute', width: 10, height: 10, background: '#10b981', borderRadius: '50%', bottom: 0, right: 0, border: '2px solid #fff' },
-    submitBtn: { background: 'linear-gradient(135deg, #dc2626, #b91c1c)', color: '#fff', border: 'none', borderRadius: 10, padding: '13px', fontSize: 15, fontWeight: 700, cursor: 'pointer', marginTop: 'auto' },
+    palettePanel: { width: 320, flexShrink: 0, background: '#fff', borderLeft: '1px solid #ccc', display: 'flex', flexDirection: 'column' },
+    candidateBlock: { display: 'flex', gap: 10, alignItems: 'center', background: '#f5f5f5', borderBottom: '1px solid #ccc', padding: '10px', color: '#333' },
+    candidateAvatar: { fontSize: 32 },
+    candidateNameRight: { fontSize: 13, fontWeight: 'bold' },
+    candidateRoll: { fontSize: 11, color: '#666' },
+    
+    statusRowJEE: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', padding: '10px', borderBottom: '1px dashed #ccc', border: '1px solid #ccc', margin: '10px', borderRadius: '4px' },
+    statusItemJEE: { display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px' },
+    paletteShapeWrap: { width: '30px', display: 'flex', justifyContent: 'center' },
+    statusLabelJEE: { color: '#333', lineHeight: '1.2' },
+    
+    statusSquare: { width: '30px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', borderRadius: '3px', fontWeight: 'bold' },
+    statusPolyRed: { width: '30px', height: '30px', background: '#eb3b3b', border: '1px solid #c92a2a', clipPath: 'polygon(0 15%, 100% 0, 100% 85%, 0% 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', borderRadius: '2px', color: '#fff', fontWeight: 'bold' },
+    statusPolyGreen: { width: '30px', height: '30px', background: '#22c55e', border: '1px solid #16a34a', clipPath: 'polygon(0 0, 100% 15%, 100% 100%, 0 85%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', borderRadius: '2px', color: '#fff', fontWeight: 'bold' },
+    statusCirclePurple: { width: '30px', height: '30px', background: '#6366f1', border: '1px solid #4f46e5', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', color: '#fff', fontWeight: 'bold' },
+    statusDotGreenSmall: { width: '8px', height: '8px', background: '#22c55e', borderRadius: '50%', position: 'absolute', bottom: '0px', right: '0px', border: '1px solid #fff' },
+    
+    paletteTitle: { fontSize: 13, fontWeight: 700, color: '#1e293b', padding: '10px', background: '#e0e7ff', borderTop: '1px solid #c7d2fe', borderBottom: '1px solid #c7d2fe' },
+    paletteGrid: { display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px', padding: '15px 10px', overflowY: 'auto' },
+    
+    submitBtn: { display: 'none' }, // Submit button is now in the actionBarRow2
     // Modal
     modalOverlay: { position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100 },
     modal: { background: '#fff', borderRadius: 16, padding: '32px 36px', width: '90%', maxWidth: 460 },

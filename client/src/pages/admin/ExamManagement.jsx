@@ -333,12 +333,12 @@ export default function ExamManagement() {
     // Merge form state
     const [mergeForm, setMergeForm] = useState({
         title: '', examType: 'NEET', paperIds: [], instructions: '',
-        start_time: '', end_time: '', duration_minutes: 180
+        start_time: '', end_time: '', duration_minutes: 180, allowedStudents: ''
     });
 
     // Config edit state
     const [configForm, setConfigForm] = useState({
-        start_time: '', end_time: '', duration_minutes: 180, instructions: '', status: ''
+        start_time: '', end_time: '', duration_minutes: 180, instructions: '', status: '', allowedStudents: ''
     });
 
     // Print / offline state
@@ -393,10 +393,14 @@ export default function ExamManagement() {
         if (mergeForm.paperIds.length === 0) return setMsg(`Select at least 1 paper.`);
         setLoading(true);
         try {
-            await api.post('/api/exams/merge', mergeForm);
+            const payload = {
+                ...mergeForm,
+                allowedStudents: mergeForm.allowedStudents ? mergeForm.allowedStudents.split(',').map(s => s.trim()).filter(Boolean) : []
+            };
+            await api.post('/api/exams/merge', payload);
             setMsg('✅ Exam created successfully!');
             setShowMergeModal(false);
-            setMergeForm({ title: '', examType: 'NEET', paperIds: [], instructions: '', start_time: '', end_time: '', duration_minutes: 180 });
+            setMergeForm({ title: '', examType: 'NEET', paperIds: [], instructions: '', start_time: '', end_time: '', duration_minutes: 180, allowedStudents: '' });
             fetchExams();
         } catch (e) {
             setMsg(e.response?.data?.msg || 'Merge failed');
@@ -410,7 +414,8 @@ export default function ExamManagement() {
             end_time: exam.end_time ? exam.end_time.substring(0, 16) : '',
             duration_minutes: exam.duration_minutes || 180,
             instructions: exam.instructions || '',
-            status: exam.status || 'draft'
+            status: exam.status || 'draft',
+            allowedStudents: exam.allowedStudents ? exam.allowedStudents.join(', ') : ''
         });
         setShowConfigModal(exam._id);
     };
@@ -418,7 +423,11 @@ export default function ExamManagement() {
     const handleConfigSave = async () => {
         setLoading(true);
         try {
-            await api.put(`/api/exams/${showConfigModal}/config`, configForm);
+            const payload = {
+                ...configForm,
+                allowedStudents: configForm.allowedStudents ? configForm.allowedStudents.split(',').map(s => s.trim()).filter(Boolean) : []
+            };
+            await api.put(`/api/exams/${showConfigModal}/config`, payload);
             setMsg('✅ Exam config updated!');
             setShowConfigModal(null);
             fetchExams();
@@ -622,6 +631,10 @@ export default function ExamManagement() {
                             <input style={styles.input} type="datetime-local" value={mergeForm.end_time}
                                 onChange={e => setMergeForm(f => ({ ...f, end_time: e.target.value }))} />
 
+                            <label style={styles.label}>Allowed Students (Roll Numbers, comma separated)</label>
+                            <input style={styles.input} placeholder="Leave blank to allow all students" value={mergeForm.allowedStudents}
+                                onChange={e => setMergeForm(f => ({ ...f, allowedStudents: e.target.value }))} />
+
                             <label style={styles.label}>
                                 Select Papers ({mergeForm.paperIds.length} selected)
                             </label>
@@ -686,6 +699,11 @@ export default function ExamManagement() {
                             <label style={styles.label}>End Time</label>
                             <input style={styles.input} type="datetime-local" value={configForm.end_time}
                                 onChange={e => setConfigForm(f => ({ ...f, end_time: e.target.value }))} />
+                            
+                            <label style={styles.label}>Allowed Students (Roll Numbers, comma separated)</label>
+                            <input style={styles.input} placeholder="Leave blank to allow all students" value={configForm.allowedStudents}
+                                onChange={e => setConfigForm(f => ({ ...f, allowedStudents: e.target.value }))} />
+
                             <label style={styles.label}>Duration (minutes)</label>
                             <input style={styles.input} type="number" value={configForm.duration_minutes}
                                 onChange={e => {

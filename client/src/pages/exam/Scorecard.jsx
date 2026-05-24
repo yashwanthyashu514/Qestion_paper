@@ -191,7 +191,7 @@ export default function Scorecard() {
                                     const parsedSelected = parseFloat(q.selectedOption);
                                     const parsedCorrect = parseFloat(q.correctAnswer);
                                     const isNumericMatch = !isNaN(parsedSelected) && !isNaN(parsedCorrect) && Math.abs(parsedSelected - parsedCorrect) < 1e-9;
-                                    const isExactMatch = q.selectedOption.toString().trim().toLowerCase() === q.correctAnswer.toString().trim().toLowerCase();
+                                    const isExactMatch = q.selectedOption.toString().trim().toLowerCase() === (q.correctAnswer || '').toString().trim().toLowerCase();
                                     isCorrect = isNumericMatch || isExactMatch;
                                     isWrong = !isCorrect;
                                 }
@@ -229,7 +229,7 @@ export default function Scorecard() {
                                         ) : (
                                             <div style={styles.reviewOptions}>
                                                 {q.options?.map((opt, oi) => {
-                                                    const label = String.fromCharCode(65 + oi);
+                                                    const label = (oi + 1).toString();
                                                     const isSelected = q.selectedOption === opt;
                                                     const isCorrectOpt = !data.answerKeyHidden && q.correctAnswer === opt;
                                                     return (
@@ -248,49 +248,6 @@ export default function Scorecard() {
                                         )}
                                         {q.markedForReview && <div style={styles.markedTag}>🔖 Marked for Review</div>}
 
-                                        {/* Solution Section */}
-                                        <div style={{ marginTop: 14 }}>
-                                            <button 
-                                                style={styles.solutionBtn}
-                                                onClick={() => toggleSolution(i, q.questionId, q.solutionText)}
-                                                disabled={loadingSolutions[i]}
-                                            >
-                                                {loadingSolutions[i] 
-                                                    ? '🤖 Generating Solution...' 
-                                                    : expandedSolutions[i] 
-                                                        ? '💡 Hide Scheme & Solution' 
-                                                        : '💡 View Scheme & Solution'}
-                                            </button>
-
-                                            {expandedSolutions[i] && (
-                                                <div style={styles.solutionBox}>
-                                                    <h5 style={styles.solutionBoxTitle}>📋 Scheme of Evaluation & Hint</h5>
-                                                    <div style={styles.solutionContent}>
-                                                        {(() => {
-                                                            const sol = expandedSolutionsData[i] || { solutionText: q.solutionText, solutionImageUrl: q.solutionImageUrl };
-                                                            return (
-                                                                <>
-                                                                    {sol.solutionText ? (
-                                                                        <p style={{ margin: 0, whiteSpace: 'pre-wrap' }}>
-                                                                            {sol.solutionText}
-                                                                        </p>
-                                                                    ) : (
-                                                                        <p style={{ margin: 0, color: '#ef4444' }}>
-                                                                            No solution found.
-                                                                        </p>
-                                                                    )}
-                                                                    {sol.solutionImageUrl && (
-                                                                        <div style={{ marginTop: 12 }}>
-                                                                            <img src={sol.solutionImageUrl} alt="Solution Diagram" style={{ maxWidth: '100%', maxHeight: 200, borderRadius: 8, border: '1px solid #e5e7eb' }} />
-                                                                        </div>
-                                                                    )}
-                                                                </>
-                                                            );
-                                                        })()}
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div>
                                     </div>
                                 );
                             })}
