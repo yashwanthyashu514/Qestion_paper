@@ -7,7 +7,7 @@ const QuestionSchema = new mongoose.Schema({
     chapter: { type: String, required: true },
     concept: { type: String, required: true },
     level: { type: String, enum: ['easy', 'medium', 'hard'], required: true },
-    type: { type: String, enum: ['MCQ', '1m', '2m', '3m', '4m', '5m'], required: true },
+    type: { type: String, enum: ['MCQ', '1m', '2m', '3m', '4m', '5m', 'numerical'], required: true },
     questionText: { type: String, required: true },
     options: [{ type: String }], // For MCQ
     answer: { type: String },

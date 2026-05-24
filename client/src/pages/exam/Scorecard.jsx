@@ -185,8 +185,16 @@ export default function Scorecard() {
                         <div style={styles.reviewList}>
                             {data.breakdown?.map((q, i) => {
                                 const attempted = q.selectedOption !== null && q.selectedOption !== '';
-                                const isCorrect = attempted && !data.answerKeyHidden && q.selectedOption === q.correctAnswer;
-                                const isWrong = attempted && !data.answerKeyHidden && q.selectedOption !== q.correctAnswer;
+                                let isCorrect = false;
+                                let isWrong = false;
+                                if (attempted && !data.answerKeyHidden) {
+                                    const parsedSelected = parseFloat(q.selectedOption);
+                                    const parsedCorrect = parseFloat(q.correctAnswer);
+                                    const isNumericMatch = !isNaN(parsedSelected) && !isNaN(parsedCorrect) && Math.abs(parsedSelected - parsedCorrect) < 1e-9;
+                                    const isExactMatch = q.selectedOption.toString().trim().toLowerCase() === q.correctAnswer.toString().trim().toLowerCase();
+                                    isCorrect = isNumericMatch || isExactMatch;
+                                    isWrong = !isCorrect;
+                                }
                                 return (
                                     <div key={q._id} style={{ ...styles.reviewCard, borderLeft: `4px solid ${!attempted ? '#9ca3af' : (data.answerKeyHidden ? '#6b7280' : isCorrect ? '#10b981' : '#ef4444')}` }}>
                                         <div style={styles.reviewQHeader}>
@@ -197,25 +205,47 @@ export default function Scorecard() {
                                             {attempted && !data.answerKeyHidden && isWrong && <span style={styles.badgeRed}>❌ Wrong</span>}
                                             {attempted && data.answerKeyHidden && <span style={styles.badgeGrey}>Attempted</span>}
                                         </div>
-                                        <p style={styles.reviewQText}>{q.questionText}</p>
-                                        <div style={styles.reviewOptions}>
-                                            {q.options?.map((opt, oi) => {
-                                                const label = String.fromCharCode(65 + oi);
-                                                const isSelected = q.selectedOption === opt;
-                                                const isCorrectOpt = !data.answerKeyHidden && q.correctAnswer === opt;
-                                                return (
-                                                    <div key={oi} style={{
+                                        <p style={styles.reviewQText} dangerouslySetInnerHTML={{ __html: q.questionText }} />
+                                        
+                                        {q.type === 'numerical' || !q.options || q.options.length === 0 ? (
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 400 }}>
+                                                <div style={{
+                                                    ...styles.reviewOption,
+                                                    background: attempted ? (isCorrect ? '#dcfce7' : '#fee2e2') : '#f9fafb',
+                                                    border: attempted ? (isCorrect ? '1.5px solid #10b981' : '1.5px solid #ef4444') : '1.5px solid #e5e7eb'
+                                                }}>
+                                                    <span style={styles.reviewOptLabel}>Your Answer:</span> <span dangerouslySetInnerHTML={{ __html: attempted ? q.selectedOption : 'Skipped' }} />
+                                                </div>
+                                                {!data.answerKeyHidden && (
+                                                    <div style={{
                                                         ...styles.reviewOption,
-                                                        background: isCorrectOpt ? '#dcfce7' : isSelected && isWrong ? '#fee2e2' : '#f9fafb',
-                                                        border: isCorrectOpt ? '1.5px solid #10b981' : isSelected ? '1.5px solid #ef4444' : '1.5px solid #e5e7eb'
+                                                        background: '#dcfce7',
+                                                        border: '1.5px solid #10b981'
                                                     }}>
-                                                        <span style={styles.reviewOptLabel}>{label}.</span> {opt}
-                                                        {isSelected && <span style={{ marginLeft: 8, fontSize: 12 }}>← Your Answer</span>}
-                                                        {isCorrectOpt && <span style={{ marginLeft: 8, fontSize: 12, color: '#10b981' }}>✓ Correct</span>}
+                                                        <span style={styles.reviewOptLabel}>Correct Answer:</span> <span dangerouslySetInnerHTML={{ __html: q.correctAnswer }} />
                                                     </div>
-                                                );
-                                            })}
-                                        </div>
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <div style={styles.reviewOptions}>
+                                                {q.options?.map((opt, oi) => {
+                                                    const label = String.fromCharCode(65 + oi);
+                                                    const isSelected = q.selectedOption === opt;
+                                                    const isCorrectOpt = !data.answerKeyHidden && q.correctAnswer === opt;
+                                                    return (
+                                                        <div key={oi} style={{
+                                                            ...styles.reviewOption,
+                                                            background: isCorrectOpt ? '#dcfce7' : isSelected && isWrong ? '#fee2e2' : '#f9fafb',
+                                                            border: isCorrectOpt ? '1.5px solid #10b981' : isSelected ? '1.5px solid #ef4444' : '1.5px solid #e5e7eb'
+                                                        }}>
+                                                            <span style={styles.reviewOptLabel}>{label}.</span> <span dangerouslySetInnerHTML={{ __html: opt }} />
+                                                            {isSelected && <span style={{ marginLeft: 8, fontSize: 12 }}>← Your Answer</span>}
+                                                            {isCorrectOpt && <span style={{ marginLeft: 8, fontSize: 12, color: '#10b981' }}>✓ Correct</span>}
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        )}
                                         {q.markedForReview && <div style={styles.markedTag}>🔖 Marked for Review</div>}
 
                                         {/* Solution Section */}

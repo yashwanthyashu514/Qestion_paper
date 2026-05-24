@@ -335,22 +335,104 @@ export default function ExamEngine() {
                             <img src={currentQ.imageUrl} alt="Question" style={styles.qImage} />
                         )}
 
-                        {/* Options */}
-                        <div style={styles.options}>
-                            {currentQ.options?.map((opt, i) => {
-                                const label = String.fromCharCode(65 + i);
-                                const selected = currentA.selectedOption === opt;
-                                return (
-                                    <div key={i}
-                                        style={{ ...styles.option, ...(selected ? styles.optionSelected : {}) }}
-                                        onClick={() => handleOptionSelect(opt)}
-                                    >
-                                        <span style={{ ...styles.optionLabel, ...(selected ? styles.optionLabelSelected : {}) }}>{label}</span>
-                                        <span style={styles.optionText} dangerouslySetInnerHTML={{ __html: opt }} />
+                        {/* Options or Numerical Input */}
+                        {currentQ.type === 'numerical' || !currentQ.options || currentQ.options.length === 0 ? (
+                            <div style={styles.numericalContainer}>
+                                <div style={styles.numericalRow}>
+                                    <div style={styles.inputWrapper}>
+                                        <label style={styles.inputLabel}>Enter your answer (Numerical Value):</label>
+                                        <input
+                                            type="text"
+                                            value={currentA.selectedOption || ''}
+                                            onChange={(e) => {
+                                                const val = e.target.value;
+                                                if (/^-?\d*\.?\d*$/.test(val)) {
+                                                    handleOptionSelect(val);
+                                                }
+                                            }}
+                                            placeholder="Type your answer here..."
+                                            style={styles.numericalInput}
+                                            autoFocus
+                                        />
                                     </div>
-                                );
-                            })}
-                        </div>
+                                    
+                                    {/* Virtual Keypad */}
+                                    <div style={styles.keypadWrapper}>
+                                        <div style={styles.keypadTitle}>Virtual Keypad</div>
+                                        <div style={styles.keypadGrid}>
+                                            {['1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '0', '.'].map((key) => (
+                                                <button
+                                                    key={key}
+                                                    type="button"
+                                                    onClick={() => {
+                                                        const currentVal = (currentA.selectedOption || '').toString();
+                                                        let newVal = currentVal;
+                                                        if (key === '-') {
+                                                            if (currentVal.startsWith('-')) {
+                                                                newVal = currentVal.substring(1);
+                                                            } else {
+                                                                newVal = '-' + currentVal;
+                                                            }
+                                                        } else if (key === '.') {
+                                                            if (!currentVal.includes('.')) {
+                                                                newVal = currentVal + '.';
+                                                            }
+                                                        } else {
+                                                            if (currentVal === '0') {
+                                                                newVal = key;
+                                                            } else {
+                                                                newVal = currentVal + key;
+                                                            }
+                                                        }
+                                                        if (/^-?\d*\.?\d*$/.test(newVal)) {
+                                                            handleOptionSelect(newVal);
+                                                        }
+                                                    }}
+                                                    style={styles.keypadBtn}
+                                                >
+                                                    {key}
+                                                </button>
+                                            ))}
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    const currentVal = (currentA.selectedOption || '').toString();
+                                                    if (currentVal.length > 0) {
+                                                        handleOptionSelect(currentVal.substring(0, currentVal.length - 1));
+                                                    }
+                                                }}
+                                                style={{ ...styles.keypadBtn, gridColumn: 'span 2', background: '#f3f4f6', color: '#374151' }}
+                                            >
+                                                ⌫ Backspace
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleOptionSelect('')}
+                                                style={{ ...styles.keypadBtn, background: '#fef2f2', color: '#b91c1c' }}
+                                            >
+                                                Clear
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div style={styles.options}>
+                                {currentQ.options?.map((opt, i) => {
+                                    const label = String.fromCharCode(65 + i);
+                                    const selected = currentA.selectedOption === opt;
+                                    return (
+                                        <div key={i}
+                                            style={{ ...styles.option, ...(selected ? styles.optionSelected : {}) }}
+                                            onClick={() => handleOptionSelect(opt)}
+                                        >
+                                            <span style={{ ...styles.optionLabel, ...(selected ? styles.optionLabelSelected : {}) }}>{label}</span>
+                                            <span style={styles.optionText} dangerouslySetInnerHTML={{ __html: opt }} />
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
 
                         {/* Action Buttons - placed below the options */}
                         <div style={{ ...styles.actionBar, marginTop: 24, borderTop: 'none', background: 'transparent', padding: '12px 0' }}>
@@ -532,5 +614,83 @@ const styles = {
     modalBtns: { display: 'flex', gap: 12 },
     cancelBtn: { flex: 1, background: '#e5e7eb', color: '#374151', border: 'none', borderRadius: 10, padding: '12px', fontSize: 14, fontWeight: 600, cursor: 'pointer' },
     confirmBtn: { flex: 1, background: '#dc2626', color: '#fff', border: 'none', borderRadius: 10, padding: '12px', fontSize: 14, fontWeight: 700, cursor: 'pointer' },
-    center: { display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', fontFamily: 'Inter, sans-serif', color: '#6b7280', fontSize: 16 }
+    center: { display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', fontFamily: 'Inter, sans-serif', color: '#6b7280', fontSize: 16 },
+    numericalContainer: {
+        background: '#f8fafc',
+        border: '1px solid #e2e8f0',
+        borderRadius: 12,
+        padding: '24px',
+        margin: '12px 0',
+        width: '100%'
+    },
+    numericalRow: {
+        display: 'flex',
+        gap: 32,
+        alignItems: 'flex-start',
+        flexWrap: 'wrap'
+    },
+    inputWrapper: {
+        flex: 1,
+        minWidth: 260,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 8
+    },
+    inputLabel: {
+        fontSize: 14,
+        fontWeight: 600,
+        color: '#475569'
+    },
+    numericalInput: {
+        padding: '14px 18px',
+        fontSize: 20,
+        fontWeight: 700,
+        fontFamily: 'Courier New, monospace',
+        border: '2.5px solid #cbd5e1',
+        borderRadius: 10,
+        outline: 'none',
+        transition: 'all 0.15s',
+        color: '#1e293b',
+        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)',
+        textAlign: 'center',
+        background: '#fff'
+    },
+    keypadWrapper: {
+        background: '#fff',
+        border: '1px solid #e2e8f0',
+        borderRadius: 12,
+        padding: '16px',
+        boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)',
+        width: '100%',
+        maxWidth: 240
+    },
+    keypadTitle: {
+        fontSize: 12,
+        fontWeight: 700,
+        color: '#94a3b8',
+        textTransform: 'uppercase',
+        letterSpacing: '0.05em',
+        marginBottom: 12,
+        textAlign: 'center'
+    },
+    keypadGrid: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: 8
+    },
+    keypadBtn: {
+        padding: '10px 0',
+        fontSize: 16,
+        fontWeight: 700,
+        border: '1px solid #e2e8f0',
+        borderRadius: 8,
+        background: '#fff',
+        cursor: 'pointer',
+        transition: 'all 0.1s',
+        color: '#1e293b',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
+    }
 };

@@ -77,7 +77,8 @@ router.post('/merge', [auth, checkRole(['admin'])], async (req, res) => {
                         options: q.options || [],
                         answer: q.answer,
                         imageUrl: q.imageUrl,
-                        marks: 4
+                        marks: 4,
+                        type: q.type || 'MCQ'
                     });
                 }
             }
@@ -232,7 +233,8 @@ router.get('/:id/take', detectLabIp, async (req, res) => {
                 questionText: q.questionText,
                 options: q.options,
                 imageUrl: q.imageUrl,
-                marks: q.marks
+                marks: q.marks,
+                type: q.type || 'MCQ'
             }))
         };
         res.json(safeExam);
@@ -319,7 +321,12 @@ router.post('/:id/submit', detectLabIp, async (req, res) => {
 
             let result = 'unattempted';
             if (selected !== null && selected !== '') {
-                if (selected === q.answer) {
+                const parsedSelected = parseFloat(selected);
+                const parsedAnswer = parseFloat(q.answer);
+                const isNumericMatch = !isNaN(parsedSelected) && !isNaN(parsedAnswer) && Math.abs(parsedSelected - parsedAnswer) < 1e-9;
+                const isExactMatch = selected.toString().trim().toLowerCase() === q.answer.toString().trim().toLowerCase();
+
+                if (isNumericMatch || isExactMatch) {
                     score += 4;
                     correct++;
                     result = 'correct';
@@ -396,7 +403,8 @@ router.get('/:id/scorecard/:sessionId', detectLabIp, async (req, res) => {
                 selectedOption: ans?.selectedOption || null,
                 markedForReview: ans?.markedForReview || false,
                 solutionText: origQ?.solutionText || '',
-                solutionImageUrl: origQ?.solutionImageUrl || ''
+                solutionImageUrl: origQ?.solutionImageUrl || '',
+                type: q.type || 'MCQ'
             };
 
             // Conditionally expose correct answer

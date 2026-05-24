@@ -13,7 +13,8 @@ const OnlineExamSchema = new mongoose.Schema({
         options: [String],
         answer: String,
         imageUrl: String,
-        marks: { type: Number, default: 4 }
+        marks: { type: Number, default: 4 },
+        type: { type: String, default: 'MCQ' }
     }],
     instructions: { type: String, default: '' },
     start_time: { type: Date },
