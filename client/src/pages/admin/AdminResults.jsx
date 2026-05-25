@@ -12,29 +12,6 @@ export default function AdminResults() {
     const [loading, setLoading] = useState(false);
     const [bridgeKey, setBridgeKey] = useState('');
     const [msg, setMsg] = useState('');
-    
-    // Sheet Modal State
-    const [sheetSessionId, setSheetSessionId] = useState(null);
-    const [sheetData, setSheetData] = useState(null);
-    const [sheetLoading, setSheetLoading] = useState(false);
-
-    useEffect(() => {
-        if (!sheetSessionId) {
-            setSheetData(null);
-            return;
-        }
-        setSheetLoading(true);
-        api.get(`/api/exams/${selectedExam}/scorecard/${sheetSessionId}`)
-            .then(res => {
-                setSheetData(res.data);
-                setSheetLoading(false);
-            })
-            .catch(() => {
-                setMsg('Failed to load analysis sheet');
-                setSheetLoading(false);
-                setSheetSessionId(null);
-            });
-    }, [sheetSessionId, selectedExam]);
 
     useEffect(() => {
         api.get('/api/exams').then(r => setExams(r.data)).catch(() => {});
@@ -206,7 +183,7 @@ export default function AdminResults() {
                                     <th style={styles.th}>Incorrect</th>
                                     <th style={styles.th}>Unattempted</th>
                                     <th style={styles.th}>Source</th>
-                                    <th style={styles.th}>Analysis</th>
+                                    <th style={styles.th}>Weak Areas</th>
                                     <th style={styles.th}>Submitted</th>
                                 </tr>
                             </thead>
@@ -241,12 +218,11 @@ export default function AdminResults() {
                                             </span>
                                         </td>
                                         <td style={styles.td}>
-                                            <button 
-                                                style={styles.viewSheetBtn}
-                                                onClick={() => setSheetSessionId(r._id)}
-                                            >
-                                                📄 View Sheet
-                                            </button>
+                                            <div style={{ fontSize: 12 }}>
+                                                {r.weakAreas?.slice(0, 2).map((w, j) => (
+                                                    <div key={j} style={{ color: '#ef4444' }}>• {w.chapter} ({w.incorrect}✕)</div>
+                                                ))}
+                                            </div>
                                         </td>
                                         <td style={{ ...styles.td, fontSize: 12, color: '#6b7280' }}>
                                             {r.endTime ? new Date(r.endTime).toLocaleString() : '—'}
@@ -261,98 +237,6 @@ export default function AdminResults() {
 
             {!loading && results.length === 0 && selectedExam && (
                 <div style={styles.empty}>No submissions yet for this exam.</div>
-            )}
-
-            {/* Analysis Sheet Modal */}
-            {sheetSessionId && (
-                <div style={styles.modalOverlay}>
-                    <div style={styles.modalContent}>
-                        <div style={styles.modalHeader}>
-                            <div>
-                                <h3 style={styles.modalTitle}>Individual Analysis Sheet</h3>
-                                {sheetData && <div style={styles.modalSubtitle}>{sheetData.studentName} ({sheetData.rollNumber})</div>}
-                            </div>
-                            <button style={styles.closeModalBtn} onClick={() => setSheetSessionId(null)}>✕</button>
-                        </div>
-                        <div style={styles.modalBody}>
-                            {sheetLoading ? (
-                                <div style={styles.loading}>Loading sheet...</div>
-                            ) : sheetData ? (
-                                <>
-                                    <div style={styles.sheetSummary}>
-                                        <div style={styles.sheetStat}>
-                                            <div style={styles.statLabel}>Score</div>
-                                            <div style={{...styles.statVal, color: getScoreColor(sheetData.score)}}>{sheetData.score}</div>
-                                        </div>
-                                        <div style={styles.sheetStat}>
-                                            <div style={styles.statLabel}>Attempted</div>
-                                            <div style={styles.statVal}>{sheetData.totalQuestions - sheetData.unattempted}</div>
-                                        </div>
-                                        <div style={styles.sheetStat}>
-                                            <div style={styles.statLabel}>Unattempted</div>
-                                            <div style={{...styles.statVal, color: '#9ca3af'}}>{sheetData.unattempted}</div>
-                                        </div>
-                                        <div style={styles.sheetStat}>
-                                            <div style={styles.statLabel}>Correct</div>
-                                            <div style={{...styles.statVal, color: '#10b981'}}>{sheetData.correct}</div>
-                                        </div>
-                                        <div style={styles.sheetStat}>
-                                            <div style={styles.statLabel}>Incorrect</div>
-                                            <div style={{...styles.statVal, color: '#ef4444'}}>{sheetData.incorrect}</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <table style={styles.sheetTable}>
-                                        <thead>
-                                            <tr style={styles.thead}>
-                                                <th style={styles.th}>Q.No</th>
-                                                <th style={styles.th}>Question / Subject</th>
-                                                <th style={styles.th}>Status</th>
-                                                <th style={styles.th}>Student Answer</th>
-                                                <th style={styles.th}>Correct Answer</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {sheetData.breakdown.map((q, i) => {
-                                                const isNum = q.type === 'NUMERICAL';
-                                                
-                                                let status = '⚪ Unattempted';
-                                                let statusColor = '#9ca3af';
-                                                if (q.selectedOption !== null && q.selectedOption !== '') {
-                                                    const isNumericMatch = isNum && !isNaN(parseFloat(q.selectedOption)) && !isNaN(parseFloat(q.correctAnswer)) && Math.abs(parseFloat(q.selectedOption) - parseFloat(q.correctAnswer)) < 1e-9;
-                                                    const isExactMatch = !isNum && q.selectedOption?.toString().trim().toLowerCase() === q.correctAnswer?.toString().trim().toLowerCase();
-                                                    
-                                                    if (isNumericMatch || isExactMatch) {
-                                                        status = '✅ Correct';
-                                                        statusColor = '#10b981';
-                                                    } else {
-                                                        status = '❌ Incorrect';
-                                                        statusColor = '#ef4444';
-                                                    }
-                                                }
-                                                
-                                                return (
-                                                    <tr key={i} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                                                        <td style={styles.td}>{i + 1}</td>
-                                                        <td style={styles.td}>
-                                                            <div style={{ fontSize: 13, color: '#6b7280', marginBottom: 4 }}>{q.subject} {q.chapter ? `— ${q.chapter}` : ''}</div>
-                                                            <div style={{ fontSize: 14, fontWeight: 500, color: '#374151' }}>
-                                                                {q.questionText ? (q.questionText.length > 60 ? q.questionText.substring(0, 60) + '...' : q.questionText) : 'Image Based Question'}
-                                                            </div>
-                                                        </td>
-                                                        <td style={{ ...styles.td, color: statusColor, fontWeight: 600 }}>{status}</td>
-                                                        <td style={{ ...styles.td, fontWeight: 500 }}>{q.selectedOption || '—'}</td>
-                                                        <td style={{ ...styles.td, fontWeight: 500, color: '#10b981' }}>{q.correctAnswer}</td>
-                                                    </tr>
-                                                );
-                                            })}
-                                        </tbody>
-                                    </table>
-                                </>
-                            ) : null}
-                        </div>
-                    </div>
-                </div>
             )}
         </div>
     );
@@ -390,18 +274,5 @@ const styles = {
     chartContainer: { display: 'flex', gap: 8, height: 200, alignItems: 'flex-end', minWidth: 'min-content' },
     barColumn: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, width: 24, cursor: 'pointer', transition: 'opacity 0.2s' },
     barVertical: { width: 16, height: 160, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', background: '#f8fafc', borderRadius: '4px 4px 0 0', overflow: 'hidden' },
-    barLabel: { fontSize: 11, color: '#6b7280', fontWeight: 600 },
-    viewSheetBtn: { background: '#f1f5f9', color: '#3b82f6', border: '1px solid #cbd5e1', borderRadius: 6, padding: '6px 12px', fontSize: 12, fontWeight: 600, cursor: 'pointer', transition: 'background 0.2s' },
-    modalOverlay: { position: 'fixed', inset: 0, background: 'rgba(15, 23, 42, 0.7)', backdropFilter: 'blur(4px)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 },
-    modalContent: { background: '#fff', width: '90%', maxWidth: 1000, maxHeight: '90vh', borderRadius: 16, display: 'flex', flexDirection: 'column', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' },
-    modalHeader: { padding: '20px 24px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
-    modalTitle: { margin: 0, fontSize: 20, fontWeight: 700, color: '#0f172a' },
-    modalSubtitle: { margin: '4px 0 0 0', fontSize: 14, color: '#64748b', fontWeight: 500 },
-    closeModalBtn: { background: '#f1f5f9', border: 'none', width: 32, height: 32, borderRadius: '50%', cursor: 'pointer', fontSize: 16, color: '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center' },
-    modalBody: { padding: 24, overflowY: 'auto', flex: 1 },
-    sheetSummary: { display: 'flex', gap: 16, marginBottom: 24, padding: 20, background: '#f8fafc', borderRadius: 12, border: '1px solid #e2e8f0' },
-    sheetStat: { flex: 1, textAlign: 'center' },
-    statLabel: { fontSize: 13, color: '#64748b', marginBottom: 4, fontWeight: 500 },
-    statVal: { fontSize: 24, fontWeight: 800, color: '#0f172a' },
-    sheetTable: { width: '100%', borderCollapse: 'collapse', fontSize: 14, border: '1px solid #e2e8f0', borderRadius: 8, overflow: 'hidden' }
+    barLabel: { fontSize: 11, color: '#6b7280', fontWeight: 600 }
 };
