@@ -306,7 +306,7 @@ router.post('/:id/submit', detectLabIp, async (req, res) => {
 
         const session = await ExamSession.findById(sessionId);
         if (!session) return res.status(404).json({ msg: 'Session not found' });
-        if (session.submitted) return res.json({ msg: 'Already submitted', session });
+        if (session.submitted) return res.json({ msg: 'Already submitted', session, sessionId: session._id });
 
         const exam = await OnlineExam.findById(req.params.id);
         if (!exam) return res.status(404).json({ msg: 'Exam not found' });
