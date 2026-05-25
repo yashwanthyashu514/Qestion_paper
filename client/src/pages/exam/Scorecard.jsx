@@ -71,7 +71,10 @@ export default function Scorecard() {
                     {data.isLabSession && (
                         <span style={styles.labBadge}>🏫 Lab Session — Answer Key Hidden</span>
                     )}
-                    <button style={styles.homeBtn} onClick={() => navigate('/')}>🏠 Home</button>
+                    <button style={styles.homeBtn} onClick={() => {
+                        localStorage.removeItem('student_info');
+                        navigate('/lab-login');
+                    }}>← Back to Lab Terminal</button>
                 </div>
             </div>
 

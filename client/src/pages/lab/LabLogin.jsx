@@ -181,7 +181,7 @@ export default function LabLogin() {
 
                     {/* Footer */}
                     <div style={styles.footer}>
-                        <a href="/" style={styles.homeLink}>← Back to Main Portal</a>
+
                         <p style={styles.footerText}>© 2024 Manchester College Examinations</p>
                     </div>
                 </div>
