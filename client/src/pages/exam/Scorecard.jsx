@@ -74,7 +74,7 @@ export default function Scorecard() {
                     <button style={styles.homeBtn} onClick={() => {
                         localStorage.removeItem('student_info');
                         navigate('/lab-login');
-                    }}>← Back to Lab Terminal</button>
+                    }}>Back</button>
                 </div>
             </div>
 
