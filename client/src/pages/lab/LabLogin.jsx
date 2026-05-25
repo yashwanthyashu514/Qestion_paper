@@ -69,15 +69,9 @@ export default function LabLogin() {
                     {/* Premium Header */}
                     <div style={styles.header}>
                         <div style={styles.logoContainer}>
-                            <div style={styles.logoShield}>
-                                <svg viewBox="0 0 100 100" style={styles.logoSvg}>
-                                    <path d="M50 10 L85 25 L85 50 Q50 80 50 80 Q15 80 15 50 L15 25 Z"
-                                        fill="none" stroke="currentColor" strokeWidth="2" vectorEffect="non-scaling-stroke" />
-                                    <circle cx="50" cy="45" r="15" fill="currentColor" opacity="0.3" />
-                                </svg>
-                            </div>
+                            <img src="/pacelogo.png" alt="PACE Logo" style={{ width: 80, height: 80, objectFit: 'contain' }} />
                         </div>
-                        <h1 style={styles.title}>Manchester College</h1>
+                        <h1 style={styles.title}>PACE PRE UNIVERSITY COLLEGE</h1>
                         <p style={styles.subtitle}>Examination Portal</p>
                         <div style={styles.divider}></div>
                     </div>
@@ -181,8 +175,7 @@ export default function LabLogin() {
 
                     {/* Footer */}
                     <div style={styles.footer}>
-
-                        <p style={styles.footerText}>© 2024 Manchester College Examinations</p>
+                        <p style={styles.footerText}>© {new Date().getFullYear()} PACE PRE UNIVERSITY COLLEGE Examinations</p>
                     </div>
                 </div>
             </div>
@@ -245,7 +238,10 @@ const styles = {
     backdrop: {
         position: 'absolute',
         inset: 0,
-        background: 'linear-gradient(135deg, #001f6d 0%, #0d1b4d 50%, #001f6d 100%)',
+        backgroundImage: 'linear-gradient(rgba(0, 31, 109, 0.75), rgba(13, 27, 77, 0.85)), url("/pacecollege1.jpg")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
         zIndex: 0,
     },
 
