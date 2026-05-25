@@ -289,6 +289,7 @@ export default function AdminResults() {
                                     <th style={styles.th}>Source</th>
                                     <th style={styles.th}>Weak Areas</th>
                                     <th style={styles.th}>Submitted</th>
+                                    <th style={styles.th}>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -330,6 +331,25 @@ export default function AdminResults() {
                                         </td>
                                         <td style={{ ...styles.td, fontSize: 12, color: '#6b7280' }}>
                                             {r.endTime ? new Date(r.endTime).toLocaleString() : '—'}
+                                        </td>
+                                        <td style={styles.td}>
+                                            <a 
+                                                href={`/exam/${selectedExam}/scorecard/${r._id}`} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                style={{
+                                                    display: 'inline-block',
+                                                    padding: '4px 8px',
+                                                    backgroundColor: '#8b5cf6',
+                                                    color: 'white',
+                                                    textDecoration: 'none',
+                                                    borderRadius: '4px',
+                                                    fontSize: '12px',
+                                                    fontWeight: '600'
+                                                }}
+                                            >
+                                                View Scorecard
+                                            </a>
                                         </td>
                                     </tr>
                                 ))}
