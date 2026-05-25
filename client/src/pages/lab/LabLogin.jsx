@@ -57,7 +57,8 @@ export default function LabLogin() {
     return (
         <div style={styles.container}>
             {/* Background Elements */}
-            <div style={styles.backdrop}></div>
+            <div style={{...styles.backdrop, ...styles.backdrop1}}></div>
+            <div style={{...styles.backdrop, ...styles.backdrop2}}></div>
             <div style={styles.gridOverlay}></div>
 
             {/* Animated Orbs */}
@@ -197,6 +198,18 @@ const keyframes = `
         }
     }
 
+    @keyframes bgFade1 {
+        0%, 40% { opacity: 1; transform: scale(1); }
+        45%, 95% { opacity: 0; transform: scale(1.02); }
+        100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes bgFade2 {
+        0%, 40% { opacity: 0; transform: scale(1.02); }
+        45%, 95% { opacity: 1; transform: scale(1); }
+        100% { opacity: 0; transform: scale(1.02); }
+    }
+
     @keyframes float {
         0%, 100% { transform: translateY(0px); }
         50% { transform: translateY(-20px); }
@@ -228,8 +241,8 @@ const keyframes = `
 
 const styles = {
     container: {
-        minHeight: '100vh',
-        width: '100%',
+        height: '100vh',
+        width: '100vw',
         position: 'relative',
         overflow: 'hidden',
         fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
@@ -237,12 +250,21 @@ const styles = {
 
     backdrop: {
         position: 'absolute',
-        inset: 0,
-        backgroundImage: 'linear-gradient(rgba(0, 31, 109, 0.75), rgba(13, 27, 77, 0.85)), url("/pacecollege1.jpg")',
+        inset: -20, // Negative inset to allow scaling without seeing edges
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
         zIndex: 0,
+    },
+
+    backdrop1: {
+        backgroundImage: 'linear-gradient(rgba(0, 31, 109, 0.75), rgba(13, 27, 77, 0.85)), url("/pacecollege1.jpg")',
+        animation: 'bgFade1 14s infinite ease-in-out',
+    },
+
+    backdrop2: {
+        backgroundImage: 'linear-gradient(rgba(0, 31, 109, 0.75), rgba(13, 27, 77, 0.85)), url("/pacecollege2.jpg")',
+        animation: 'bgFade2 14s infinite ease-in-out',
     },
 
     gridOverlay: {
@@ -289,7 +311,8 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: '100vh',
+        height: '100vh',
+        boxSizing: 'border-box',
         padding: '20px',
     },
 
