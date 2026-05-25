@@ -460,6 +460,56 @@ router.get('/:id/results', [auth, checkRole(['admin'])], async (req, res) => {
 });
 
 // ─────────────────────────────────────────────────────────────────
+// ADMIN: Get Question Analytics
+// GET /api/exams/:id/analytics
+// ─────────────────────────────────────────────────────────────────
+router.get('/:id/analytics', [auth, checkRole(['admin'])], async (req, res) => {
+    try {
+        const exam = await OnlineExam.findById(req.params.id);
+        if (!exam) return res.status(404).json({ msg: 'Exam not found' });
+
+        const sessions = await ExamSession.find({ examId: req.params.id, submitted: true });
+        
+        const analytics = exam.questions.map((q, i) => {
+            let correct = 0, incorrect = 0, unattempted = 0;
+
+            sessions.forEach(session => {
+                const ans = session.answers.find(a => a.questionId?.toString() === q._id?.toString());
+                const selected = ans?.selectedOption || null;
+                
+                if (selected !== null && selected !== '') {
+                    const parsedSelected = parseFloat(selected);
+                    const parsedAnswer = parseFloat(q.answer);
+                    const isNumericMatch = !isNaN(parsedSelected) && !isNaN(parsedAnswer) && Math.abs(parsedSelected - parsedAnswer) < 1e-9;
+                    const isExactMatch = selected.toString().trim().toLowerCase() === q.answer?.toString().trim().toLowerCase();
+
+                    if (isNumericMatch || isExactMatch) {
+                        correct++;
+                    } else {
+                        incorrect++;
+                    }
+                } else {
+                    unattempted++;
+                }
+            });
+
+            return {
+                questionNumber: i + 1,
+                subject: q.subject,
+                correct,
+                incorrect,
+                unattempted,
+                total: sessions.length
+            };
+        });
+
+        res.json(analytics);
+    } catch (err) {
+        res.status(500).json({ msg: 'Server Error' });
+    }
+});
+
+// ─────────────────────────────────────────────────────────────────
 // ADMIN: Generate Bridge Key
 // POST /api/exams/:id/bridge-key
 // ─────────────────────────────────────────────────────────────────

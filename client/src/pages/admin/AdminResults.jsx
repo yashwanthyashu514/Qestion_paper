@@ -8,6 +8,7 @@ export default function AdminResults() {
     const [exams, setExams] = useState([]);
     const [selectedExam, setSelectedExam] = useState(examIdParam || '');
     const [results, setResults] = useState([]);
+    const [analytics, setAnalytics] = useState(null);
     const [loading, setLoading] = useState(false);
     const [bridgeKey, setBridgeKey] = useState('');
     const [msg, setMsg] = useState('');
@@ -20,8 +21,12 @@ export default function AdminResults() {
     const fetchResults = async (eid) => {
         setLoading(true);
         try {
-            const res = await api.get(`/api/exams/${eid}/results`);
+            const [res, analyticsRes] = await Promise.all([
+                api.get(`/api/exams/${eid}/results`),
+                api.get(`/api/exams/${eid}/analytics`).catch(() => ({ data: null }))
+            ]);
             setResults(res.data);
+            if (analyticsRes.data) setAnalytics(analyticsRes.data);
         } catch (e) { setMsg('Failed to load results'); }
         setLoading(false);
     };
@@ -29,6 +34,7 @@ export default function AdminResults() {
     const handleExamSelect = (e) => {
         setSelectedExam(e.target.value);
         setResults([]);
+        setAnalytics(null);
         setBridgeKey('');
         if (e.target.value) fetchResults(e.target.value);
     };
@@ -100,6 +106,38 @@ export default function AdminResults() {
                             <div style={styles.summaryLabel}>Lab Students</div>
                         </div>
                     </div>
+
+                    {analytics && analytics.length > 0 && (
+                        <div style={styles.analyticsSection}>
+                            <h3 style={styles.analyticsTitle}>Global Question Analytics</h3>
+                            <div style={styles.chartLegend}>
+                                <span style={styles.legendItem}><span style={{...styles.legendDot, background: '#10b981'}}></span> Correct</span>
+                                <span style={styles.legendItem}><span style={{...styles.legendDot, background: '#ef4444'}}></span> Incorrect</span>
+                                <span style={styles.legendItem}><span style={{...styles.legendDot, background: '#e5e7eb'}}></span> Unattempted</span>
+                            </div>
+                            <div style={styles.chartScroll}>
+                                <div style={styles.chartContainer}>
+                                    {analytics.map((a, i) => {
+                                        const total = a.total || 1; // prevent divide by zero
+                                        const cPct = (a.correct / total) * 100;
+                                        const iPct = (a.incorrect / total) * 100;
+                                        const uPct = (a.unattempted / total) * 100;
+
+                                        return (
+                                            <div key={i} style={styles.barColumn} title={`Q${a.questionNumber}\nCorrect: ${a.correct}\nIncorrect: ${a.incorrect}\nUnattempted: ${a.unattempted}`}>
+                                                <div style={styles.barVertical}>
+                                                    {uPct > 0 && <div style={{ height: `${uPct}%`, background: '#e5e7eb', width: '100%' }} />}
+                                                    {iPct > 0 && <div style={{ height: `${iPct}%`, background: '#ef4444', width: '100%' }} />}
+                                                    {cPct > 0 && <div style={{ height: `${cPct}%`, background: '#10b981', width: '100%', borderRadius: (uPct === 0 && iPct === 0) ? '4px 4px 0 0' : '0' }} />}
+                                                </div>
+                                                <div style={styles.barLabel}>{a.questionNumber}</div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     <div style={styles.tableWrap}>
                         <table style={styles.table}>
@@ -194,5 +232,15 @@ const styles = {
     thead: { background: '#f8fafc' },
     th: { padding: '12px 14px', textAlign: 'left', fontWeight: 700, color: '#374151', borderBottom: '1px solid #e5e7eb', whiteSpace: 'nowrap' },
     td: { padding: '12px 14px', borderBottom: '1px solid #f1f5f9', verticalAlign: 'top' },
-    sourceBadge: { borderRadius: 6, padding: '3px 8px', fontSize: 12, fontWeight: 600 }
+    sourceBadge: { borderRadius: 6, padding: '3px 8px', fontSize: 12, fontWeight: 600 },
+    analyticsSection: { background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: '20px', marginBottom: 24, boxShadow: '0 1px 3px rgba(0,0,0,0.05)' },
+    analyticsTitle: { fontSize: 16, fontWeight: 700, color: '#1e293b', marginBottom: 16, marginTop: 0 },
+    chartLegend: { display: 'flex', gap: 16, marginBottom: 16, fontSize: 13, color: '#6b7280' },
+    legendItem: { display: 'flex', alignItems: 'center', gap: 6 },
+    legendDot: { width: 10, height: 10, borderRadius: '50%' },
+    chartScroll: { overflowX: 'auto', paddingBottom: 12 },
+    chartContainer: { display: 'flex', gap: 8, height: 200, alignItems: 'flex-end', minWidth: 'min-content' },
+    barColumn: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, width: 24, cursor: 'pointer', transition: 'opacity 0.2s' },
+    barVertical: { width: 16, height: 160, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', background: '#f8fafc', borderRadius: '4px 4px 0 0', overflow: 'hidden' },
+    barLabel: { fontSize: 11, color: '#6b7280', fontWeight: 600 }
 };
