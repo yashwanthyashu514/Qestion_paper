@@ -25,7 +25,7 @@ export default function LabExamList() {
     const getExamStatus = (exam) => {
         if (!exam.start_time) return 'live';
         const start = new Date(exam.start_time);
-        const end = new Date(start.getTime() + exam.duration_minutes * 60000);
+        const end = exam.end_time ? new Date(exam.end_time) : new Date(start.getTime() + exam.duration_minutes * 60000);
         if (now < start) return 'upcoming';
         if (now > end) return 'ended';
         return 'live';
