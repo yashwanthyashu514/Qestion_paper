@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import api from '../../api';
+import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 export default function AdminResults() {
     const [searchParams] = useSearchParams();
@@ -59,6 +62,62 @@ export default function AdminResults() {
         return '#ef4444';
     };
 
+    const exportExcel = () => {
+        if (!results || results.length === 0) return;
+        const data = results.map((r, i) => ({
+            'S.No': i + 1,
+            'Student Name': r.studentName,
+            'Roll No': r.rollNumber || 'N/A',
+            'Score': r.score,
+            'Correct': r.correct,
+            'Incorrect': r.incorrect,
+            'Unattempted': r.unattempted,
+            'Submitted At': new Date(r.createdAt).toLocaleString()
+        }));
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Results");
+        const examName = exams.find(e => e._id === selectedExam)?.title || 'Exam';
+        XLSX.writeFile(workbook, `${examName}_Results.xlsx`);
+    };
+
+    const exportPDF = () => {
+        if (!results || results.length === 0) return;
+        const doc = new jsPDF();
+        const examName = exams.find(e => e._id === selectedExam)?.title || 'Exam Results';
+        
+        doc.setFontSize(16);
+        doc.text(examName, 14, 15);
+        doc.setFontSize(10);
+        doc.text(`Total Students: ${results.length}`, 14, 22);
+
+        const tableColumn = ["#", "Student", "Roll No", "Score", "Correct", "Incorrect", "Unattempted"];
+        const tableRows = [];
+
+        results.forEach((r, i) => {
+            const rowData = [
+                i + 1,
+                r.studentName,
+                r.rollNumber || 'N/A',
+                r.score,
+                r.correct,
+                r.incorrect,
+                r.unattempted
+            ];
+            tableRows.push(rowData);
+        });
+
+        doc.autoTable({
+            head: [tableColumn],
+            body: tableRows,
+            startY: 28,
+            styles: { fontSize: 9 },
+            headStyles: { fillColor: [59, 130, 246] }
+        });
+
+        doc.save(`${examName}_Results.pdf`);
+    };
+
     return (
         <div style={styles.container}>
             <h2 style={styles.title}>📊 Student Exam Results</h2>
@@ -70,7 +129,15 @@ export default function AdminResults() {
                     <option value="">— Select an Exam —</option>
                     {exams.map(e => <option key={e._id} value={e._id}>{e.title} ({e.examType})</option>)}
                 </select>
-                <button style={styles.keyBtn} onClick={generateBridgeKey}>🔑 Generate Bridge Key</button>
+                <div style={{ display: 'flex', gap: 8 }}>
+                    <button style={styles.keyBtn} onClick={generateBridgeKey}>🔑 Generate Bridge Key</button>
+                    {results && results.length > 0 && (
+                        <>
+                            <button style={{...styles.keyBtn, background: '#10b981'}} onClick={exportExcel}>📊 Excel</button>
+                            <button style={{...styles.keyBtn, background: '#ef4444'}} onClick={exportPDF}>📄 PDF</button>
+                        </>
+                    )}
+                </div>
             </div>
 
             {bridgeKey && (
