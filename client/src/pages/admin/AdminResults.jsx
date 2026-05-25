@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import api from '../../api';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 
 export default function AdminResults() {
     const [searchParams] = useSearchParams();
@@ -64,55 +64,92 @@ export default function AdminResults() {
 
     const exportExcel = () => {
         if (!results || results.length === 0) return;
-        const data = results.map((r, i) => ({
-            'S.No': i + 1,
-            'Student Name': r.studentName,
-            'Roll No': r.rollNumber || 'N/A',
-            'Score': r.score,
-            'Correct': r.correct,
-            'Incorrect': r.incorrect,
-            'Unattempted': r.unattempted,
-            'Submitted At': new Date(r.createdAt).toLocaleString()
-        }));
+        const exam = exams.find(e => e._id === selectedExam);
+        const data = results.map((r, i) => {
+            const attempted = [];
+            const unattempted = [];
+            if (exam && exam.questions) {
+                exam.questions.forEach((q, idx) => {
+                    const qNum = idx + 1;
+                    const ans = r.answers?.find(a => a.questionId?.toString() === q._id?.toString());
+                    if (ans && ans.selectedOption !== null && ans.selectedOption !== '') {
+                        attempted.push(qNum);
+                    } else {
+                        unattempted.push(qNum);
+                    }
+                });
+            }
+
+            return {
+                'S.No': i + 1,
+                'Student Name': r.studentName,
+                'Roll No': r.rollNumber || 'N/A',
+                'Score': r.score,
+                'Correct': r.correct,
+                'Incorrect': r.incorrect,
+                'Unattempted': r.unattempted,
+                'Attempted Qs': attempted.join(', '),
+                'Unattempted Qs': unattempted.join(', '),
+                'Submitted At': new Date(r.createdAt).toLocaleString()
+            };
+        });
         const worksheet = XLSX.utils.json_to_sheet(data);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, "Results");
-        const examName = exams.find(e => e._id === selectedExam)?.title || 'Exam';
+        const examName = exam?.title || 'Exam';
         XLSX.writeFile(workbook, `${examName}_Results.xlsx`);
     };
 
     const exportPDF = () => {
         if (!results || results.length === 0) return;
-        const doc = new jsPDF();
-        const examName = exams.find(e => e._id === selectedExam)?.title || 'Exam Results';
+        const doc = new jsPDF('landscape'); // Landscape to fit extra columns
+        const exam = exams.find(e => e._id === selectedExam);
+        const examName = exam?.title || 'Exam Results';
         
         doc.setFontSize(16);
         doc.text(examName, 14, 15);
         doc.setFontSize(10);
         doc.text(`Total Students: ${results.length}`, 14, 22);
 
-        const tableColumn = ["#", "Student", "Roll No", "Score", "Correct", "Incorrect", "Unattempted"];
+        const tableColumn = ["#", "Student", "Roll No", "Score", "Attempted Qs", "Unattempted Qs"];
         const tableRows = [];
 
         results.forEach((r, i) => {
+            const attempted = [];
+            const unattempted = [];
+            if (exam && exam.questions) {
+                exam.questions.forEach((q, idx) => {
+                    const qNum = idx + 1;
+                    const ans = r.answers?.find(a => a.questionId?.toString() === q._id?.toString());
+                    if (ans && ans.selectedOption !== null && ans.selectedOption !== '') {
+                        attempted.push(qNum);
+                    } else {
+                        unattempted.push(qNum);
+                    }
+                });
+            }
+
             const rowData = [
                 i + 1,
                 r.studentName,
                 r.rollNumber || 'N/A',
                 r.score,
-                r.correct,
-                r.incorrect,
-                r.unattempted
+                attempted.join(', '),
+                unattempted.join(', ')
             ];
             tableRows.push(rowData);
         });
 
-        doc.autoTable({
+        autoTable(doc, {
             head: [tableColumn],
             body: tableRows,
             startY: 28,
-            styles: { fontSize: 9 },
-            headStyles: { fillColor: [59, 130, 246] }
+            styles: { fontSize: 8 },
+            headStyles: { fillColor: [59, 130, 246] },
+            columnStyles: {
+                4: { cellWidth: 80 }, // give more width to lists
+                5: { cellWidth: 80 }
+            }
         });
 
         doc.save(`${examName}_Results.pdf`);
