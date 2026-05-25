@@ -42,15 +42,11 @@ export default function LabExamList() {
             <header style={s.topbar}>
                 <div style={s.topbarInner}>
                     <div style={s.brand}>
-                        <div style={s.brandShield}>
-                            <svg viewBox="0 0 100 100" style={s.shieldSvg}>
-                                <path d="M50 10 L85 25 L85 50 Q50 80 50 80 Q15 80 15 50 L15 25 Z"
-                                    fill="none" stroke="currentColor" strokeWidth="2.5" vectorEffect="non-scaling-stroke" />
-                                <circle cx="50" cy="45" r="12" fill="currentColor" opacity="0.4" />
-                            </svg>
+                        <div style={{...s.brandShield, background: 'transparent', border: 'none'}}>
+                            <img src="/pacelogo.png" alt="PACE Logo" style={{width: 36, height: 36, objectFit: 'contain'}} />
                         </div>
                         <div>
-                            <div style={s.brandName}>Manchester College</div>
+                            <div style={s.brandName}>PACE Pre University College, Shivamogga</div>
                             <div style={s.brandSub}>Examination Portal</div>
                         </div>
                     </div>
@@ -119,7 +115,7 @@ export default function LabExamList() {
 
             {/* Footer strip */}
             <footer style={s.footer}>
-                © {new Date().getFullYear()} Manchester College · Examination System · All sessions are monitored
+                © {new Date().getFullYear()} PACE Pre University College, Shivamogga · Examination System · All sessions are monitored
             </footer>
         </div>
     );
