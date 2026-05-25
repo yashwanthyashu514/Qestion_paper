@@ -65,7 +65,10 @@ export default function ExamInstructions() {
         <div style={styles.page}>
             {/* Top Bar */}
             <div style={styles.topBar}>
-                <div style={styles.systemName}>🎓 National Testing Agency — Exam Portal</div>
+                <div style={{ ...styles.systemName, display: 'flex', alignItems: 'center' }}>
+                    <img src="/pacelogo.png" alt="PACE Logo" style={{ height: 24, marginRight: 8, objectFit: 'contain' }} />
+                    PACE Pre University College, Shivamogga — Exam Portal
+                </div>
                 <div style={styles.topRight}>
                     <div style={styles.studentInfoBox}>
                         <div style={styles.studentDetails}>
