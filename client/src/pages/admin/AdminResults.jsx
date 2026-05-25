@@ -139,6 +139,38 @@ export default function AdminResults() {
                         </div>
                     )}
 
+                    {results && results.length > 0 && (
+                        <div style={styles.analyticsSection}>
+                            <h3 style={styles.analyticsTitle}>Student Performance Analytics</h3>
+                            <div style={styles.chartLegend}>
+                                <span style={styles.legendItem}><span style={{...styles.legendDot, background: '#10b981'}}></span> Correct</span>
+                                <span style={styles.legendItem}><span style={{...styles.legendDot, background: '#ef4444'}}></span> Incorrect</span>
+                                <span style={styles.legendItem}><span style={{...styles.legendDot, background: '#e5e7eb'}}></span> Unattempted</span>
+                            </div>
+                            <div style={styles.chartScroll}>
+                                <div style={styles.chartContainer}>
+                                    {results.map((r, i) => {
+                                        const total = r.totalQuestions || 1; // prevent divide by zero
+                                        const cPct = (r.correct / total) * 100;
+                                        const iPct = (r.incorrect / total) * 100;
+                                        const uPct = (r.unattempted / total) * 100;
+
+                                        return (
+                                            <div key={i} style={styles.barColumn} title={`Student: ${r.studentName} (${r.rollNumber || 'N/A'})\nScore: ${r.score}\nCorrect: ${r.correct}\nIncorrect: ${r.incorrect}\nUnattempted: ${r.unattempted}`}>
+                                                <div style={styles.barVertical}>
+                                                    {uPct > 0 && <div style={{ height: `${uPct}%`, background: '#e5e7eb', width: '100%' }} />}
+                                                    {iPct > 0 && <div style={{ height: `${iPct}%`, background: '#ef4444', width: '100%' }} />}
+                                                    {cPct > 0 && <div style={{ height: `${cPct}%`, background: '#10b981', width: '100%', borderRadius: (uPct === 0 && iPct === 0) ? '4px 4px 0 0' : '0' }} />}
+                                                </div>
+                                                <div style={styles.barLabel}>{i + 1}</div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     <div style={styles.tableWrap}>
                         <table style={styles.table}>
                             <thead>
