@@ -99,12 +99,6 @@ router.post('/merge', [auth, checkRole(['admin'])], async (req, res) => {
         });
 
         await exam.save();
-        if (['live', 'scheduled'].includes(exam.status)) {
-            await OnlineExam.updateMany(
-                { _id: { $ne: exam._id }, status: { $in: ['live', 'scheduled'] } },
-                { $set: { status: 'ended' } }
-            );
-        }
         res.status(201).json({ msg: 'Exam created successfully', exam });
     } catch (err) {
         console.error('Merge error:', err.message);
@@ -174,12 +168,6 @@ router.put('/:id/config', [auth, checkRole(['admin'])], async (req, res) => {
 
         const exam = await OnlineExam.findByIdAndUpdate(req.params.id, { $set: update }, { new: true });
         if (!exam) return res.status(404).json({ msg: 'Exam not found' });
-        if (['live', 'scheduled'].includes(exam.status)) {
-            await OnlineExam.updateMany(
-                { _id: { $ne: exam._id }, status: { $in: ['live', 'scheduled'] } },
-                { $set: { status: 'ended' } }
-            );
-        }
         res.json({ msg: 'Exam updated', exam });
     } catch (err) {
         res.status(500).json({ msg: 'Server Error' });
@@ -326,6 +314,7 @@ router.post('/:id/submit', detectLabIp, async (req, res) => {
             const submitted = answerMap[sid];
             const selected = submitted?.selectedOption || null;
             const markedForReview = submitted?.markedForReview || false;
+            const timeTaken = submitted?.timeTaken || 0;
 
             let result = 'unattempted';
             if (selected !== null && selected !== '') {
@@ -351,7 +340,7 @@ router.post('/:id/submit', detectLabIp, async (req, res) => {
                 unattempted++;
             }
 
-            return { questionId: q._id, selectedOption: selected, markedForReview, visited: true };
+            return { questionId: q._id, selectedOption: selected, markedForReview, visited: submitted ? true : false, timeTaken };
         });
 
         const weakAreas = Object.values(weakMap).sort((a, b) => b.incorrect - a.incorrect);
@@ -410,6 +399,7 @@ router.get('/:id/scorecard/:sessionId', detectLabIp, async (req, res) => {
                 options: q.options,
                 selectedOption: ans?.selectedOption || null,
                 markedForReview: ans?.markedForReview || false,
+                timeTaken: ans?.timeTaken || 0,
                 solutionText: origQ?.solutionText || '',
                 solutionImageUrl: origQ?.solutionImageUrl || '',
                 type: q.type || 'MCQ'
@@ -633,6 +623,21 @@ router.delete('/:id', [auth, checkRole(['admin'])], async (req, res) => {
 });
 
 // ─────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────
+// STUDENT & ADMIN: Get leaderboard / results list for an exam
+// GET /api/exams/:id/leaderboard
+// ─────────────────────────────────────────────────────────────────
+router.get('/:id/leaderboard', async (req, res) => {
+    try {
+        const sessions = await ExamSession.find({ examId: req.params.id, submitted: true })
+            .select('studentName rollNumber score correct incorrect unattempted weakAreas endTime')
+            .sort({ score: -1 });
+        res.json(sessions);
+    } catch (err) {
+        res.status(500).json({ msg: 'Server Error' });
+    }
+});
+
 // Helpers
 // ─────────────────────────────────────────────────────────────────
 function getDefaultInstructions(examType) {

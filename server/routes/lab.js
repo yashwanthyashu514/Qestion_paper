@@ -110,7 +110,33 @@ router.get('/exams', labIpOnly, async (req, res) => {
         const exams = await OnlineExam.find(query)
             .select('title examType duration_minutes start_time end_time instructions status')
             .sort({ start_time: 1 });
-        res.json(exams);
+
+        let examsWithSession = [];
+        if (rollNumber) {
+            const ExamSession = require('../models/ExamSession');
+            const examIds = exams.map(e => e._id);
+            const sessions = await ExamSession.find({
+                examId: { $in: examIds },
+                rollNumber: rollNumber
+            });
+
+            examsWithSession = exams.map(exam => {
+                const session = sessions.find(s => s.examId.toString() === exam._id.toString());
+                return {
+                    ...exam.toObject(),
+                    sessionStatus: session ? (session.submitted ? 'submitted' : 'active') : 'not_started',
+                    sessionId: session ? session._id : null
+                };
+            });
+        } else {
+            examsWithSession = exams.map(exam => ({
+                ...exam.toObject(),
+                sessionStatus: 'not_started',
+                sessionId: null
+            }));
+        }
+
+        res.json(examsWithSession);
     } catch (err) {
         res.status(500).json({ msg: 'Server Error' });
     }

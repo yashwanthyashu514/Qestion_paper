@@ -90,8 +90,20 @@ export default function ExamEngine() {
 
                 setExam(e);
 
-                // 2. Late Entry Check: Capped remaining time based on end_time
-                let durationSeconds = e.duration_minutes * 60;
+                const sessionRes = await api.post(`/api/exams/${examId}/start`, {
+                    studentName: studentInfo.studentName || 'Student',
+                    studentEmail: studentInfo.studentEmail || '',
+                    rollNumber: studentInfo.rollNumber || ''
+                });
+                const sessionData = sessionRes.data.session;
+                setSession(sessionData);
+
+                // Calculate remaining time relative to student's actual session start time
+                const elapsedSeconds = Math.floor((new Date().getTime() - new Date(sessionData.startTime).getTime()) / 1000);
+                let durationSeconds = e.duration_minutes * 60 - elapsedSeconds;
+                if (durationSeconds < 0) durationSeconds = 0;
+
+                // Late Entry Check: Capped remaining time based on end_time if it exists
                 if (e.end_time) {
                     const end = new Date(e.end_time).getTime();
                     const now = new Date().getTime();
@@ -102,20 +114,17 @@ export default function ExamEngine() {
                 }
                 setTimeLeft(durationSeconds);
 
-                const sessionRes = await api.post(`/api/exams/${examId}/start`, {
-                    studentName: studentInfo.studentName || 'Student',
-                    studentEmail: studentInfo.studentEmail || '',
-                    rollNumber: studentInfo.rollNumber || ''
-                });
-                setSession(sessionRes.data.session);
-
-                // Initialize local answers state
-                setAnswers(e.questions.map((q, i) => ({
-                    questionId: q._id,
-                    selectedOption: null,
-                    markedForReview: false,
-                    visited: i === 0
-                })));
+                // Initialize local answers state (restore saved state if session resumed)
+                setAnswers(e.questions.map((q, i) => {
+                    const savedAns = sessionData.answers?.find(sa => sa.questionId?.toString() === q._id?.toString());
+                    return {
+                        questionId: q._id,
+                        selectedOption: savedAns ? savedAns.selectedOption : null,
+                        markedForReview: savedAns ? savedAns.markedForReview : false,
+                        visited: savedAns ? savedAns.visited : (i === 0),
+                        timeTaken: savedAns ? (savedAns.timeTaken || 0) : 0
+                    };
+                }));
             } catch (err) {
                 console.error(err);
             }
@@ -217,9 +226,10 @@ export default function ExamEngine() {
                 }
                 return t - 1;
             });
+            setAnswers(prev => prev.map((a, i) => i === current ? { ...a, timeTaken: (a.timeTaken || 0) + 1 } : a));
         }, 1000);
         return () => clearInterval(timerRef.current);
-    }, [timeLeft !== null]);
+    }, [timeLeft !== null, current]);
 
     const formatTime = (secs) => {
         const h = Math.floor(secs / 3600);

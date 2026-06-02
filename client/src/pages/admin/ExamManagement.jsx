@@ -303,6 +303,20 @@ function ExamPrintView({ exam, templates, settings, setSettings, onBack }) {
     );
 }
 
+const localToUtcIso = (localStr) => {
+    if (!localStr) return null;
+    const d = new Date(localStr);
+    return isNaN(d.getTime()) ? null : d.toISOString();
+};
+
+const utcToLocalStr = (utcStr) => {
+    if (!utcStr) return '';
+    const d = new Date(utcStr);
+    if (isNaN(d.getTime())) return '';
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+};
+
 // Helper to auto-calculate end time based on start time and duration
 const calculateEndTime = (startTimeStr, durationMin) => {
     if (!startTimeStr || !durationMin) return '';
@@ -395,6 +409,8 @@ export default function ExamManagement() {
         try {
             const payload = {
                 ...mergeForm,
+                start_time: localToUtcIso(mergeForm.start_time),
+                end_time: localToUtcIso(mergeForm.end_time),
                 allowedStudents: mergeForm.allowedStudents ? mergeForm.allowedStudents.split(',').map(s => s.trim()).filter(Boolean) : []
             };
             await api.post('/api/exams/merge', payload);
@@ -410,8 +426,8 @@ export default function ExamManagement() {
 
     const openConfigModal = (exam) => {
         setConfigForm({
-            start_time: exam.start_time ? exam.start_time.substring(0, 16) : '',
-            end_time: exam.end_time ? exam.end_time.substring(0, 16) : '',
+            start_time: utcToLocalStr(exam.start_time),
+            end_time: utcToLocalStr(exam.end_time),
             duration_minutes: exam.duration_minutes || 180,
             instructions: exam.instructions || '',
             status: exam.status || 'draft',
@@ -425,6 +441,8 @@ export default function ExamManagement() {
         try {
             const payload = {
                 ...configForm,
+                start_time: localToUtcIso(configForm.start_time),
+                end_time: localToUtcIso(configForm.end_time),
                 allowedStudents: configForm.allowedStudents ? configForm.allowedStudents.split(',').map(s => s.trim()).filter(Boolean) : []
             };
             await api.put(`/api/exams/${showConfigModal}/config`, payload);

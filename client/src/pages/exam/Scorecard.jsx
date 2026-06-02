@@ -11,6 +11,23 @@ export default function Scorecard() {
     const [expandedSolutions, setExpandedSolutions] = useState({});
     const [expandedSolutionsData, setExpandedSolutionsData] = useState({});
     const [loadingSolutions, setLoadingSolutions] = useState({});
+    const [leaderboard, setLeaderboard] = useState([]);
+    const [loadingLeaderboard, setLoadingLeaderboard] = useState(false);
+
+    useEffect(() => {
+        if (activeTab === 'leaderboard') {
+            setLoadingLeaderboard(true);
+            api.get(`/api/exams/${examId}/leaderboard`)
+                .then(r => { setLeaderboard(r.data); setLoadingLeaderboard(false); })
+                .catch(() => setLoadingLeaderboard(false));
+        }
+    }, [activeTab, examId]);
+
+    const formatSeconds = (totalSecs) => {
+        const m = Math.floor(totalSecs / 60);
+        const s = totalSecs % 60;
+        return m > 0 ? `${m}m ${s}s` : `${s}s`;
+    };
 
     const toggleSolution = async (qIndex, questionId, savedSolutionText) => {
         if (expandedSolutions[qIndex]) {
@@ -116,10 +133,10 @@ export default function Scorecard() {
 
                 {/* Tabs */}
                 <div style={styles.tabs}>
-                    {['summary', 'weakareas', 'review'].map(t => (
+                    {['summary', 'weakareas', 'timeanalysis', 'review', 'leaderboard'].map(t => (
                         <button key={t} style={{ ...styles.tab, ...(activeTab === t ? styles.tabActive : {}) }}
                             onClick={() => setActiveTab(t)}>
-                            {t === 'summary' ? '📊 Summary' : t === 'weakareas' ? '⚠️ Weak Areas' : '📝 Question Review'}
+                            {t === 'summary' ? '📊 Summary' : t === 'weakareas' ? '⚠️ Weak Areas' : t === 'timeanalysis' ? '⏱️ Time Analysis' : t === 'review' ? '📝 Question Review' : '🏆 Leaderboard'}
                         </button>
                     ))}
                 </div>
@@ -203,6 +220,7 @@ export default function Scorecard() {
                                         <div style={styles.reviewQHeader}>
                                             <span style={styles.reviewQNum}>Q{i + 1}</span>
                                             <span style={styles.reviewSubject}>{q.subject} | {q.chapter}</span>
+                                            <span style={styles.timeBadge}>⏱️ {formatSeconds(q.timeTaken || 0)}</span>
                                             {!attempted && <span style={styles.badge('#9ca3af')}>Skipped</span>}
                                             {attempted && !data.answerKeyHidden && isCorrect && <span style={styles.badgeGreen}>✅ Correct</span>}
                                             {attempted && !data.answerKeyHidden && isWrong && <span style={styles.badgeRed}>❌ Wrong</span>}
@@ -255,6 +273,113 @@ export default function Scorecard() {
                                 );
                             })}
                         </div>
+                    </div>
+                )}
+
+                {/* Time Analysis Tab */}
+                {activeTab === 'timeanalysis' && (
+                    <div style={styles.tabContent}>
+                        <h3 style={styles.sectionTitle}>⏱️ Time Spent Analysis</h3>
+                        <div style={styles.timeSummaryRow}>
+                            <div style={styles.timeSummaryCard}>
+                                <div style={styles.timeSummaryNum}>{formatSeconds(data.breakdown?.reduce((acc, q) => acc + (q.timeTaken || 0), 0) || 0)}</div>
+                                <div style={styles.timeSummaryLabel}>Total Time Taken</div>
+                            </div>
+                            <div style={styles.timeSummaryCard}>
+                                <div style={styles.timeSummaryNum}>
+                                    {data.totalQuestions > 0 ? formatSeconds(Math.round((data.breakdown?.reduce((acc, q) => acc + (q.timeTaken || 0), 0) || 0) / data.totalQuestions)) : '0s'}
+                                </div>
+                                <div style={styles.timeSummaryLabel}>Average Time Per Question</div>
+                            </div>
+                        </div>
+
+                        <h4 style={{ ...styles.sectionTitle, marginTop: 24 }}>Questions Taking the Most Time</h4>
+                        {(() => {
+                            const sorted = data.breakdown ? [...data.breakdown]
+                                .map((q, idx) => ({ ...q, qNumber: idx + 1 }))
+                                .filter(q => (q.timeTaken || 0) > 0)
+                                .sort((a, b) => b.timeTaken - a.timeTaken) : [];
+                            return sorted.length > 0 ? (
+                                <div style={styles.timeList}>
+                                    {sorted.slice(0, 10).map((q, i) => (
+                                        <div key={i} style={styles.timeRow}>
+                                            <span style={styles.timeRowIndex}>#{i + 1}</span>
+                                            <span style={styles.timeRowQNum}>Question {q.qNumber} ({q.subject})</span>
+                                            <span style={styles.timeRowTopic}>{q.chapter}</span>
+                                            <span style={styles.timeRowVal}>{formatSeconds(q.timeTaken)}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p style={{ color: '#6b7280' }}>No time records found.</p>
+                            );
+                        })()}
+
+                        <h4 style={{ ...styles.sectionTitle, marginTop: 28 }}>Time Grid (All Questions)</h4>
+                        <div style={styles.timeGrid}>
+                            {data.breakdown?.map((q, idx) => (
+                                <div key={idx} style={styles.timeGridCell}>
+                                    <div style={styles.timeGridQ}>Q{idx + 1}</div>
+                                    <div style={styles.timeGridVal}>{formatSeconds(q.timeTaken || 0)}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {/* Leaderboard Tab */}
+                {activeTab === 'leaderboard' && (
+                    <div style={styles.tabContent}>
+                        <h3 style={styles.sectionTitle}>🏆 Leaderboard / Results Sheet</h3>
+                        {loadingLeaderboard ? (
+                            <div style={{ textAlign: 'center', padding: 20 }}>Loading results...</div>
+                        ) : leaderboard.length > 0 ? (
+                            <div style={styles.leaderboardWrap}>
+                                <table style={styles.leaderboardTable}>
+                                    <thead>
+                                        <tr style={styles.leaderboardThead}>
+                                            <th style={styles.leaderboardTh}>Rank</th>
+                                            <th style={styles.leaderboardTh}>Name</th>
+                                            <th style={styles.leaderboardTh}>Roll Number</th>
+                                            <th style={styles.leaderboardTh}>Score</th>
+                                            <th style={styles.leaderboardTh}>Accuracy</th>
+                                            <th style={styles.leaderboardTh}>Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {leaderboard.map((student, rankIdx) => {
+                                            const isCurrentUser = student.rollNumber === data.rollNumber;
+                                            const totalAttempted = student.correct + student.incorrect;
+                                            const accuracy = totalAttempted > 0 
+                                                ? Math.round((student.correct / totalAttempted) * 100)
+                                                : 0;
+
+                                            return (
+                                                <tr key={rankIdx} style={{ 
+                                                    background: isCurrentUser ? '#e2e8f0' : rankIdx % 2 === 0 ? '#fff' : '#f9fafb',
+                                                    fontWeight: isCurrentUser ? 'bold' : 'normal'
+                                                }}>
+                                                    <td style={styles.leaderboardTd}>
+                                                        {rankIdx === 0 ? '🥇' : rankIdx === 1 ? '🥈' : rankIdx === 2 ? '🥉' : rankIdx + 1}
+                                                    </td>
+                                                    <td style={styles.leaderboardTd}>
+                                                        {student.studentName} {isCurrentUser && <span style={{ color: '#4f46e5', fontSize: 11 }}>(You)</span>}
+                                                    </td>
+                                                    <td style={styles.leaderboardTd}>{student.rollNumber || '—'}</td>
+                                                    <td style={{ ...styles.leaderboardTd, color: '#4f46e5', fontWeight: 'bold' }}>{student.score}</td>
+                                                    <td style={styles.leaderboardTd}>{accuracy}% accuracy</td>
+                                                    <td style={{ ...styles.leaderboardTd, fontSize: 12, color: '#6b7280' }}>
+                                                        ✅ {student.correct} | ❌ {student.incorrect} | ⏳ {student.unattempted} skipped
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        ) : (
+                            <p style={{ color: '#6b7280' }}>No submissions found for this exam yet.</p>
+                        )}
                     </div>
                 )}
             </div>
@@ -364,5 +489,118 @@ const styles = {
         fontSize: 13,
         color: '#1e1b4b',
         lineHeight: 1.6
+    },
+    timeBadge: {
+        background: '#eff6ff',
+        color: '#1d4ed8',
+        borderRadius: 6,
+        padding: '2px 8px',
+        fontSize: 12,
+        fontWeight: 700
+    },
+    timeSummaryRow: {
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gap: 16,
+        marginBottom: 20
+    },
+    timeSummaryCard: {
+        background: '#f8fafc',
+        border: '1px solid #e2e8f0',
+        borderRadius: 12,
+        padding: '20px',
+        textAlign: 'center'
+    },
+    timeSummaryNum: {
+        fontSize: 28,
+        fontWeight: 800,
+        color: '#1d4ed8'
+    },
+    timeSummaryLabel: {
+        fontSize: 13,
+        color: '#64748b',
+        marginTop: 4
+    },
+    timeList: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 8,
+        background: '#f8fafc',
+        borderRadius: 12,
+        padding: '16px',
+        border: '1px solid #e2e8f0'
+    },
+    timeRow: {
+        display: 'flex',
+        alignItems: 'center',
+        padding: '8px 12px',
+        borderBottom: '1px solid #e2e8f0',
+        fontSize: 14
+    },
+    timeRowIndex: {
+        fontWeight: 700,
+        color: '#94a3b8',
+        width: 32
+    },
+    timeRowQNum: {
+        fontWeight: 600,
+        color: '#1e293b',
+        width: 180
+    },
+    timeRowTopic: {
+        color: '#64748b',
+        flex: 1
+    },
+    timeRowVal: {
+        fontWeight: 700,
+        color: '#1d4ed8'
+    },
+    timeGrid: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))',
+        gap: 8,
+        marginTop: 12
+    },
+    timeGridCell: {
+        background: '#f8fafc',
+        border: '1px solid #e2e8f0',
+        borderRadius: 8,
+        padding: '8px',
+        textAlign: 'center'
+    },
+    timeGridQ: {
+        fontSize: 12,
+        fontWeight: 700,
+        color: '#64748b'
+    },
+    timeGridVal: {
+        fontSize: 13,
+        fontWeight: 600,
+        color: '#1d4ed8',
+        marginTop: 2
+    },
+    leaderboardWrap: {
+        overflowX: 'auto',
+        borderRadius: 12,
+        border: '1px solid #e5e7eb'
+    },
+    leaderboardTable: {
+        width: '100%',
+        borderCollapse: 'collapse',
+        fontSize: 14
+    },
+    leaderboardThead: {
+        background: '#f8fafc'
+    },
+    leaderboardTh: {
+        padding: '12px 14px',
+        textAlign: 'left',
+        fontWeight: 700,
+        color: '#374151',
+        borderBottom: '1px solid #e5e7eb'
+    },
+    leaderboardTd: {
+        padding: '12px 14px',
+        borderBottom: '1px solid #f1f5f9'
     }
 };

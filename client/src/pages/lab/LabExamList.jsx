@@ -123,6 +123,7 @@ export default function LabExamList() {
 
 function ExamCard({ exam, status, index, mounted, onStart }) {
     const [hovered, setHovered] = useState(false);
+    const navigate = useNavigate();
 
     const statusConfig = {
         live: { label: 'Live Now', bg: '#dcfce7', color: '#15803d', dot: '#22c55e' },
@@ -198,18 +199,46 @@ function ExamCard({ exam, status, index, mounted, onStart }) {
 
             <div style={s.cardDivider}></div>
 
-            <button
-                style={{
-                    ...s.startBtn,
-                    ...(status === 'ended' ? s.startBtnDisabled : {}),
-                    transform: hovered && status !== 'ended' ? 'scale(1.01)' : 'scale(1)',
-                    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-                }}
-                onClick={status !== 'ended' ? onStart : undefined}
-                disabled={status === 'ended'}
-            >
-                {status === 'ended' ? 'Exam Ended' : status === 'upcoming' ? '⏳ View Instructions' : '▶ Start Examination'}
-            </button>
+            {exam.sessionStatus === 'submitted' ? (
+                <button
+                    style={{
+                        ...s.startBtn,
+                        background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                        boxShadow: '0 4px 14px rgba(16, 185, 129, 0.25)',
+                        transform: hovered ? 'scale(1.01)' : 'scale(1)',
+                        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                    }}
+                    onClick={() => navigate(`/exam/${exam._id}/scorecard/${exam.sessionId}`)}
+                >
+                    📊 View Scorecard
+                </button>
+            ) : exam.sessionStatus === 'active' ? (
+                <button
+                    style={{
+                        ...s.startBtn,
+                        background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+                        boxShadow: '0 4px 14px rgba(59, 130, 246, 0.25)',
+                        transform: hovered ? 'scale(1.01)' : 'scale(1)',
+                        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                    }}
+                    onClick={onStart}
+                >
+                    ▶ Resume Examination
+                </button>
+            ) : (
+                <button
+                    style={{
+                        ...s.startBtn,
+                        ...(status === 'ended' ? s.startBtnDisabled : {}),
+                        transform: hovered && status !== 'ended' ? 'scale(1.01)' : 'scale(1)',
+                        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                    }}
+                    onClick={status !== 'ended' ? onStart : undefined}
+                    disabled={status === 'ended'}
+                >
+                    {status === 'ended' ? 'Exam Ended' : status === 'upcoming' ? '⏳ View Instructions' : '▶ Start Examination'}
+                </button>
+            )}
         </div>
     );
 }
