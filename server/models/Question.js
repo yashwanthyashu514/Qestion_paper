@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const QuestionSchema = new mongoose.Schema({
     questionId: { type: String, required: true, unique: true },
     subject: { type: String, required: true },
-    classes: [{ type: String, enum: ['11', '12', 'JEE', 'KCET', 'NEET'], required: true }],
+    classes: [{ type: String, required: true }], // allow flexible class strings
     chapter: { type: String, required: true },
     concept: { type: String, required: true },
+    subConcept: { type: String, default: '' },
     level: { type: String, enum: ['easy', 'medium', 'hard'], required: true },
-    type: { type: String, enum: ['MCQ', '1m', '2m', '3m', '4m', '5m', 'numerical'], required: true },
+    type: { type: String, required: true }, // flexible string
     questionText: { type: String, required: true },
     options: [{ type: String }], // For MCQ
     answer: { type: String },
