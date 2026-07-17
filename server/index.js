@@ -19,7 +19,6 @@ const paperRoutes = require('./routes/papers.js');
 const templateRoutes = require('./routes/templates.js');
 const examRoutes = require('./routes/exams.js');
 const labRoutes = require('./routes/lab.js');
-const patternRoutes = require('./routes/patterns.js');
 
 dotenv.config();
 
@@ -63,7 +62,6 @@ app.use('/api/papers', paperRoutes);
 app.use('/api/templates', templateRoutes);
 app.use('/api/exams', examRoutes);
 app.use('/api/lab', labRoutes);
-app.use('/api/patterns', patternRoutes);
 
 // ── Global error handler
 app.use((err, req, res, next) => {

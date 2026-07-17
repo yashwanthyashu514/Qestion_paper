@@ -14,13 +14,6 @@ const PaperSchema = new mongoose.Schema({
         description: String,
         marks: Number
     }],
-    paperType: { type: String, enum: ['Standard', 'GrandTest', 'PYQ'], default: 'Standard' },
-    examType: { type: String, enum: ['JEE', 'NEET', 'KCET', 'Custom', 'Other'], default: 'Custom' },
-    version: { type: Number, default: 1 },
-    revision: { type: Number, default: 0 },
-    parentPaperId: { type: mongoose.Schema.Types.ObjectId, ref: 'Paper' },
-    year: { type: Number },
-    fileUrl: { type: String },
     createdAt: { type: Date, default: Date.now },
     status: { type: String, enum: ['Pending Approval', 'Approved', 'Rejected'], default: 'Pending Approval' }
 });
