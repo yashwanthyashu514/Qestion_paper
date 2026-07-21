@@ -310,6 +310,11 @@ const GeneratePaperModal = ({ onClose, onGenerate, filters, allQuestions, setFil
                                             >
                                                 <option value="">Select Type</option>
                                                 <option value="MCQ">MCQ</option>
+                                                <option value="ASSERTION_REASON">Assertion / Reason</option>
+                                                <option value="STATEMENT_BASED">Statement Based</option>
+                                                <option value="MATCH_FOLLOWING">Match the Following</option>
+                                                <option value="TRUE_FALSE">True / False</option>
+                                                <option value="NUMERICAL">Numerical</option>
                                                 <option value="1m">1 Mark</option>
                                                 <option value="2m">2 Marks</option>
                                                 <option value="3m">3 Marks</option>
@@ -678,11 +683,19 @@ const CreatePaper = () => {
                     <option value="">All Levels</option>
                     <option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option>
                 </select>
-                <select value={filters.type} onChange={e => setFilters({ ...filters, type: e.target.value })} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer" disabled={['JEE', 'KCET', 'NEET'].includes(filters.class)}>
+                <select value={filters.type} onChange={e => setFilters({ ...filters, type: e.target.value })} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer">
                     <option value="">All Types</option>
-                    <option value="MCQ">MCQ</option><option value="1m">1 Mark</option>
-                    <option value="2m">2 Marks</option><option value="3m">3 Marks</option>
-                    <option value="4m">4 Marks</option><option value="5m">5 Marks</option>
+                    <option value="MCQ">MCQ</option>
+                    <option value="ASSERTION_REASON">Assertion / Reason</option>
+                    <option value="STATEMENT_BASED">Statement Based</option>
+                    <option value="MATCH_FOLLOWING">Match the Following</option>
+                    <option value="TRUE_FALSE">True / False</option>
+                    <option value="NUMERICAL">Numerical</option>
+                    <option value="1m">1 Mark</option>
+                    <option value="2m">2 Marks</option>
+                    <option value="3m">3 Marks</option>
+                    <option value="4m">4 Marks</option>
+                    <option value="5m">5 Marks</option>
                 </select>
                 <select value={filters.chapter} onChange={e => setFilters({ ...filters, chapter: e.target.value, concept: '' })} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer w-40">
                     <option value="">All Chapters</option>
@@ -849,6 +862,11 @@ const CreatePaper = () => {
                                             <select value={sec.type} onChange={e => handlePatternChange(idx, 'type', e.target.value)} className="border border-gray-200 p-3 rounded-xl w-36 text-sm font-bold text-gray-700 outline-none focus:border-[#1e3280] bg-white shadow-sm appearance-none cursor-pointer">
                                                 <option value="" disabled>Select Type</option>
                                                 <option value="MCQ">MCQ</option>
+                                                <option value="ASSERTION_REASON">Assertion / Reason</option>
+                                                <option value="STATEMENT_BASED">Statement Based</option>
+                                                <option value="MATCH_FOLLOWING">Match the Following</option>
+                                                <option value="TRUE_FALSE">True / False</option>
+                                                <option value="NUMERICAL">Numerical</option>
                                                 <option value="1m">1 Mark</option><option value="2m">2 Marks</option><option value="3m">3 Marks</option><option value="4m">4 Marks</option><option value="5m">5 Marks</option>
                                             </select>
                                         </div>
