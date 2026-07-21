@@ -1,4 +1,4 @@
-const dns = require('dns'); // trigger nodemon restart 2
+const dns = require('dns'); // trigger render redeploy 3
 // Set DNS servers to resolve MongoDB SRV records reliably
 try {
     dns.setServers(['8.8.8.8', '1.1.1.1']);
