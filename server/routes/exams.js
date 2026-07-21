@@ -107,6 +107,59 @@ router.post('/merge', [auth, checkRole(['admin'])], async (req, res) => {
 });
 
 // ─────────────────────────────────────────────────────────────────
+// ADMIN: Create exam from a Grand Test paper
+// POST /api/exams/from-grand-test
+// ─────────────────────────────────────────────────────────────────
+router.post('/from-grand-test', [auth, checkRole(['admin'])], async (req, res) => {
+    try {
+        const { grandTestId, title, instructions, start_time, end_time, duration_minutes, allowedStudents } = req.body;
+
+        const GrandTestPaper = require('../models/GrandTestPaper');
+        const Question = require('../models/Question');
+
+        const gt = await GrandTestPaper.findById(grandTestId).populate('questions');
+        if (!gt) return res.status(404).json({ msg: 'Grand Test not found' });
+
+        const mergedQuestions = gt.questions.map(q => ({
+            questionId: q._id,
+            subject: q.subject,
+            chapter: q.chapter,
+            concept: q.concept,
+            questionText: q.questionText,
+            options: q.options || [],
+            answer: q.answer,
+            imageUrl: q.imageUrl || null,
+            marks: q.type === 'NUMERICAL' ? 4 : 4,
+            negativeMarks: q.type === 'NUMERICAL' ? 0 : 1,
+            type: q.type || 'MCQ'
+        }));
+
+        const getDefaultInstructions = (examType) => `This is a ${examType} Grand Test. Read all questions carefully.`;
+
+        const exam = new OnlineExam({
+            title: title || gt.title,
+            examType: gt.examType,
+            sourcePapers: [],
+            sourceGrandTest: grandTestId,
+            questions: mergedQuestions,
+            instructions: instructions || getDefaultInstructions(gt.examType),
+            start_time: start_time || null,
+            end_time: end_time || null,
+            duration_minutes: duration_minutes || 180,
+            status: start_time ? 'scheduled' : 'draft',
+            allowedStudents: Array.isArray(allowedStudents) ? allowedStudents : [],
+            createdBy: req.user.id
+        });
+
+        await exam.save();
+        res.status(201).json({ msg: 'Grand Test Exam created successfully', exam });
+    } catch (err) {
+        console.error('Grand Test exam creation error:', err.message);
+        res.status(500).json({ msg: 'Server Error', error: err.message });
+    }
+});
+
+// ─────────────────────────────────────────────────────────────────
 // ADMIN: List all online exams
 // GET /api/exams
 // ─────────────────────────────────────────────────────────────────

@@ -339,6 +339,7 @@ export default function ExamManagement() {
     const [exams, setExams] = useState([]);
     const [papers, setPapers] = useState([]);
     const [templates, setTemplates] = useState([]);
+    const [grandTests, setGrandTests] = useState([]);
     const [showMergeModal, setShowMergeModal] = useState(false);
     const [showConfigModal, setShowConfigModal] = useState(null); // exam id
     const [loading, setLoading] = useState(false);
@@ -349,6 +350,9 @@ export default function ExamManagement() {
         title: '', examType: 'NEET', paperIds: [], instructions: '',
         start_time: '', end_time: '', duration_minutes: 180, allowedStudents: ''
     });
+
+    // Grand Test exam creation state
+    const [selectedGTId, setSelectedGTId] = useState('');
 
     // Config edit state
     const [configForm, setConfigForm] = useState({
@@ -371,6 +375,7 @@ export default function ExamManagement() {
         fetchExams(); 
         fetchPapers(); 
         fetchTemplates();
+        fetchGrandTests();
     }, []);
 
     const fetchExams = async () => {
@@ -391,6 +396,13 @@ export default function ExamManagement() {
         try {
             const res = await api.get('/api/templates');
             setTemplates(res.data);
+        } catch (e) { /* ignore */ }
+    };
+
+    const fetchGrandTests = async () => {
+        try {
+            const res = await api.get('/api/grand-tests');
+            setGrandTests(res.data);
         } catch (e) { /* ignore */ }
     };
 
@@ -420,6 +432,31 @@ export default function ExamManagement() {
             fetchExams();
         } catch (e) {
             setMsg(e.response?.data?.msg || 'Merge failed');
+        }
+        setLoading(false);
+    };
+
+    const handleCreateFromGT = async () => {
+        if (!selectedGTId) return setMsg('Please select a Grand Test paper.');
+        setLoading(true);
+        try {
+            const payload = {
+                grandTestId: selectedGTId,
+                title: mergeForm.title,
+                instructions: mergeForm.instructions,
+                start_time: localToUtcIso(mergeForm.start_time),
+                end_time: localToUtcIso(mergeForm.end_time),
+                duration_minutes: mergeForm.duration_minutes,
+                allowedStudents: mergeForm.allowedStudents ? mergeForm.allowedStudents.split(',').map(s => s.trim()).filter(Boolean) : []
+            };
+            await api.post('/api/exams/from-grand-test', payload);
+            setMsg('✅ Grand Test Exam created successfully!');
+            setShowMergeModal(false);
+            setSelectedGTId('');
+            setMergeForm({ title: '', examType: 'NEET', paperIds: [], instructions: '', start_time: '', end_time: '', duration_minutes: 180, allowedStudents: '' });
+            fetchExams();
+        } catch (e) {
+            setMsg(e.response?.data?.msg || 'Failed to create exam from Grand Test');
         }
         setLoading(false);
     };
@@ -661,6 +698,44 @@ export default function ExamManagement() {
                                 {mergeForm.examType === 'JEE' && 'Required: Physics, Chemistry, Mathematics (30 Qs each)'}
                                 {mergeForm.examType === 'CET' && 'Required: Physics, Chemistry, Mathematics, Biology (60 Qs each)'}
                             </div>
+
+                            {/* Grand Test Papers Section */}
+                            {grandTests.length > 0 && (
+                                <div style={{ marginBottom: 16 }}>
+                                    <div style={{ fontSize: 12, fontWeight: 700, color: '#001f6d', marginBottom: 8, background: '#f0f4ff', padding: '6px 10px', borderRadius: 8, border: '1px solid #c7d2fe' }}>
+                                        📋 OR — Select a Grand Test Paper
+                                    </div>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 12, maxHeight: 160, overflowY: 'auto' }}>
+                                        {grandTests.map(gt => (
+                                            <div
+                                                key={gt._id}
+                                                onClick={() => setSelectedGTId(prev => prev === gt._id ? '' : gt._id)}
+                                                style={{
+                                                    display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px',
+                                                    border: selectedGTId === gt._id ? '2px solid #001f6d' : '1.5px solid #e5e7eb',
+                                                    borderRadius: 10, cursor: 'pointer', background: selectedGTId === gt._id ? '#eef2ff' : '#fff',
+                                                    transition: 'all 0.15s'
+                                                }}
+                                            >
+                                                <span style={{ fontSize: 16 }}>{selectedGTId === gt._id ? '✅' : '⬜'}</span>
+                                                <div>
+                                                    <div style={{ fontWeight: 700, fontSize: 13, color: '#001f6d' }}>{gt.title}</div>
+                                                    <div style={{ fontSize: 11, color: '#6b7280' }}>
+                                                        {gt.examType} • {gt.questions?.length || 0} Questions
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    {selectedGTId && (
+                                        <div style={{ fontSize: 11, color: '#10b981', fontWeight: 600, padding: '4px 10px', background: '#ecfdf5', borderRadius: 6 }}>
+                                            ✅ Grand Test selected — use button below to create exam from this GT.
+                                        </div>
+                                    )}
+                                    <div style={{ textAlign: 'center', margin: '10px 0', fontSize: 11, color: '#9ca3af', fontWeight: 600 }}>— OR select individual teacher papers below —</div>
+                                </div>
+                            )}
+
                             <div style={styles.paperList}>
                                 {papers.map(p => {
                                     const selected = mergeForm.paperIds.includes(p._id);
@@ -685,9 +760,15 @@ export default function ExamManagement() {
                         </div>
                         <div style={styles.modalFooter}>
                             <button style={styles.cancelBtn} onClick={() => setShowMergeModal(false)}>Cancel</button>
-                            <button style={styles.primaryBtn} onClick={handleMerge} disabled={loading || mergeForm.paperIds.length === 0}>
-                                {loading ? 'Merging...' : '🔀 Merge & Create Exam'}
-                            </button>
+                            {selectedGTId ? (
+                                <button style={styles.primaryBtn} onClick={handleCreateFromGT} disabled={loading}>
+                                    {loading ? 'Creating...' : '📋 Create Exam from GT'}
+                                </button>
+                            ) : (
+                                <button style={styles.primaryBtn} onClick={handleMerge} disabled={loading || mergeForm.paperIds.length === 0}>
+                                    {loading ? 'Merging...' : '🔀 Merge & Create Exam'}
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
