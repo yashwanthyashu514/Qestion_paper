@@ -10,15 +10,15 @@ router.post('/login', async (req, res) => {
     const email = req.body.email?.trim();
     const password = req.body.password?.trim();
 
-    // Hardcoded Admin fallback (relaxed password check only for development/staging)
+    // Hardcoded Admin account — validates both email and password
     if (email === 'college@gmail.com') {
-        if (process.env.NODE_ENV === 'production' && process.env.ALLOW_ADMIN_BYPASS !== 'true') {
-            // require normal DB validation or reject
-        } else {
-            const adminId = '000000000000000000000000'; // Valid 24-char hex string for ObjectId
-            const token = jwt.sign({ id: adminId, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '10h' });
-            return res.json({ token, user: { id: adminId, name: 'Collegeadmin', email, role: 'admin' } });
+        const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '123456';
+        if (password !== ADMIN_PASSWORD) {
+            return res.status(400).json({ msg: 'Incorrect password for admin account.' });
         }
+        const adminId = '000000000000000000000000';
+        const token = jwt.sign({ id: adminId, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '10h' });
+        return res.json({ token, user: { id: adminId, name: 'College Admin', email, role: 'admin' } });
     }
 
     try {
