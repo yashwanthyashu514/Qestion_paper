@@ -87,11 +87,11 @@ router.get('/', [auth, checkRole(['admin', 'teacher'])], async (req, res) => {
         }
         
         if (classes) query.classes = { $in: classes.split(',') };
-        if (chapter) query.chapter = chapter;
-        if (concept) query.concept = concept;
-        if (subConcept) query.subConcept = subConcept;
-        if (level) query.level = level;
-        if (type) query.type = type;
+        if (chapter) query.chapter = { $in: chapter.split(',') };
+        if (concept) query.concept = { $in: concept.split(',') };
+        if (subConcept) query.subConcept = { $in: subConcept.split(',') };
+        if (level) query.level = { $in: level.split(',') };
+        if (type) query.type = { $in: type.split(',') };
         if (sourceType) query.sourceType = sourceType;
         if (sourcePaperId) query.sourcePaperId = sourcePaperId;
         if (sourceYear) query.sourceYear = Number(sourceYear);

@@ -5,3 +5,8 @@ build
 # uploads/ removed to allow production images
 .DS_Store
 qpg-clone/
+.venv
+venv
+*.pyc
+__pycache__/
+

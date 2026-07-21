@@ -1,18 +1,86 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api';
 
+
+const MultiSelectCheckbox = ({ label, options, selectedValues, onChange, disabled }) => {
+    const [isOpen, setIsOpen] = React.useState(false);
+    const containerRef = React.useRef(null);
+
+    React.useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (containerRef.current && !containerRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    const toggleOption = (val) => {
+        if (selectedValues.includes(val)) {
+            onChange(selectedValues.filter(v => v !== val));
+        } else {
+            onChange([...selectedValues, val]);
+        }
+    };
+
+    return (
+        <div ref={containerRef} className="relative inline-block text-left w-full select-none">
+            <div>
+                <button
+                    type="button"
+                    disabled={disabled}
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="w-full border border-gray-200 p-3 rounded-xl text-xs bg-white font-bold flex justify-between items-center disabled:opacity-50 outline-none text-left"
+                >
+                    <span className="truncate">
+                        {selectedValues.length === 0 ? label : `${label} (${selectedValues.length})`}
+                    </span>
+                    <span className="text-[10px] text-gray-400 ml-2">▼</span>
+                </button>
+            </div>
+
+            {isOpen && !disabled && (
+                <div className="absolute left-0 mt-1 w-full rounded-xl shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-20 max-h-60 overflow-y-auto border border-gray-100">
+                    <div className="py-1">
+                        {options.length === 0 ? (
+                            <div className="px-4 py-2 text-xs text-gray-400 italic">No options available</div>
+                        ) : (
+                            options.map((opt) => {
+                                const checked = selectedValues.includes(opt);
+                                return (
+                                    <label key={opt} className="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 cursor-pointer whitespace-nowrap">
+                                        <input
+                                            type="checkbox"
+                                            checked={checked}
+                                            onChange={() => toggleOption(opt)}
+                                            className="h-3.5 w-3.5 text-blue-600 border-gray-300 rounded mr-2 focus:ring-blue-500"
+                                        />
+                                        <span className="truncate">{opt}</span>
+                                    </label>
+                                );
+                            })
+                        )}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
 const AdminQuestionBank = () => {
     const [questions, setQuestions] = useState([]);
+    const [allQuestions, setAllQuestions] = useState([]);
     const [filters, setFilters] = useState({
         examType: '',
         subject: '',
         classes: '',
         academicYearLevel: '',
-        chapter: '',
-        concept: '',
-        subConcept: '',
-        level: '',
-        type: '',
+        chapter: [],
+        concept: [],
+        subConcept: [],
+        level: [],
+        type: [],
         sourceType: ''
     });
 
@@ -20,18 +88,35 @@ const AdminQuestionBank = () => {
     const [uniqueConcepts, setUniqueConcepts] = useState([]);
     const [uniqueSubConcepts, setUniqueSubConcepts] = useState([]);
 
+    const fetchAllQuestionsOnce = async () => {
+        try {
+            const res = await api.get('/api/questions');
+            setAllQuestions(res.data);
+            const chs = [...new Set(res.data.map(q => q.chapter))].filter(Boolean);
+            setUniqueChapters(chs);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    useEffect(() => {
+        fetchAllQuestionsOnce();
+    }, []);
+
     const fetchQuestions = async () => {
         try {
             const queryParams = new URLSearchParams();
             Object.keys(filters).forEach(key => {
-                if (filters[key]) queryParams.append(key, filters[key]);
+                if (Array.isArray(filters[key])) {
+                    if (filters[key].length > 0) {
+                        queryParams.append(key, filters[key].join(','));
+                    }
+                } else if (filters[key]) {
+                    queryParams.append(key, filters[key]);
+                }
             });
             const res = await api.get(`/api/questions?${queryParams.toString()}`);
             setQuestions(res.data);
-
-            // Populate cascade metadata
-            const chs = [...new Set(res.data.map(q => q.chapter))].filter(Boolean);
-            setUniqueChapters(chs);
         } catch (err) {
             console.error(err);
         }
@@ -41,26 +126,36 @@ const AdminQuestionBank = () => {
         fetchQuestions();
     }, [filters]);
 
-    // Handle cascade filters
-    const handleChapterChange = (chapterVal) => {
+    // Handle cascade filters with arrays
+    const handleChapterChange = (chapters) => {
         setFilters(prev => ({
             ...prev,
-            chapter: chapterVal,
-            concept: '',
-            subConcept: ''
+            chapter: chapters,
+            concept: [],
+            subConcept: []
         }));
-        const matchingQs = questions.filter(q => q.chapter === chapterVal);
+        const matchingQs = allQuestions.filter(q => chapters.length === 0 || chapters.includes(q.chapter));
         setUniqueConcepts([...new Set(matchingQs.map(q => q.concept))].filter(Boolean));
     };
 
-    const handleConceptChange = (conceptVal) => {
+    const handleConceptChange = (concepts) => {
         setFilters(prev => ({
             ...prev,
-            concept: conceptVal,
-            subConcept: ''
+            concept: concepts,
+            subConcept: []
         }));
-        const matchingQs = questions.filter(q => q.chapter === filters.chapter && q.concept === conceptVal);
+        const matchingQs = allQuestions.filter(q => 
+            (filters.chapter.length === 0 || filters.chapter.includes(q.chapter)) &&
+            (concepts.length === 0 || concepts.includes(q.concept))
+        );
         setUniqueSubConcepts([...new Set(matchingQs.map(q => q.subConcept))].filter(Boolean));
+    };
+
+    const handleSubConceptChange = (subConcepts) => {
+        setFilters(prev => ({
+            ...prev,
+            subConcept: subConcepts
+        }));
     };
 
     const handleClearFilters = () => {
@@ -69,11 +164,11 @@ const AdminQuestionBank = () => {
             subject: '',
             classes: '',
             academicYearLevel: '',
-            chapter: '',
-            concept: '',
-            subConcept: '',
-            level: '',
-            type: '',
+            chapter: [],
+            concept: [],
+            subConcept: [],
+            level: [],
+            type: [],
             sourceType: ''
         });
     };
@@ -116,23 +211,19 @@ const AdminQuestionBank = () => {
                     <option value="Zoology">Zoology</option>
                 </select>
 
-                <select className="border border-gray-200 p-3 rounded-xl text-xs bg-white font-bold" value={filters.level} onChange={e => setFilters({...filters, level: e.target.value})}>
-                    <option value="">All Levels</option>
-                    <option value="easy">Easy</option>
-                    <option value="medium">Medium</option>
-                    <option value="hard">Hard</option>
-                </select>
+                <MultiSelectCheckbox 
+                    label="All Levels" 
+                    options={["easy", "medium", "hard"]} 
+                    selectedValues={filters.level} 
+                    onChange={vals => setFilters(f => ({ ...f, level: vals }))} 
+                />
 
-                <select className="border border-gray-200 p-3 rounded-xl text-xs bg-white font-bold" value={filters.type} onChange={e => setFilters({...filters, type: e.target.value})}>
-                    <option value="">All Types</option>
-                    <option value="MCQ">MCQ</option>
-                    <option value="ASSERTION_REASON">Assertion & Reason</option>
-                    <option value="STATEMENT_BASED">Statement-Based</option>
-                    <option value="TRUE_FALSE">True or False</option>
-                    <option value="MATCH_FOLLOWING">Match the Following</option>
-                    <option value="DIAGRAM_BASED">Diagram-Oriented</option>
-                    <option value="NUMERICAL">Numerical</option>
-                </select>
+                <MultiSelectCheckbox 
+                    label="All Types" 
+                    options={["MCQ", "ASSERTION_REASON", "STATEMENT_BASED", "TRUE_FALSE", "MATCH_FOLLOWING", "DIAGRAM_BASED", "NUMERICAL"]} 
+                    selectedValues={filters.type} 
+                    onChange={vals => setFilters(f => ({ ...f, type: vals }))} 
+                />
 
                 <select className="border border-gray-200 p-3 rounded-xl text-xs bg-white font-bold" value={filters.sourceType} onChange={e => setFilters({...filters, sourceType: e.target.value})}>
                     <option value="">All Sources</option>
@@ -142,20 +233,28 @@ const AdminQuestionBank = () => {
                 </select>
 
                 {/* Cascade Taxonomy */}
-                <select className="border border-gray-200 p-3 rounded-xl text-xs bg-white font-bold" value={filters.chapter} onChange={e => handleChapterChange(e.target.value)}>
-                    <option value="">All Chapters</option>
-                    {uniqueChapters.map(ch => <option key={ch} value={ch}>{ch}</option>)}
-                </select>
+                <MultiSelectCheckbox 
+                    label="All Chapters" 
+                    options={uniqueChapters} 
+                    selectedValues={filters.chapter} 
+                    onChange={handleChapterChange} 
+                />
 
-                <select className="border border-gray-200 p-3 rounded-xl text-xs bg-white font-bold" value={filters.concept} onChange={e => handleConceptChange(e.target.value)} disabled={!filters.chapter}>
-                    <option value="">All Concepts</option>
-                    {uniqueConcepts.map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
+                <MultiSelectCheckbox 
+                    label="All Concepts" 
+                    options={uniqueConcepts} 
+                    selectedValues={filters.concept} 
+                    onChange={handleConceptChange} 
+                    disabled={filters.chapter.length === 0}
+                />
 
-                <select className="border border-gray-200 p-3 rounded-xl text-xs bg-white font-bold" value={filters.subConcept} onChange={e => setFilters({...filters, subConcept: e.target.value})} disabled={!filters.concept}>
-                    <option value="">All Sub-concepts</option>
-                    {uniqueSubConcepts.map(sc => <option key={sc} value={sc}>{sc}</option>)}
-                </select>
+                <MultiSelectCheckbox 
+                    label="All Sub-concepts" 
+                    options={uniqueSubConcepts} 
+                    selectedValues={filters.subConcept} 
+                    onChange={handleSubConceptChange} 
+                    disabled={filters.concept.length === 0}
+                />
 
                 <button onClick={handleClearFilters} className="col-span-2 bg-navy text-gold py-3 rounded-xl text-xs font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-md">
                     Clear Filters

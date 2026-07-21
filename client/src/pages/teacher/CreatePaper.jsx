@@ -403,11 +403,78 @@ const GeneratePaperModal = ({ onClose, onGenerate, filters, allQuestions, setFil
 };
 
 // ─── Main Component ──────────────────────────────────────────────────────────
+
+const MultiSelectCheckbox = ({ label, options, selectedValues, onChange, disabled }) => {
+    const [isOpen, setIsOpen] = React.useState(false);
+    const containerRef = React.useRef(null);
+
+    React.useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (containerRef.current && !containerRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    const toggleOption = (val) => {
+        if (selectedValues.includes(val)) {
+            onChange(selectedValues.filter(v => v !== val));
+        } else {
+            onChange([...selectedValues, val]);
+        }
+    };
+
+    return (
+        <div ref={containerRef} className="relative inline-block text-left w-48 select-none">
+            <div>
+                <button
+                    type="button"
+                    disabled={disabled}
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="w-full border border-gray-300 p-2.5 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer flex justify-between items-center disabled:opacity-50 text-left"
+                >
+                    <span className="truncate">
+                        {selectedValues.length === 0 ? label : `${label} (${selectedValues.length})`}
+                    </span>
+                    <span className="text-xs text-gray-400 ml-2">▼</span>
+                </button>
+            </div>
+
+            {isOpen && !disabled && (
+                <div className="absolute right-0 mt-1 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-20 max-h-60 overflow-y-auto border border-gray-200">
+                    <div className="py-1">
+                        {options.length === 0 ? (
+                            <div className="px-4 py-2 text-sm text-gray-400 italic">No options available</div>
+                        ) : (
+                            options.map((opt) => {
+                                const checked = selectedValues.includes(opt);
+                                return (
+                                    <label key={opt} className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer whitespace-nowrap">
+                                        <input
+                                            type="checkbox"
+                                            checked={checked}
+                                            onChange={() => toggleOption(opt)}
+                                            className="h-4 w-4 text-blue-600 border-gray-300 rounded mr-2 focus:ring-blue-500"
+                                        />
+                                        <span className="truncate">{opt}</span>
+                                    </label>
+                                );
+                            })
+                        )}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
 const CreatePaper = () => {
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const [filters, setFilters] = useState({ class: '', level: '', type: '', chapter: '', concept: '', sourceType: '', sourcePaperId: '' });
+    const [filters, setFilters] = useState({ class: '', level: [], type: [], chapter: [], concept: [], sourceType: '', sourcePaperId: '' });
     const [questions, setQuestions] = useState([]);
     const [selectedQuestions, setSelectedQuestions] = useState([]);
     const [previewQuestion, setPreviewQuestion] = useState(null);
@@ -437,13 +504,19 @@ const CreatePaper = () => {
     }, []);
 
     const uniqueChapters = [...new Set(allQuestions.map(q => q.chapter))].filter(Boolean);
-    const uniqueConcepts = [...new Set(allQuestions.filter(q => !filters.chapter || q.chapter === filters.chapter).map(q => q.concept))].filter(Boolean);
+    const uniqueConcepts = [...new Set(allQuestions.filter(q => filters.chapter.length === 0 || filters.chapter.includes(q.chapter)).map(q => q.concept))].filter(Boolean);
 
     const fetchFilteredQuestions = async () => {
         try {
             const queryData = {};
             Object.keys(filters).forEach(k => {
-                if (filters[k]) queryData[k] = filters[k];
+                if (Array.isArray(filters[k])) {
+                    if (filters[k].length > 0) {
+                        queryData[k] = filters[k].join(',');
+                    }
+                } else if (filters[k]) {
+                    queryData[k] = filters[k];
+                }
             });
             if (queryData.class) { queryData.classes = queryData.class; delete queryData.class; }
             const res = await api.get(`/api/questions?${new URLSearchParams(queryData).toString()}`);
@@ -679,32 +752,31 @@ const CreatePaper = () => {
                     <option value="11">Class 11</option><option value="12">Class 12</option>
                     <option value="JEE">JEE</option><option value="KCET">KCET</option><option value="NEET">NEET</option>
                 </select>
-                <select value={filters.level} onChange={e => setFilters({ ...filters, level: e.target.value })} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer">
-                    <option value="">All Levels</option>
-                    <option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option>
-                </select>
-                <select value={filters.type} onChange={e => setFilters({ ...filters, type: e.target.value })} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer">
-                    <option value="">All Types</option>
-                    <option value="MCQ">MCQ</option>
-                    <option value="ASSERTION_REASON">Assertion / Reason</option>
-                    <option value="STATEMENT_BASED">Statement Based</option>
-                    <option value="MATCH_FOLLOWING">Match the Following</option>
-                    <option value="TRUE_FALSE">True / False</option>
-                    <option value="NUMERICAL">Numerical</option>
-                    <option value="1m">1 Mark</option>
-                    <option value="2m">2 Marks</option>
-                    <option value="3m">3 Marks</option>
-                    <option value="4m">4 Marks</option>
-                    <option value="5m">5 Marks</option>
-                </select>
-                <select value={filters.chapter} onChange={e => setFilters({ ...filters, chapter: e.target.value, concept: '' })} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer w-40">
-                    <option value="">All Chapters</option>
-                    {uniqueChapters.map(ch => <option key={ch} value={ch}>{ch}</option>)}
-                </select>
-                <select value={filters.concept} onChange={e => setFilters({ ...filters, concept: e.target.value })} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer w-40">
-                    <option value="">All Concepts</option>
-                    {uniqueConcepts.map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
+                <MultiSelectCheckbox 
+                    label="All Levels" 
+                    options={["easy", "medium", "hard"]} 
+                    selectedValues={filters.level} 
+                    onChange={vals => setFilters(f => ({ ...f, level: vals }))} 
+                />
+                <MultiSelectCheckbox 
+                    label="All Types" 
+                    options={["MCQ", "ASSERTION_REASON", "STATEMENT_BASED", "TRUE_FALSE", "MATCH_FOLLOWING", "NUMERICAL", "1m", "2m", "3m", "4m", "5m"]} 
+                    selectedValues={filters.type} 
+                    onChange={vals => setFilters(f => ({ ...f, type: vals }))} 
+                />
+                <MultiSelectCheckbox 
+                    label="All Chapters" 
+                    options={uniqueChapters} 
+                    selectedValues={filters.chapter} 
+                    onChange={vals => setFilters(f => ({ ...f, chapter: vals, concept: [] }))} 
+                />
+                <MultiSelectCheckbox 
+                    label="All Concepts" 
+                    options={uniqueConcepts} 
+                    selectedValues={filters.concept} 
+                    onChange={vals => setFilters(f => ({ ...f, concept: vals }))} 
+                    disabled={filters.chapter.length === 0}
+                />
             </div>
 
             {/* Three Columns Workspace */}
