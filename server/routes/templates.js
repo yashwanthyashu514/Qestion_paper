@@ -31,6 +31,8 @@ router.post('/', [auth, checkRole(['admin']), upload.single('template')], async 
         const template = new Template({
             filename: req.file.filename,
             originalName: req.file.originalname,
+            title: req.body.title || req.file.originalname,
+            description: req.body.description || '',
             uploadedBy: req.user.id,
             fileUrl
         });
