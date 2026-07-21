@@ -302,7 +302,8 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
         lineHeight: '1.5',
         columns: 1,
         showMarks: true,
-        showSettings: false
+        showSettings: false,
+        viewMode: 'qp' // 'qp', 'side-by-side', 'key'
     });
 
     const renderQuestions = () => {
@@ -368,8 +369,9 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
                         </button>
                         {paperData.status?.toLowerCase() === 'approved' ? (
                             <>
-                                <button style={S.btnPrint} onClick={() => window.print()}>🖨 Print Paper</button>
-                                <button style={S.btnPdf} onClick={() => exportToWord('.print-area', `${paperData.title.replace(/\s+/g, '_')}.doc`, settings)}>⬇ Export Word</button>
+                                <button style={S.btnPrint} onClick={() => window.print()}>🖨 Print</button>
+                                <button style={S.btnPdf} onClick={() => exportToWord('#qp-print-area', `${paperData.title.replace(/\s+/g, '_')}_QP.doc`, settings)}>⬇ Export QP (Word)</button>
+                                <button style={{ ...S.btnPdf, background: '#10b981' }} onClick={() => exportToWord('#key-print-area', `${paperData.title.replace(/\s+/g, '_')}_AnswerKey.doc`, settings)}>🔑 Export Key (Word)</button>
                             </>
                         ) : (
                             <span style={{ color: '#dc2626', fontSize: '13px', fontWeight: 600, display: 'flex', alignItems: 'center', padding: '0 10px' }}>
@@ -444,53 +446,141 @@ const PaperView = ({ paper, activeTemplate, onBack }) => {
                                 <option value="no">No (Hide)</option>
                             </select>
                         </div>
+                        <div>
+                            <label style={{ ...S.filterLabel, display: 'block', marginBottom: '8px' }}>View Mode</label>
+                            <select 
+                                style={S.filterSelect} 
+                                value={settings.viewMode}
+                                onChange={e => setSettings(s => ({ ...s, viewMode: e.target.value }))}
+                            >
+                                <option value="qp">Question Paper Only</option>
+                                <option value="side-by-side">Side-by-Side (QP + Key)</option>
+                                <option value="key">Answer Key Sheet Only</option>
+                            </select>
+                        </div>
                     </div>
                 )}
             </div>
 
-            <div className="print-area" style={{
-                background: '#fff', padding: '48px 56px',
-                maxWidth: '1000px', margin: '0 auto',
-                border: '1px solid #e2e8f0', borderRadius: '12px',
-                fontFamily: settings.fontFamily, fontSize: settings.fontSize,
-                lineHeight: settings.lineHeight,
-                boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
-            }}>
-                {activeTemplate?.fileUrl?.match(/\.(jpeg|jpg|gif|png)$/i) && (
-                    <div style={{ marginBottom: '20px', borderBottom: '2px solid #000', paddingBottom: '16px', textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
-                        <img src={activeTemplate.fileUrl} alt="Header" style={{ maxWidth: '100%', maxHeight: '140px', objectFit: 'contain', margin: '0 auto', display: 'block' }} />
-                    </div>
-                )}
-
-                <div style={{ marginBottom: '24px' }}>
-                    <div style={{ textAlign: 'center' }}>
-                        <h1 style={{ fontSize: '22px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>{paper.title}</h1>
-                        <p style={{ marginTop: '6px', color: '#333', fontWeight: 500 }}>Subject: {paper.subject} &nbsp;|&nbsp; Class: {paper.classes?.join(', ')}</p>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px', borderBottom: '2px solid #000', paddingBottom: '8px', fontWeight: 700, fontSize: '15px' }}>
-                        <span>Time: 3 Hours</span>
-                        <span>Max. Marks: {totalMarks}</span>
-                    </div>
-                </div>
-
-                <div style={{ 
-                    columnCount: settings.columns, 
-                    columnGap: '40px', 
-                    columnRule: settings.columns > 1 ? '1px solid #eee' : 'none' 
+            {/* Print View Renderers depending on View Mode */}
+            {settings.viewMode === 'qp' && (
+                <div id="qp-print-area" className="print-area" style={{
+                    background: '#fff', padding: '48px 56px',
+                    maxWidth: '1000px', margin: '0 auto',
+                    border: '1px solid #e2e8f0', borderRadius: '12px',
+                    fontFamily: settings.fontFamily, fontSize: settings.fontSize,
+                    lineHeight: settings.lineHeight,
+                    boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
+                    boxSizing: 'border-box'
                 }}>
-                    {renderQuestions()}
-                </div>
+                    {activeTemplate?.fileUrl?.match(/\.(jpeg|jpg|gif|png)$/i) && (
+                        <div style={{ marginBottom: '20px', borderBottom: '2px solid #000', paddingBottom: '16px', textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
+                            <img src={activeTemplate.fileUrl} alt="Header" style={{ maxWidth: '100%', maxHeight: '140px', objectFit: 'contain', margin: '0 auto', display: 'block' }} />
+                        </div>
+                    )}
 
-                <div style={{ textAlign: 'center', fontWeight: 700, borderTop: '2px solid #000', paddingTop: '16px', marginTop: '48px', fontSize: '13px' }}>
-                    *** End of Paper ***
+                    <div style={{ marginBottom: '24px' }}>
+                        <div style={{ textAlign: 'center' }}>
+                            <h1 style={{ fontSize: '22px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>{paper.title}</h1>
+                            <p style={{ marginTop: '6px', color: '#333', fontWeight: 500 }}>Subject: {paper.subject} &nbsp;|&nbsp; Class: {paper.classes?.join(', ')}</p>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px', borderBottom: '2px solid #000', paddingBottom: '8px', fontWeight: 700, fontSize: '15px' }}>
+                            <span>Time: 3 Hours</span>
+                            <span>Max. Marks: {totalMarks}</span>
+                        </div>
+                    </div>
+
+                    <div style={{ 
+                        columnCount: settings.columns, 
+                        columnGap: '40px', 
+                        columnRule: settings.columns > 1 ? '1px solid #eee' : 'none' 
+                    }}>
+                        {renderQuestions()}
+                    </div>
+
+                    <div style={{ textAlign: 'center', fontWeight: 700, borderTop: '2px solid #000', paddingTop: '16px', marginTop: '48px', fontSize: '13px' }}>
+                        *** End of Paper ***
+                    </div>
                 </div>
-            </div>
+            )}
+
+            {settings.viewMode === 'key' && (
+                <AnswerKeySheet paper={paperData} settings={settings} onGenerateSolution={handleGenerateSolution} generatingSolutions={generatingSolutions} />
+            )}
+
+            {settings.viewMode === 'side-by-side' && (
+                <div style={{ display: 'flex', gap: '30px', justifyContent: 'center', alignItems: 'flex-start', flexWrap: 'wrap', width: '100%', maxWidth: '2100px', margin: '0 auto' }}>
+                    <div style={{ flex: '1', minWidth: '450px', maxWidth: '1000px' }}>
+                        <div id="qp-print-area" className="print-area" style={{
+                            background: '#fff', padding: '48px 56px',
+                            border: '1px solid #e2e8f0', borderRadius: '12px',
+                            fontFamily: settings.fontFamily, fontSize: settings.fontSize,
+                            lineHeight: settings.lineHeight,
+                            boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
+                            boxSizing: 'border-box'
+                        }}>
+                            {activeTemplate?.fileUrl?.match(/\.(jpeg|jpg|gif|png)$/i) && (
+                                <div style={{ marginBottom: '20px', borderBottom: '2px solid #000', paddingBottom: '16px', textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
+                                    <img src={activeTemplate.fileUrl} alt="Header" style={{ maxWidth: '100%', maxHeight: '140px', objectFit: 'contain', margin: '0 auto', display: 'block' }} />
+                                </div>
+                            )}
+
+                            <div style={{ marginBottom: '24px' }}>
+                                <div style={{ textAlign: 'center' }}>
+                                    <h1 style={{ fontSize: '22px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>{paper.title}</h1>
+                                    <p style={{ marginTop: '6px', color: '#333', fontWeight: 500 }}>Subject: {paper.subject} &nbsp;|&nbsp; Class: {paper.classes?.join(', ')}</p>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px', borderBottom: '2px solid #000', paddingBottom: '8px', fontWeight: 700, fontSize: '15px' }}>
+                                    <span>Time: 3 Hours</span>
+                                    <span>Max. Marks: {totalMarks}</span>
+                                </div>
+                            </div>
+
+                            <div style={{ 
+                                columnCount: settings.columns, 
+                                columnGap: '40px', 
+                                columnRule: settings.columns > 1 ? '1px solid #eee' : 'none' 
+                            }}>
+                                {renderQuestions()}
+                            </div>
+
+                            <div style={{ textAlign: 'center', fontWeight: 700, borderTop: '2px solid #000', paddingTop: '16px', marginTop: '48px', fontSize: '13px' }}>
+                                *** End of Paper ***
+                            </div>
+                        </div>
+                    </div>
+                    <div style={{ flex: '1', minWidth: '450px', maxWidth: '1000px' }}>
+                        <AnswerKeySheet paper={paperData} settings={settings} onGenerateSolution={handleGenerateSolution} generatingSolutions={generatingSolutions} />
+                    </div>
+                </div>
+            )}
 
             <style>{`
         @media print {
           body * { visibility: hidden; }
-          .print-area, .print-area * { visibility: visible; }
-          .print-area { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none !important; border: none !important; border-radius: 0 !important; padding: 0 !important; margin: 0 !important; }
+          .print-area, .print-area *, .print-area-key, .print-area-key * { visibility: visible; }
+          .print-area { 
+            position: relative !important; 
+            width: 100% !important; 
+            box-shadow: none !important; 
+            border: none !important; 
+            border-radius: 0 !important; 
+            padding: 0 !important; 
+            margin: 0 0 50px 0 !important; 
+            page-break-after: always;
+            break-after: page;
+          }
+          .print-area-key { 
+            position: relative !important; 
+            width: 100% !important; 
+            box-shadow: none !important; 
+            border: none !important; 
+            border-radius: 0 !important; 
+            padding: 0 !important; 
+            margin: 0 !important; 
+            page-break-before: always;
+            break-before: page;
+          }
           .no-print { display: none !important; }
           @page { margin: 15mm; size: A4; }
         }
@@ -617,6 +707,71 @@ const QuestionList = ({ questions, fontSize, showMarks, classes, showAnswerKey, 
 /* ═══════════════════════════════════════════════════════════════════════ */
 /*  MAIN COMPONENT                                                        */
 /* ═══════════════════════════════════════════════════════════════════════ */
+
+const AnswerKeySheet = ({ paper, settings, onGenerateSolution, generatingSolutions }) => {
+    return (
+        <div id="key-print-area" className="print-area-key" style={{
+            background: '#fff', padding: '48px 56px',
+            maxWidth: '1000px', margin: '0 auto',
+            border: '1px solid #e2e8f0', borderRadius: '12px',
+            fontFamily: settings.fontFamily, fontSize: settings.fontSize,
+            lineHeight: settings.lineHeight,
+            boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
+            boxSizing: 'border-box'
+        }}>
+            <div style={{ marginBottom: '24px', textAlign: 'center', borderBottom: '2px solid #000', paddingBottom: '16px' }}>
+                <h1 style={{ fontSize: '20px', fontWeight: 800, textTransform: 'uppercase', margin: 0, letterSpacing: '0.05em' }}>SCHEME OF EVALUATION & ANSWER KEY</h1>
+                <h2 style={{ fontSize: '15px', fontWeight: 600, marginTop: '6px', color: '#4b5563' }}>{paper.title}</h2>
+                <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#6b7280' }}>Subject: {paper.subject} &nbsp;|&nbsp; Class: {paper.classes?.join(', ')}</p>
+            </div>
+
+            <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
+                <thead>
+                    <tr style={{ borderBottom: '2px solid #111' }}>
+                        <th style={{ textAlign: 'left', padding: '10px 8px', fontWeight: 700, width: '10%', fontSize: '13px' }}>Q.No</th>
+                        <th style={{ textAlign: 'left', padding: '10px 8px', fontWeight: 700, width: '20%', fontSize: '13px' }}>Type</th>
+                        <th style={{ textAlign: 'left', padding: '10px 8px', fontWeight: 700, width: '25%', fontSize: '13px' }}>Correct Key</th>
+                        <th style={{ textAlign: 'left', padding: '10px 8px', fontWeight: 700, width: '45%', fontSize: '13px' }}>Detailed Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {paper.questions?.map((q, idx) => (
+                        <tr key={q._id} style={{ borderBottom: '1px solid #e5e7eb' }}>
+                            <td style={{ padding: '12px 8px', fontWeight: 700, verticalAlign: 'top', fontSize: '13px' }}>{idx + 1}</td>
+                            <td style={{ padding: '12px 8px', verticalAlign: 'top', textTransform: 'uppercase', fontSize: '11px', fontWeight: 700, color: '#4f46e5' }}>{q.type || 'MCQ'}</td>
+                            <td style={{ padding: '12px 8px', verticalAlign: 'top' }}>
+                                <span style={{ color: '#15803d', fontWeight: 800, background: '#f0fdf4', padding: '3px 8px', borderRadius: '4px', border: '1px solid #bbf7d0', fontSize: '12px', display: 'inline-block' }}>
+                                    {q.answer || '—'}
+                                </span>
+                            </td>
+                            <td style={{ padding: '12px 8px', verticalAlign: 'top', fontSize: '13px', color: '#1f2937' }}>
+                                {q.solutionText ? (
+                                    <div style={{ whiteSpace: 'pre-wrap' }}>{q.solutionText}</div>
+                                ) : (
+                                    <div>
+                                        <span style={{ color: '#6b7280', fontStyle: 'italic', display: 'block', marginBottom: '8px', fontSize: '12px' }}>No explanation.</span>
+                                        <button
+                                            className="no-print"
+                                            onClick={() => onGenerateSolution(q._id)}
+                                            disabled={generatingSolutions[q._id]}
+                                            style={{
+                                                background: '#4f46e5', color: '#fff', border: 'none', borderRadius: '6px',
+                                                padding: '4px 8px', fontSize: '11px', cursor: 'pointer', fontWeight: 600
+                                            }}
+                                        >
+                                            {generatingSolutions[q._id] ? 'Solving...' : '🤖 Solve with Gemini AI'}
+                                        </button>
+                                    </div>
+                                )}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+};
+
 const SavedPapers = () => {
     const [papers, setPapers] = useState([]);
     const [selectedPaper, setSelectedPaper] = useState(null);

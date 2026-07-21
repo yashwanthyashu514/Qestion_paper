@@ -6,17 +6,24 @@ const AddQuestion = () => {
     const [formData, setFormData] = useState({
         chapter: '',
         concept: '',
+        subConcept: '',
         level: 'easy',
         classes: '11',
         type: 'MCQ',
         questionText: '',
         options: ['', '', '', ''],
         answer: '',
-        solutionText: ''
+        solutionText: '',
+        assertion: '',
+        reason: '',
+        statements: ['', ''],
+        matchPairs: [{ left: '', right: '' }, { left: '', right: '' }, { left: '', right: '' }, { left: '', right: '' }],
+        numericalTolerance: 0
     });
     const [imageFile, setImageFile] = useState(null);
     const [solutionImageFile, setSolutionImageFile] = useState(null);
     const [editId, setEditId] = useState(null);
+    const [showForm, setShowForm] = useState(false);
 
     const fetchQuestions = async () => {
         try {
@@ -37,6 +44,7 @@ const AddQuestion = () => {
             const submitData = new FormData();
             submitData.append('chapter', formData.chapter);
             submitData.append('concept', formData.concept);
+            submitData.append('subConcept', formData.subConcept || '');
             submitData.append('level', formData.level);
             submitData.append('classes', formData.classes);
             submitData.append('type', formData.type);
@@ -46,9 +54,28 @@ const AddQuestion = () => {
                 submitData.append('solutionText', formData.solutionText);
             }
             
-            if (formData.type === 'MCQ') {
+            // Format options & fields based on Question Type
+            if (formData.type === 'MCQ' || formData.type === 'DIAGRAM_BASED') {
                 submitData.append('options', JSON.stringify(formData.options));
+            } else if (formData.type === 'ASSERTION_REASON') {
+                submitData.append('assertion', formData.assertion);
+                submitData.append('reason', formData.reason);
+                submitData.append('options', JSON.stringify([
+                    'Both A and R are true and R is the correct explanation of A',
+                    'Both A and R are true but R is not the correct explanation of A',
+                    'A is true but R is false',
+                    'A is false but R is true'
+                ]));
+            } else if (formData.type === 'STATEMENT_BASED') {
+                submitData.append('statements', JSON.stringify(formData.statements.filter(Boolean)));
+                submitData.append('options', JSON.stringify(formData.options));
+            } else if (formData.type === 'MATCH_FOLLOWING') {
+                submitData.append('matchPairs', JSON.stringify(formData.matchPairs.filter(p => p.left || p.right)));
+                submitData.append('options', JSON.stringify(formData.options));
+            } else if (formData.type === 'NUMERICAL') {
+                submitData.append('numericalTolerance', formData.numericalTolerance || 0);
             }
+
             if (imageFile) {
                 submitData.append('image', imageFile);
             }
@@ -68,16 +95,30 @@ const AddQuestion = () => {
                 alert('Question added successfully!');
             }
             
-            setFormData({ chapter: '', concept: '', level: 'easy', classes: '11', type: 'MCQ', questionText: '', answer: '', solutionText: '', options: ['', '', '', ''] });
+            setFormData({
+                chapter: '',
+                concept: '',
+                subConcept: '',
+                level: 'easy',
+                classes: '11',
+                type: 'MCQ',
+                questionText: '',
+                options: ['', '', '', ''],
+                answer: '',
+                solutionText: '',
+                assertion: '',
+                reason: '',
+                statements: ['', ''],
+                matchPairs: [{ left: '', right: '' }, { left: '', right: '' }, { left: '', right: '' }, { left: '', right: '' }],
+                numericalTolerance: 0
+            });
             setImageFile(null);
             setSolutionImageFile(null);
             setEditId(null);
             fetchQuestions();
             setShowForm(false);
         } catch (err) {
-            console.error('Full error:', err);
-            console.error('Status:', err.response?.status);
-            console.error('Data:', err.response?.data);
+            console.error('Submit question error:', err);
             alert(`Error: ${err.response?.data?.msg || err.response?.data?.message || err.message}`);
         }
     };
@@ -86,13 +127,19 @@ const AddQuestion = () => {
         setFormData({
             chapter: q.chapter || '',
             concept: q.concept || '',
+            subConcept: q.subConcept || '',
             level: q.level || 'easy',
             classes: q.classes[0] || '11',
             type: q.type || 'MCQ',
             questionText: q.questionText || '',
             options: q.options && q.options.length === 4 ? q.options : ['', '', '', ''],
             answer: q.answer || '',
-            solutionText: q.solutionText || ''
+            solutionText: q.solutionText || '',
+            assertion: q.assertion || '',
+            reason: q.reason || '',
+            statements: q.statements && q.statements.length > 0 ? q.statements : ['', ''],
+            matchPairs: q.matchPairs && q.matchPairs.length > 0 ? q.matchPairs : [{ left: '', right: '' }, { left: '', right: '' }, { left: '', right: '' }, { left: '', right: '' }],
+            numericalTolerance: q.numericalTolerance || 0
         });
         setEditId(q._id);
         setShowForm(true);
@@ -109,7 +156,24 @@ const AddQuestion = () => {
         }
     };
 
-    const [showForm, setShowForm] = useState(false);
+    // AI numerical conversion trigger from UI
+    const handleAIConvert = async (q) => {
+        if (window.confirm('Are you sure you want to rephrase this MCQ into a Numerical question using Gemini AI?')) {
+            try {
+                const res = await api.post(`/api/questions/convert-numerical/${q._id}`);
+                const { convertedQuestion } = res.data;
+                const confirmMsg = `Gemini Proposed Conversion:\n\nQuestion: ${convertedQuestion.questionText}\nAnswer: ${convertedQuestion.answer}\nSolution: ${convertedQuestion.solutionText}\n\nDo you want to save this as a derived Numerical Question?`;
+                
+                if (window.confirm(confirmMsg)) {
+                    await api.post(`/api/questions/confirm-conversion/${q._id}`, convertedQuestion);
+                    alert('Derived Numerical question created successfully!');
+                    fetchQuestions();
+                }
+            } catch (err) {
+                alert('Conversion failed: ' + (err.response?.data?.msg || err.message));
+            }
+        }
+    };
 
     return (
         <div className="bg-surface p-10 rounded-[2.5rem] shadow-sm border border-gray-100 animate-fade-in-up">
@@ -123,7 +187,23 @@ const AddQuestion = () => {
                         if (showForm) {
                             setShowForm(false);
                             setEditId(null);
-                            setFormData({ chapter: '', concept: '', level: 'easy', classes: '11', type: 'MCQ', questionText: '', answer: '', solutionText: '', options: ['', '', '', ''] });
+                            setFormData({
+                                chapter: '',
+                                concept: '',
+                                subConcept: '',
+                                level: 'easy',
+                                classes: '11',
+                                type: 'MCQ',
+                                questionText: '',
+                                options: ['', '', '', ''],
+                                answer: '',
+                                solutionText: '',
+                                assertion: '',
+                                reason: '',
+                                statements: ['', ''],
+                                matchPairs: [{ left: '', right: '' }, { left: '', right: '' }, { left: '', right: '' }, { left: '', right: '' }],
+                                numericalTolerance: 0
+                            });
                             setImageFile(null);
                             setSolutionImageFile(null);
                         } else {
@@ -146,14 +226,7 @@ const AddQuestion = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
                                 <label className="block text-[10px] font-black text-navy/40 uppercase tracking-widest mb-3 ml-1">Target Academic Class</label>
-                                <select className="w-full border-2 border-gray-100 p-4 rounded-2xl focus:border-navy bg-white font-bold text-navy outline-none transition-all shadow-sm" value={formData.classes} onChange={e => {
-                                    const val = e.target.value;
-                                    const newFormData = { ...formData, classes: val };
-                                    if (['JEE', 'KCET', 'NEET'].includes(val)) {
-                                        newFormData.type = 'MCQ';
-                                    }
-                                    setFormData(newFormData);
-                                }}>
+                                <select className="w-full border-2 border-gray-100 p-4 rounded-2xl focus:border-navy bg-white font-bold text-navy outline-none transition-all shadow-sm" value={formData.classes} onChange={e => setFormData({...formData, classes: e.target.value})}>
                                     <option value="11">Class 11</option>
                                     <option value="12">Class 12</option>
                                     <option value="JEE">JEE (Entrance)</option>
@@ -167,9 +240,14 @@ const AddQuestion = () => {
                                     className="w-full border-2 border-gray-100 p-4 rounded-2xl focus:border-navy bg-white font-bold text-navy outline-none transition-all shadow-sm" 
                                     value={formData.type} 
                                     onChange={e=>setFormData({...formData, type: e.target.value})}
-                                    disabled={['JEE', 'KCET', 'NEET'].includes(formData.classes)}
                                 >
                                     <option value="MCQ">MCQ</option>
+                                    <option value="ASSERTION_REASON">Assertion & Reason</option>
+                                    <option value="STATEMENT_BASED">Statement-Based</option>
+                                    <option value="TRUE_FALSE">True or False</option>
+                                    <option value="MATCH_FOLLOWING">Match the Following</option>
+                                    <option value="DIAGRAM_BASED">Diagram-Oriented</option>
+                                    <option value="NUMERICAL">Numerical Answer Type</option>
                                     <option value="1m">1 Mark</option>
                                     <option value="2m">2 Marks</option>
                                     <option value="3m">3 Marks</option>
@@ -187,20 +265,25 @@ const AddQuestion = () => {
                             </div>
                         </div>
                         
-                        <div>
-                            <label className="block text-sm font-bold text-gray-700 mb-1">Chapter Name</label>
-                            <input type="text" list="chapters" placeholder="e.g. Thermodynamics" required className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-green-500" value={formData.chapter} onChange={e=>setFormData({...formData, chapter: e.target.value})} />
-                            <datalist id="chapters">
-                                {[...new Set(questions.map(q => q.chapter))].filter(Boolean).map(ch => <option key={ch} value={ch} />)}
-                            </datalist>
-                        </div>
-                        
-                        <div>
-                            <label className="block text-sm font-bold text-gray-700 mb-1">Concept / Topic</label>
-                            <input type="text" list="concepts" placeholder="e.g. First Law of Thermodynamics" required className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-green-500" value={formData.concept} onChange={e=>setFormData({...formData, concept: e.target.value})} />
-                            <datalist id="concepts">
-                                {[...new Set(questions.filter(q => !formData.chapter || q.chapter === formData.chapter).map(q => q.concept))].filter(Boolean).map(c => <option key={c} value={c} />)}
-                            </datalist>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label className="block text-sm font-bold text-gray-700 mb-1">Chapter Name</label>
+                                <input type="text" list="chapters" placeholder="e.g. Cell" required className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-green-500" value={formData.chapter} onChange={e=>setFormData({...formData, chapter: e.target.value})} />
+                                <datalist id="chapters">
+                                    {[...new Set(questions.map(q => q.chapter))].filter(Boolean).map(ch => <option key={ch} value={ch} />)}
+                                </datalist>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-bold text-gray-700 mb-1">Concept / Topic</label>
+                                <input type="text" list="concepts" placeholder="e.g. Plasma Membrane" required className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-green-500" value={formData.concept} onChange={e=>setFormData({...formData, concept: e.target.value})} />
+                                <datalist id="concepts">
+                                    {[...new Set(questions.filter(q => !formData.chapter || q.chapter === formData.chapter).map(q => q.concept))].filter(Boolean).map(c => <option key={c} value={c} />)}
+                                </datalist>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-bold text-gray-700 mb-1">Sub-concept</label>
+                                <input type="text" placeholder="e.g. Structure" className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-green-500" value={formData.subConcept} onChange={e=>setFormData({...formData, subConcept: e.target.value})} />
+                            </div>
                         </div>
 
                         <div>
@@ -208,7 +291,7 @@ const AddQuestion = () => {
                             <textarea placeholder="Enter the exact question text here..." required className="w-full border border-gray-300 p-3 rounded-lg h-32 focus:ring-2 focus:ring-green-500 mb-3" value={formData.questionText} onChange={e=>setFormData({...formData, questionText: e.target.value})}></textarea>
                             
                             {/* Image Upload Area */}
-                            <label className="block text-sm font-bold text-gray-700 mb-1 mt-2">Diagram / Reference Image (Optional)</label>
+                            <label className="block text-sm font-bold text-gray-700 mb-1 mt-2">Diagram / Reference Image (Optional/Required for Diagram-Oriented)</label>
                             <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center bg-gray-50 hover:bg-green-50 hover:border-green-400 transition cursor-pointer relative"
                                  onDragOver={(e) => { e.preventDefault(); e.currentTarget.classList.add('bg-green-50', 'border-green-400'); }}
                                  onDragLeave={(e) => { e.preventDefault(); e.currentTarget.classList.remove('bg-green-50', 'border-green-400'); }}
@@ -240,9 +323,10 @@ const AddQuestion = () => {
                                 )}
                             </div>
                         </div>
-                        
+
+                        {/* QUESTION TYPE SPECIFIC DYNAMIC FIELDS */}
                         {formData.type === 'MCQ' && (
-                            <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm space-y-3">
+                            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm space-y-3">
                                 <p className="font-bold text-sm text-gray-800">Multiple Choice Options:</p>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {formData.options.map((opt, i) => (
@@ -259,11 +343,149 @@ const AddQuestion = () => {
                                 </div>
                             </div>
                         )}
-                        
-                        <div>
-                            <label className="block text-sm font-bold text-gray-700 mb-1">Correct Answer / Marking Scheme (Optional)</label>
-                            <input type="text" placeholder="Enter answer or hints..." className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-green-500" value={formData.answer} onChange={e=>setFormData({...formData, answer: e.target.value})} />
-                        </div>
+
+                        {formData.type === 'DIAGRAM_BASED' && (
+                            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm space-y-3">
+                                <p className="font-bold text-sm text-gray-800">Diagram-Based Choices (MCQ style option list):</p>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {formData.options.map((opt, i) => (
+                                        <div key={i} className="flex items-center">
+                                            <span className="font-bold bg-gray-100 text-gray-600 w-8 h-8 flex items-center justify-center rounded-l-md border border-r-0 border-gray-300">{String.fromCharCode(65+i)}</span>
+                                            <input type="text" placeholder={`Option content`} required className="flex-1 border border-gray-300 p-2 rounded-r-md text-sm focus:ring-2 focus:ring-green-500"
+                                                value={opt} onChange={e => {
+                                                    const newOpts = [...formData.options];
+                                                    newOpts[i] = e.target.value;
+                                                    setFormData({...formData, options: newOpts});
+                                                }} />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {formData.type === 'ASSERTION_REASON' && (
+                            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm space-y-4">
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-700 mb-1">Assertion (Statement A)</label>
+                                    <textarea required placeholder="Enter the Assertion statement..." className="w-full border border-gray-300 p-2 rounded-lg text-sm" value={formData.assertion} onChange={e=>setFormData({...formData, assertion: e.target.value})}></textarea>
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-700 mb-1">Reason (Statement R)</label>
+                                    <textarea required placeholder="Enter the Reason statement..." className="w-full border border-gray-300 p-2 rounded-lg text-sm" value={formData.reason} onChange={e=>setFormData({...formData, reason: e.target.value})}></textarea>
+                                </div>
+                                <div className="text-xs text-gray-500 italic">
+                                    Options A-D are pre-configured to standard combinations:
+                                    <ul className="list-disc pl-5 mt-1">
+                                        <li>A: Both A and R are true and R is correct explanation of A</li>
+                                        <li>B: Both A and R are true but R is not correct explanation of A</li>
+                                        <li>C: A is true but R is false</li>
+                                        <li>D: A is false but R is true</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        )}
+
+                        {formData.type === 'STATEMENT_BASED' && (
+                            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm space-y-4">
+                                <p className="font-bold text-sm text-gray-800">Statements list:</p>
+                                {formData.statements.map((stmt, idx) => (
+                                    <div key={idx} className="flex items-start gap-2">
+                                        <span className="font-bold bg-gray-100 text-gray-600 w-10 py-2 text-center rounded border border-gray-300 text-xs">S-{idx+1}</span>
+                                        <textarea required placeholder={`Enter Statement ${idx+1}`} className="flex-1 border border-gray-300 p-2 rounded text-sm h-12" value={stmt} onChange={e => {
+                                            const newStmts = [...formData.statements];
+                                            newStmts[idx] = e.target.value;
+                                            setFormData({...formData, statements: newStmts});
+                                        }}></textarea>
+                                    </div>
+                                ))}
+                                <button type="button" onClick={() => setFormData({...formData, statements: [...formData.statements, '']})} className="text-xs font-bold text-blue-600 hover:text-blue-800">+ Add Statement</button>
+
+                                <div className="mt-4 pt-4 border-t border-gray-100 space-y-2">
+                                    <p className="font-bold text-xs text-gray-700">Statement MCQ Options (A, B, C, D):</p>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        {formData.options.map((opt, idx) => (
+                                            <input key={idx} type="text" placeholder={`Option ${String.fromCharCode(65+idx)} (e.g. Statement I is correct, II is incorrect)`} required className="border border-gray-300 p-2 rounded text-xs" value={opt} onChange={e => {
+                                                const newOpts = [...formData.options];
+                                                newOpts[idx] = e.target.value;
+                                                setFormData({...formData, options: newOpts});
+                                            }} />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {formData.type === 'MATCH_FOLLOWING' && (
+                            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm space-y-4">
+                                <p className="font-bold text-sm text-gray-800">Match Pairs (Column A & Column B):</p>
+                                <div className="space-y-3">
+                                    {formData.matchPairs.map((pair, idx) => (
+                                        <div key={idx} className="grid grid-cols-2 gap-4">
+                                            <input type="text" placeholder={`Column A Item ${idx+1}`} className="border border-gray-300 p-2 rounded text-xs" value={pair.left} onChange={e => {
+                                                const newPairs = [...formData.matchPairs];
+                                                newPairs[idx].left = e.target.value;
+                                                setFormData({...formData, matchPairs: newPairs});
+                                            }} />
+                                            <input type="text" placeholder={`Column B Match ${idx+1}`} className="border border-gray-300 p-2 rounded text-xs" value={pair.right} onChange={e => {
+                                                const newPairs = [...formData.matchPairs];
+                                                newPairs[idx].right = e.target.value;
+                                                setFormData({...formData, matchPairs: newPairs});
+                                            }} />
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="mt-4 pt-4 border-t border-gray-100 space-y-2">
+                                    <p className="font-bold text-xs text-gray-700">Matches MCQ Option Lists (A, B, C, D):</p>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        {formData.options.map((opt, idx) => (
+                                            <input key={idx} type="text" placeholder={`Option ${String.fromCharCode(65+idx)} (e.g. A-I, B-III, C-II)`} required className="border border-gray-300 p-2 rounded text-xs" value={opt} onChange={e => {
+                                                const newOpts = [...formData.options];
+                                                newOpts[idx] = e.target.value;
+                                                setFormData({...formData, options: newOpts});
+                                            }} />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {formData.type === 'TRUE_FALSE' && (
+                            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm space-y-3">
+                                <label className="block text-xs font-bold text-gray-700">Correct Answer Choice:</label>
+                                <select className="w-full border-2 border-gray-100 p-3 rounded-xl bg-white font-bold text-navy outline-none" value={formData.answer} onChange={e=>setFormData({...formData, answer: e.target.value})}>
+                                    <option value="">-- Choose Answer --</option>
+                                    <option value="True">True</option>
+                                    <option value="False">False</option>
+                                </select>
+                            </div>
+                        )}
+
+                        {formData.type === 'NUMERICAL' && (
+                            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm space-y-4">
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-700 mb-1">Numerical Correct Value</label>
+                                    <input type="text" required placeholder="e.g. 4.0 or -12.5" className="w-full border border-gray-300 p-3 rounded-lg text-sm" value={formData.answer} onChange={e=>setFormData({...formData, answer: e.target.value})} />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-700 mb-1">Answer Tolerance Range (+/- value)</label>
+                                    <input type="number" step="any" placeholder="e.g. 0.01" className="w-full border border-gray-300 p-3 rounded-lg text-sm" value={formData.numericalTolerance} onChange={e=>setFormData({...formData, numericalTolerance: Number(e.target.value)})} />
+                                </div>
+                            </div>
+                        )}
+
+                        {formData.type !== 'TRUE_FALSE' && formData.type !== 'NUMERICAL' && (
+                            <div>
+                                <label className="block text-sm font-bold text-gray-700 mb-1">Correct Answer / Key</label>
+                                <select required className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-green-500 bg-white" value={formData.answer} onChange={e=>setFormData({...formData, answer: e.target.value})}>
+                                    <option value="">-- Select Correct Option --</option>
+                                    <option value="A">Option A</option>
+                                    <option value="B">Option B</option>
+                                    <option value="C">Option C</option>
+                                    <option value="D">Option D</option>
+                                </select>
+                            </div>
+                        )}
 
                         <div className="bg-gray-50/50 p-6 rounded-2xl border border-gray-200">
                             <h4 className="font-black text-navy mb-4 border-b border-gray-200 pb-2">Detailed Solution (Optional)</h4>
@@ -316,29 +538,81 @@ const AddQuestion = () => {
                     </div>
                     {questions.map(q => (
                         <div key={q._id} className="border border-gray-200 p-5 rounded-lg shadow-sm bg-white relative group hover:shadow-md transition">
-                            <div className="absolute top-4 right-4 hidden group-hover:flex space-x-3">
+                            <div className="absolute top-4 right-4 hidden group-hover:flex space-x-3 z-10">
+                                {q.type === 'MCQ' && (
+                                    <button onClick={() => handleAIConvert(q)} className="text-green-700 hover:text-green-900 text-sm font-bold bg-green-50 px-3 py-1 rounded">Convert to Numerical via AI</button>
+                                )}
                                 <button onClick={() => handleEdit(q)} className="text-blue-600 hover:text-blue-800 text-sm font-bold bg-blue-50 px-3 py-1 rounded">Edit</button>
                                 <button onClick={() => handleDelete(q._id)} className="text-red-600 hover:text-red-800 text-sm font-bold bg-red-50 px-3 py-1 rounded">Delete</button>
                             </div>
-                            <div className="flex items-center gap-3 mb-3">
-                                <span className="bg-green-100 text-green-800 text-sm px-3 py-1 rounded-full font-bold">{q.questionId}</span>
-                                <span className="text-xs font-semibold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">Class: {q.classes.join(', ')}</span>
-                                <span className="text-xs font-semibold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">Type: {q.type}</span>
-                                <span className="text-xs font-semibold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">Level: {q.level}</span>
+                            <div className="flex items-center flex-wrap gap-2 mb-3">
+                                <span className="bg-green-100 text-green-800 text-[10px] px-3 py-1 rounded-full font-bold">{q.questionId}</span>
+                                <span className="text-[10px] font-semibold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">Class: {q.classes.join(', ')}</span>
+                                <span className="text-[10px] font-semibold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">Type: {q.type}</span>
+                                <span className="text-[10px] font-semibold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">Level: {q.level}</span>
+                                {q.sourceType !== 'REGULAR' && (
+                                    <span className="text-[10px] font-semibold text-gold bg-navy px-3 py-1 rounded-full">{q.sourceType} ({q.sourceDisplayCode})</span>
+                                )}
                             </div>
-                            <p className="mt-2 text-base text-gray-900 font-medium whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: q.questionText }}></p>
+
+                            {/* Dynamic Display of Question Content */}
+                            {q.type === 'ASSERTION_REASON' ? (
+                                <div className="space-y-2 mt-2 text-base text-gray-900 font-medium">
+                                    <p><strong>Assertion (A):</strong> {q.assertion}</p>
+                                    <p><strong>Reason (R):</strong> {q.reason}</p>
+                                </div>
+                            ) : q.type === 'STATEMENT_BASED' ? (
+                                <div className="space-y-2 mt-2 text-base text-gray-900 font-medium">
+                                    <p dangerouslySetInnerHTML={{ __html: q.questionText }}></p>
+                                    {q.statements.map((stmt, idx) => (
+                                        <p key={idx}><strong>Statement {idx+1}:</strong> {stmt}</p>
+                                    ))}
+                                </div>
+                            ) : q.type === 'MATCH_FOLLOWING' ? (
+                                <div className="space-y-2 mt-2 text-base text-gray-900 font-medium">
+                                    <p dangerouslySetInnerHTML={{ __html: q.questionText }}></p>
+                                    <div className="border border-gray-100 rounded-lg p-3 bg-gray-50/50 max-w-md">
+                                        <table className="w-full text-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th className="text-left font-bold pb-2">Column A</th>
+                                                    <th className="text-left font-bold pb-2">Column B</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {q.matchPairs?.map((pair, idx) => (
+                                                    <tr key={idx}>
+                                                        <td className="py-1">{String.fromCharCode(65+idx)}. {pair.left}</td>
+                                                        <td className="py-1">{idx+1}. {pair.right}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            ) : (
+                                <p className="mt-2 text-base text-gray-900 font-medium whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: q.questionText }}></p>
+                            )}
+
                             {q.imageUrl && (
                                 <div className="mt-3">
                                     <img src={q.imageUrl} alt="Question Reference" className="max-h-48 rounded border border-gray-200" />
                                 </div>
                             )}
                             
-                            {q.type === 'MCQ' && q.options && (
+                            {(q.type === 'MCQ' || q.type === 'DIAGRAM_BASED' || q.type === 'ASSERTION_REASON' || q.type === 'STATEMENT_BASED' || q.type === 'MATCH_FOLLOWING') && q.options && q.options.length > 0 && (
                                 <div className="mt-4 grid grid-cols-2 gap-2 text-sm text-gray-700 bg-gray-50 p-3 rounded border border-gray-100">
                                     {q.options.map((opt, idx) => (
                                         <div key={idx} className="flex"><strong className="mr-1">{String.fromCharCode(65+idx)})</strong> <span dangerouslySetInnerHTML={{ __html: opt }}></span></div>
                                     ))}
                                 </div>
+                            )}
+
+                            <div className="mt-3 text-sm font-bold text-gray-700">
+                                Correct Answer: <span className="text-navy">{q.answer}</span>
+                            </div>
+                            {q.type === 'NUMERICAL' && q.numericalTolerance > 0 && (
+                                <div className="text-xs text-gray-500">Tolerance range: +/- {q.numericalTolerance}</div>
                             )}
 
                             {(q.solutionText || q.solutionImageUrl) && (

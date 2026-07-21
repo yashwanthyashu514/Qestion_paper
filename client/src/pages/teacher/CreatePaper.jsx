@@ -402,7 +402,7 @@ const CreatePaper = () => {
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const [filters, setFilters] = useState({ class: '', level: '', type: '', chapter: '', concept: '' });
+    const [filters, setFilters] = useState({ class: '', level: '', type: '', chapter: '', concept: '', sourceType: '', sourcePaperId: '' });
     const [questions, setQuestions] = useState([]);
     const [selectedQuestions, setSelectedQuestions] = useState([]);
     const [previewQuestion, setPreviewQuestion] = useState(null);
@@ -417,10 +417,18 @@ const CreatePaper = () => {
     const [showGenerateModal, setShowGenerateModal] = useState(false);
     const [toast, setToast] = useState(null);
 
+    const [blueprints, setBlueprints] = useState([]);
+    const [grandTests, setGrandTests] = useState([]);
+    const [previousYearPapers, setPreviousYearPapers] = useState([]);
+    const [selectedBlueprintId, setSelectedBlueprintId] = useState('');
+
     const showToast = (msg, type = 'info') => setToast({ msg, type });
 
     useEffect(() => {
         api.get('/api/questions').then(res => setAllQuestions(res.data)).catch(console.error);
+        api.get('/api/exam-blueprints').then(res => setBlueprints(res.data)).catch(console.error);
+        api.get('/api/grand-tests').then(res => setGrandTests(res.data)).catch(console.error);
+        api.get('/api/previous-year-papers').then(res => setPreviousYearPapers(res.data)).catch(console.error);
     }, []);
 
     const uniqueChapters = [...new Set(allQuestions.map(q => q.chapter))].filter(Boolean);
@@ -428,7 +436,10 @@ const CreatePaper = () => {
 
     const fetchFilteredQuestions = async () => {
         try {
-            const queryData = { ...filters };
+            const queryData = {};
+            Object.keys(filters).forEach(k => {
+                if (filters[k]) queryData[k] = filters[k];
+            });
             if (queryData.class) { queryData.classes = queryData.class; delete queryData.class; }
             const res = await api.get(`/api/questions?${new URLSearchParams(queryData).toString()}`);
             setQuestions(res.data);
@@ -443,6 +454,28 @@ const CreatePaper = () => {
     };
 
     const handleDeselect = (id) => setSelectedQuestions(prev => prev.filter(q => q._id !== id));
+
+    const handleBlueprintChange = (blueprintId) => {
+        setSelectedBlueprintId(blueprintId);
+        if (!blueprintId) return;
+        const bp = blueprints.find(b => b._id === blueprintId);
+        if (bp) {
+            const userSub = user?.subject?.toLowerCase() || '';
+            const matchingSub = bp.subjects.find(s => s.subjectName.toLowerCase().includes(userSub) || userSub.includes(s.subjectName.toLowerCase()));
+            const targetSubject = matchingSub || bp.subjects[0];
+            if (targetSubject && targetSubject.sections) {
+                const mappedPattern = targetSubject.sections.map((sec, idx) => ({
+                    sectionName: sec.sectionName || `Section ${String.fromCharCode(65 + idx)}`,
+                    numQuestions: sec.numQuestions || '',
+                    type: sec.questionTypes[0] || 'MCQ',
+                    description: sec.allowedToAnswer ? `Answer any ${sec.allowedToAnswer} questions` : '',
+                    marks: (sec.numQuestions || 0) * (sec.markingRules?.correct || 4)
+                }));
+                setPattern(mappedPattern);
+                showToast(`✓ Pattern pre-populated from Blueprint: ${bp.name}`, 'success');
+            }
+        }
+    };
 
     // ── Auto Get Questions handler ──
     const handleAutoGet = (qty, level) => {
@@ -602,6 +635,34 @@ const CreatePaper = () => {
             {/* Filter Bar */}
             <div className="px-6 py-4 bg-white border-b border-gray-200 flex flex-wrap gap-4 items-center z-0 mx-4 border-x">
                 <input type="text" placeholder="Paper Title" value={paperTitle} onChange={e => setPaperTitle(e.target.value)} className="border border-gray-300 p-2 rounded-lg font-medium w-48 text-sm focus:border-blue-500 outline-none" />
+                <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mx-2">Blueprint</div>
+                <select value={selectedBlueprintId} onChange={e => handleBlueprintChange(e.target.value)} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer w-48">
+                    <option value="">-- Apply Blueprint --</option>
+                    {blueprints.map(bp => <option key={bp._id} value={bp._id}>{bp.name} ({bp.examType})</option>)}
+                </select>
+
+                <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mx-2">Source</div>
+                <select value={filters.sourceType} onChange={e => setFilters({ ...filters, sourceType: e.target.value, sourcePaperId: '' })} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer">
+                    <option value="">All Sources</option>
+                    <option value="REGULAR">Repository (Regular)</option>
+                    <option value="GT">Grand Tests (GT)</option>
+                    <option value="PYQ">Previous Years (PYQ)</option>
+                </select>
+
+                {filters.sourceType === 'GT' && (
+                    <select value={filters.sourcePaperId} onChange={e => setFilters({ ...filters, sourcePaperId: e.target.value })} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer w-40">
+                        <option value="">-- Choose GT --</option>
+                        {grandTests.map(gt => <option key={gt._id} value={gt._id}>{gt.title}</option>)}
+                    </select>
+                )}
+
+                {filters.sourceType === 'PYQ' && (
+                    <select value={filters.sourcePaperId} onChange={e => setFilters({ ...filters, sourcePaperId: e.target.value })} className="border border-gray-300 p-2 rounded-lg text-sm text-gray-700 bg-white focus:border-blue-500 outline-none shadow-sm cursor-pointer w-40">
+                        <option value="">-- Choose PYQ --</option>
+                        {previousYearPapers.map(pyq => <option key={pyq._id} value={pyq._id}>{pyq.title} ({pyq.year})</option>)}
+                    </select>
+                )}
+
                 <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mx-2">Filter</div>
                 <select value={filters.class} onChange={e => {
                     const val = e.target.value;

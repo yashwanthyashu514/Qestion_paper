@@ -340,13 +340,55 @@ export default function ExamEngine() {
 
                     {/* Question Text */}
                     <div style={styles.qBody}>
-                        <p style={styles.qText} dangerouslySetInnerHTML={{ __html: currentQ.questionText }} />
+                        {currentQ.type === 'ASSERTION_REASON' && (
+                            <div style={{ marginBottom: '1.5rem', fontSize: '1.1rem', lineHeight: '1.6', color: '#1f2937' }}>
+                                <p style={{ marginBottom: '0.5rem' }}><strong>Assertion (A):</strong> {currentQ.assertion}</p>
+                                <p style={{ marginBottom: '0.5rem' }}><strong>Reason (R):</strong> {currentQ.reason}</p>
+                            </div>
+                        )}
+
+                        {currentQ.type === 'STATEMENT_BASED' && (
+                            <div style={{ marginBottom: '1.5rem', fontSize: '1.1rem', lineHeight: '1.6', color: '#1f2937' }}>
+                                <p style={{ marginBottom: '0.75rem', fontWeight: 'bold' }} dangerouslySetInnerHTML={{ __html: currentQ.questionText }}></p>
+                                {currentQ.statements?.map((stmt, idx) => (
+                                    <p key={idx} style={{ marginLeft: '1rem', marginBottom: '0.5rem' }}><strong>Statement {idx + 1}:</strong> {stmt}</p>
+                                ))}
+                            </div>
+                        )}
+
+                        {currentQ.type === 'MATCH_FOLLOWING' && (
+                            <div style={{ marginBottom: '1.5rem', fontSize: '1.1rem', color: '#1f2937' }}>
+                                <p style={{ marginBottom: '0.75rem', fontWeight: 'bold' }} dangerouslySetInnerHTML={{ __html: currentQ.questionText }}></p>
+                                <div style={{ border: '1px solid #e5e7eb', borderRadius: '12px', padding: '1rem', background: '#f9fafb', maxWidth: '500px', marginBottom: '1rem' }}>
+                                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                        <thead>
+                                            <tr>
+                                                <th style={{ textAlign: 'left', fontWeight: 'bold', paddingBottom: '0.5rem', borderBottom: '1px solid #e5e7eb' }}>Column A</th>
+                                                <th style={{ textAlign: 'left', fontWeight: 'bold', paddingBottom: '0.5rem', borderBottom: '1px solid #e5e7eb' }}>Column B</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {currentQ.matchPairs?.map((pair, idx) => (
+                                                <tr key={idx}>
+                                                    <td style={{ padding: '0.5rem 0' }}>{String.fromCharCode(65 + idx)}. {pair.left}</td>
+                                                    <td style={{ padding: '0.5rem 0' }}>{idx + 1}. {pair.right}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        )}
+
+                        {currentQ.type !== 'ASSERTION_REASON' && currentQ.type !== 'STATEMENT_BASED' && currentQ.type !== 'MATCH_FOLLOWING' && (
+                            <p style={styles.qText} dangerouslySetInnerHTML={{ __html: currentQ.questionText }} />
+                        )}
                         {currentQ.imageUrl && (
                             <img src={currentQ.imageUrl} alt="Question" style={styles.qImage} />
                         )}
 
                         {/* Options or Numerical Input */}
-                        {currentQ.type === 'numerical' || !currentQ.options || currentQ.options.length === 0 ? (
+                        {currentQ.type === 'NUMERICAL' || currentQ.type === 'numerical' || !currentQ.options || currentQ.options.length === 0 ? (
                             <div style={styles.numericalContainer}>
                                 <div style={styles.numericalRow}>
                                     <div style={styles.inputWrapper}>
@@ -426,11 +468,29 @@ export default function ExamEngine() {
                                     </div>
                                 </div>
                             </div>
+                        ) : currentQ.type === 'TRUE_FALSE' ? (
+                            <div style={{ display: 'flex', gap: '2rem', marginTop: '1.5rem', marginBottom: '1.5rem' }}>
+                                {['True', 'False'].map(opt => {
+                                    const selected = currentA.selectedOption === opt;
+                                    return (
+                                        <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', color: '#1e3a8a' }}>
+                                            <input
+                                                type="radio"
+                                                name="tf_option"
+                                                checked={selected}
+                                                onChange={() => handleOptionSelect(opt)}
+                                                style={{ width: '1.25rem', height: '1.25rem' }}
+                                            />
+                                            {opt}
+                                        </label>
+                                    );
+                                })}
+                            </div>
                         ) : (
                             <div>
                                 <div style={styles.optionsTextContainer}>
                                     {currentQ.options?.map((opt, i) => {
-                                        const label = (i + 1).toString();
+                                        const label = String.fromCharCode(65 + i); // Use standard A, B, C, D
                                         return (
                                             <div key={i} style={styles.optionTextLine}>
                                                 <span style={styles.optionTextLabel}>{label}.</span>
@@ -442,15 +502,15 @@ export default function ExamEngine() {
                                 <hr style={styles.divider} />
                                 <div style={styles.radioContainer}>
                                     {currentQ.options?.map((opt, i) => {
-                                        const label = (i + 1).toString();
-                                        const selected = currentA.selectedOption === opt;
+                                        const label = String.fromCharCode(65 + i);
+                                        const selected = currentA.selectedOption === label || currentA.selectedOption === opt;
                                         return (
                                             <label key={`radio-${i}`} style={styles.radioLabel}>
                                                 <input 
                                                     type="radio" 
                                                     name="jee_option" 
                                                     checked={selected} 
-                                                    onChange={() => handleOptionSelect(opt)} 
+                                                    onChange={() => handleOptionSelect(label)} 
                                                     style={styles.radioInput}
                                                 />
                                                 {label})

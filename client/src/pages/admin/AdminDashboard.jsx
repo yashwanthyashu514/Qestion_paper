@@ -7,6 +7,10 @@ import SubjectDetails from './SubjectDetails';
 import AdminPaperPreview from './AdminPaperPreview';
 import ExamManagement from './ExamManagement';
 import AdminResults from './AdminResults';
+import AdminQuestionBank from './AdminQuestionBank';
+import GrandTestList from './GrandTestList';
+import PreviousYearPapers from './PreviousYearPapers';
+import ExamBlueprints from './ExamBlueprints';
 
 const DashboardHome = () => {
     const subjects = ['Physics', 'Chemistry', 'Biology', 'Maths', 'Computer Science', 'Kannada', 'English', 'Hindi'];
@@ -85,27 +89,51 @@ const AdminDashboard = () => {
                 <div className="space-x-4 flex items-center mr-4">
                     <Link 
                         to="/admin/dashboard/exams" 
-                        className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition flex items-center gap-2 ${location.pathname.includes('/exams') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
+                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition flex items-center gap-2 ${location.pathname.includes('/exams') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
                     >
                         Exams
                     </Link>
                     <Link 
                         to="/admin/dashboard/results" 
-                        className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition flex items-center gap-2 ${location.pathname.includes('/results') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
+                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition flex items-center gap-2 ${location.pathname.includes('/results') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
                     >
                         Results
                     </Link>
                     <Link 
-                        to="/admin/dashboard/upload-template" 
-                        className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition flex items-center gap-2 ${location.pathname.includes('upload-template') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
+                        to="/admin/dashboard/question-bank" 
+                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition ${location.pathname.includes('question-bank') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
                     >
-                        Upload Template
+                        Q-Bank
+                    </Link>
+                    <Link 
+                        to="/admin/dashboard/grand-tests" 
+                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition ${location.pathname.includes('grand-tests') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
+                    >
+                        GT Papers
+                    </Link>
+                    <Link 
+                        to="/admin/dashboard/previous-year-papers" 
+                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition ${location.pathname.includes('previous-year-papers') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
+                    >
+                        PYQs
+                    </Link>
+                    <Link 
+                        to="/admin/dashboard/exam-blueprints" 
+                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition ${location.pathname.includes('exam-blueprints') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
+                    >
+                        Blueprints
+                    </Link>
+                    <Link 
+                        to="/admin/dashboard/upload-template" 
+                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition flex items-center gap-2 ${location.pathname.includes('upload-template') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
+                    >
+                        Templates
                     </Link>
                     <Link 
                         to="/admin/dashboard/create-teacher" 
-                        className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition flex items-center gap-2 ${location.pathname.includes('create-teacher') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
+                        className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition flex items-center gap-2 ${location.pathname.includes('create-teacher') ? 'bg-gold text-navy shadow-lg' : 'bg-white/5 text-gold border border-gold/30 hover:bg-white/10'}`}
                     >
-                        + Create Teacher
+                        + Teacher
                     </Link>
                     <div className="w-px h-8 bg-gold/20 mx-2"></div>
                     <button 
@@ -126,6 +154,10 @@ const AdminDashboard = () => {
                     <Route path="/preview/:paperId" element={<AdminPaperPreview />} />
                     <Route path="/exams" element={<ExamManagement />} />
                     <Route path="/results" element={<AdminResults />} />
+                    <Route path="/question-bank" element={<AdminQuestionBank />} />
+                    <Route path="/grand-tests" element={<GrandTestList />} />
+                    <Route path="/previous-year-papers" element={<PreviousYearPapers />} />
+                    <Route path="/exam-blueprints" element={<ExamBlueprints />} />
                 </Routes>
             </div>
         </div>

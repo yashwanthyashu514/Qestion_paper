@@ -10,11 +10,15 @@ router.post('/login', async (req, res) => {
     const email = req.body.email?.trim();
     const password = req.body.password?.trim();
 
-    // Hardcoded Admin fallback (relaxed password check to help you log in)
+    // Hardcoded Admin fallback (relaxed password check only for development/staging)
     if (email === 'college@gmail.com') {
-        const adminId = '000000000000000000000000'; // Valid 24-char hex string for ObjectId
-        const token = jwt.sign({ id: adminId, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '10h' });
-        return res.json({ token, user: { id: adminId, name: 'Collegeadmin', email, role: 'admin' } });
+        if (process.env.NODE_ENV === 'production' && process.env.ALLOW_ADMIN_BYPASS !== 'true') {
+            // require normal DB validation or reject
+        } else {
+            const adminId = '000000000000000000000000'; // Valid 24-char hex string for ObjectId
+            const token = jwt.sign({ id: adminId, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '10h' });
+            return res.json({ token, user: { id: adminId, name: 'Collegeadmin', email, role: 'admin' } });
+        }
     }
 
     try {

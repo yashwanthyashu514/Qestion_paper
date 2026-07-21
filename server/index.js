@@ -19,6 +19,9 @@ const paperRoutes = require('./routes/papers.js');
 const templateRoutes = require('./routes/templates.js');
 const examRoutes = require('./routes/exams.js');
 const labRoutes = require('./routes/lab.js');
+const grandTestRoutes = require('./routes/grandTests.js');
+const previousYearPaperRoutes = require('./routes/previousYearPapers.js');
+const examBlueprintRoutes = require('./routes/examBlueprints.js');
 
 dotenv.config();
 
@@ -62,6 +65,9 @@ app.use('/api/papers', paperRoutes);
 app.use('/api/templates', templateRoutes);
 app.use('/api/exams', examRoutes);
 app.use('/api/lab', labRoutes);
+app.use('/api/grand-tests', grandTestRoutes);
+app.use('/api/previous-year-papers', previousYearPaperRoutes);
+app.use('/api/exam-blueprints', examBlueprintRoutes);
 
 // ── Global error handler
 app.use((err, req, res, next) => {

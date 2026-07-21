@@ -208,11 +208,37 @@ export default function Scorecard() {
                                 let isCorrect = false;
                                 let isWrong = false;
                                 if (attempted && !data.answerKeyHidden) {
+                                    // 1. Numerical match with tolerance
+                                    const tolerance = q.numericalTolerance || 0;
                                     const parsedSelected = parseFloat(q.selectedOption);
                                     const parsedCorrect = parseFloat(q.correctAnswer);
-                                    const isNumericMatch = !isNaN(parsedSelected) && !isNaN(parsedCorrect) && Math.abs(parsedSelected - parsedCorrect) < 1e-9;
-                                    const isExactMatch = q.selectedOption.toString().trim().toLowerCase() === (q.correctAnswer || '').toString().trim().toLowerCase();
-                                    isCorrect = isNumericMatch || isExactMatch;
+                                    if (!isNaN(parsedSelected) && !isNaN(parsedCorrect)) {
+                                        if (Math.abs(parsedSelected - parsedCorrect) <= (tolerance + 1e-9)) {
+                                            isCorrect = true;
+                                        }
+                                    }
+
+                                    // 2. Exact match
+                                    if (!isCorrect && q.selectedOption.toString().trim().toLowerCase() === (q.correctAnswer || '').toString().trim().toLowerCase()) {
+                                        isCorrect = true;
+                                    }
+
+                                    // 3. Option index / letter match fallback
+                                    if (!isCorrect && q.options && q.options.length > 0) {
+                                        const letters = ['A', 'B', 'C', 'D'];
+                                        const selectedIdx = letters.indexOf(q.selectedOption.toString().toUpperCase());
+                                        if (selectedIdx !== -1 && q.options[selectedIdx]) {
+                                            if (q.options[selectedIdx].toString().trim().toLowerCase() === (q.correctAnswer || '').toString().trim().toLowerCase()) {
+                                                isCorrect = true;
+                                            }
+                                        }
+                                        const correctIdx = letters.indexOf((q.correctAnswer || '').toString().toUpperCase());
+                                        if (correctIdx !== -1 && q.options[correctIdx]) {
+                                            if (q.selectedOption.toString().trim().toLowerCase() === q.options[correctIdx].toString().trim().toLowerCase()) {
+                                                isCorrect = true;
+                                            }
+                                        }
+                                    }
                                     isWrong = !isCorrect;
                                 }
                                 return (

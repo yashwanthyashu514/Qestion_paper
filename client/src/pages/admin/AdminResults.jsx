@@ -68,12 +68,46 @@ export default function AdminResults() {
         const data = results.map((r, i) => {
             const attempted = [];
             const unattempted = [];
+            const correct = [];
+            const wrong = [];
             if (exam && exam.questions) {
                 exam.questions.forEach((q, idx) => {
                     const qNum = idx + 1;
                     const ans = r.answers?.find(a => a.questionId?.toString() === q._id?.toString());
                     if (ans && ans.selectedOption !== null && ans.selectedOption !== '') {
                         attempted.push(qNum);
+                        let isCorrect = false;
+                        const tolerance = q.numericalTolerance || 0;
+                        const parsedSelected = parseFloat(ans.selectedOption);
+                        const parsedAnswer = parseFloat(q.answer);
+                        if (!isNaN(parsedSelected) && !isNaN(parsedAnswer)) {
+                            if (Math.abs(parsedSelected - parsedAnswer) <= (tolerance + 1e-9)) {
+                                isCorrect = true;
+                            }
+                        }
+                        if (!isCorrect && ans.selectedOption.toString().trim().toLowerCase() === q.answer.toString().trim().toLowerCase()) {
+                            isCorrect = true;
+                        }
+                        if (!isCorrect && q.options && q.options.length > 0) {
+                            const letters = ['A', 'B', 'C', 'D'];
+                            const selectedIdx = letters.indexOf(ans.selectedOption.toString().toUpperCase());
+                            if (selectedIdx !== -1 && q.options[selectedIdx]) {
+                                if (q.options[selectedIdx].toString().trim().toLowerCase() === q.answer.toString().trim().toLowerCase()) {
+                                    isCorrect = true;
+                                }
+                            }
+                            const correctIdx = letters.indexOf(q.answer.toString().toUpperCase());
+                            if (correctIdx !== -1 && q.options[correctIdx]) {
+                                if (ans.selectedOption.toString().trim().toLowerCase() === q.options[correctIdx].toString().trim().toLowerCase()) {
+                                    isCorrect = true;
+                                }
+                            }
+                        }
+                        if (isCorrect) {
+                            correct.push(qNum);
+                        } else {
+                            wrong.push(qNum);
+                        }
                     } else {
                         unattempted.push(qNum);
                     }
@@ -85,10 +119,12 @@ export default function AdminResults() {
                 'Student Name': r.studentName,
                 'Roll No': r.rollNumber || 'N/A',
                 'Score': r.score,
-                'Correct': r.correct,
-                'Incorrect': r.incorrect,
-                'Unattempted': r.unattempted,
+                'Correct Count': r.correct,
+                'Incorrect Count': r.incorrect,
+                'Unattempted Count': r.unattempted,
                 'Attempted Qs': attempted.join(', '),
+                'Correct Qs': correct.join(', '),
+                'Wrong Qs': wrong.join(', '),
                 'Unattempted Qs': unattempted.join(', '),
                 'Submitted At': new Date(r.createdAt).toLocaleString()
             };
@@ -102,7 +138,7 @@ export default function AdminResults() {
 
     const exportPDF = () => {
         if (!results || results.length === 0) return;
-        const doc = new jsPDF('landscape'); // Landscape to fit extra columns
+        const doc = new jsPDF('landscape');
         const exam = exams.find(e => e._id === selectedExam);
         const examName = exam?.title || 'Exam Results';
         
@@ -111,18 +147,52 @@ export default function AdminResults() {
         doc.setFontSize(10);
         doc.text(`Total Students: ${results.length}`, 14, 22);
 
-        const tableColumn = ["#", "Student", "Roll No", "Score", "Attempted Qs", "Unattempted Qs"];
+        const tableColumn = ["#", "Student", "Roll No", "Score", "Attempted Qs", "Correct Qs", "Wrong Qs", "Unattempted Qs"];
         const tableRows = [];
 
         results.forEach((r, i) => {
             const attempted = [];
             const unattempted = [];
+            const correct = [];
+            const wrong = [];
             if (exam && exam.questions) {
                 exam.questions.forEach((q, idx) => {
                     const qNum = idx + 1;
                     const ans = r.answers?.find(a => a.questionId?.toString() === q._id?.toString());
                     if (ans && ans.selectedOption !== null && ans.selectedOption !== '') {
                         attempted.push(qNum);
+                        let isCorrect = false;
+                        const tolerance = q.numericalTolerance || 0;
+                        const parsedSelected = parseFloat(ans.selectedOption);
+                        const parsedAnswer = parseFloat(q.answer);
+                        if (!isNaN(parsedSelected) && !isNaN(parsedAnswer)) {
+                            if (Math.abs(parsedSelected - parsedAnswer) <= (tolerance + 1e-9)) {
+                                isCorrect = true;
+                            }
+                        }
+                        if (!isCorrect && ans.selectedOption.toString().trim().toLowerCase() === q.answer.toString().trim().toLowerCase()) {
+                            isCorrect = true;
+                        }
+                        if (!isCorrect && q.options && q.options.length > 0) {
+                            const letters = ['A', 'B', 'C', 'D'];
+                            const selectedIdx = letters.indexOf(ans.selectedOption.toString().toUpperCase());
+                            if (selectedIdx !== -1 && q.options[selectedIdx]) {
+                                if (q.options[selectedIdx].toString().trim().toLowerCase() === q.answer.toString().trim().toLowerCase()) {
+                                    isCorrect = true;
+                                }
+                            }
+                            const correctIdx = letters.indexOf(q.answer.toString().toUpperCase());
+                            if (correctIdx !== -1 && q.options[correctIdx]) {
+                                if (ans.selectedOption.toString().trim().toLowerCase() === q.options[correctIdx].toString().trim().toLowerCase()) {
+                                    isCorrect = true;
+                                }
+                            }
+                        }
+                        if (isCorrect) {
+                            correct.push(qNum);
+                        } else {
+                            wrong.push(qNum);
+                        }
                     } else {
                         unattempted.push(qNum);
                     }
@@ -135,6 +205,8 @@ export default function AdminResults() {
                 r.rollNumber || 'N/A',
                 r.score,
                 attempted.join(', '),
+                correct.join(', '),
+                wrong.join(', '),
                 unattempted.join(', ')
             ];
             tableRows.push(rowData);
@@ -147,8 +219,10 @@ export default function AdminResults() {
             styles: { fontSize: 8 },
             headStyles: { fillColor: [59, 130, 246] },
             columnStyles: {
-                4: { cellWidth: 80 }, // give more width to lists
-                5: { cellWidth: 80 }
+                4: { cellWidth: 50 },
+                5: { cellWidth: 50 },
+                6: { cellWidth: 50 },
+                7: { cellWidth: 50 }
             }
         });
 

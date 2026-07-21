@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const OnlineExamSchema = new mongoose.Schema({
     title: { type: String, required: true },
     examType: { type: String, enum: ['JEE', 'NEET', 'CET'], required: true },
+    blueprintId: { type: mongoose.Schema.Types.ObjectId, ref: 'ExamBlueprint' },
     sourcePapers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Paper' }],
     questions: [{
         questionId: { type: mongoose.Schema.Types.ObjectId, ref: 'Question', required: true },
@@ -14,7 +15,8 @@ const OnlineExamSchema = new mongoose.Schema({
         answer: String,
         imageUrl: String,
         marks: { type: Number, default: 4 },
-        type: { type: String, default: 'MCQ' }
+        type: { type: String, default: 'MCQ' },
+        sectionName: String
     }],
     instructions: { type: String, default: '' },
     start_time: { type: Date },

@@ -309,6 +309,16 @@ router.post('/:id/submit', detectLabIp, async (req, res) => {
         let score = 0, correct = 0, incorrect = 0, unattempted = 0;
         const weakMap = {};
 
+        const ExamBlueprint = require('../models/ExamBlueprint.js');
+        let blueprint = null;
+        try {
+            if (exam.blueprintId) {
+                blueprint = await ExamBlueprint.findById(exam.blueprintId);
+            }
+        } catch (e) {
+            console.error('Failed to load blueprint for grading:', e);
+        }
+
         const processedAnswers = exam.questions.map(q => {
             const sid = q._id.toString();
             const submitted = answerMap[sid];
@@ -316,19 +326,65 @@ router.post('/:id/submit', detectLabIp, async (req, res) => {
             const markedForReview = submitted?.markedForReview || false;
             const timeTaken = submitted?.timeTaken || 0;
 
+            // Load marking rules (fallback to JEE standard 4, -1, 0)
+            let correctMarks = 4;
+            let incorrectMarks = -1;
+            let unattemptedMarks = 0;
+
+            if (blueprint) {
+                const bpSubject = blueprint.subjects.find(s => s.subjectName.toLowerCase().trim() === (q.subject || '').toLowerCase().trim());
+                if (bpSubject && bpSubject.sections) {
+                    const bpSection = bpSubject.sections.find(sec => (sec.sectionName || '').toLowerCase().trim() === (q.sectionName || '').toLowerCase().trim());
+                    if (bpSection && bpSection.markingRules) {
+                        correctMarks = bpSection.markingRules.correct !== undefined ? bpSection.markingRules.correct : 4;
+                        incorrectMarks = bpSection.markingRules.incorrect !== undefined ? bpSection.markingRules.incorrect : -1;
+                        unattemptedMarks = bpSection.markingRules.unattempted !== undefined ? bpSection.markingRules.unattempted : 0;
+                    }
+                }
+            }
+
             let result = 'unattempted';
             if (selected !== null && selected !== '') {
+                let isCorrect = false;
+
+                // 1. Numerical match with tolerance
+                const tolerance = q.numericalTolerance || 0;
                 const parsedSelected = parseFloat(selected);
                 const parsedAnswer = parseFloat(q.answer);
-                const isNumericMatch = !isNaN(parsedSelected) && !isNaN(parsedAnswer) && Math.abs(parsedSelected - parsedAnswer) < 1e-9;
-                const isExactMatch = selected.toString().trim().toLowerCase() === q.answer.toString().trim().toLowerCase();
+                if (!isNaN(parsedSelected) && !isNaN(parsedAnswer)) {
+                    if (Math.abs(parsedSelected - parsedAnswer) <= (tolerance + 1e-9)) {
+                        isCorrect = true;
+                    }
+                }
 
-                if (isNumericMatch || isExactMatch) {
-                    score += 4;
+                // 2. Exact match
+                if (!isCorrect && selected.toString().trim().toLowerCase() === q.answer.toString().trim().toLowerCase()) {
+                    isCorrect = true;
+                }
+
+                // 3. Option index / letter match
+                if (!isCorrect && q.options && q.options.length > 0) {
+                    const letters = ['A', 'B', 'C', 'D'];
+                    const selectedIdx = letters.indexOf(selected.toString().toUpperCase());
+                    if (selectedIdx !== -1 && q.options[selectedIdx]) {
+                        if (q.options[selectedIdx].toString().trim().toLowerCase() === q.answer.toString().trim().toLowerCase()) {
+                            isCorrect = true;
+                        }
+                    }
+                    const correctIdx = letters.indexOf(q.answer.toString().toUpperCase());
+                    if (correctIdx !== -1 && q.options[correctIdx]) {
+                        if (selected.toString().trim().toLowerCase() === q.options[correctIdx].toString().trim().toLowerCase()) {
+                            isCorrect = true;
+                        }
+                    }
+                }
+
+                if (isCorrect) {
+                    score += correctMarks;
                     correct++;
                     result = 'correct';
                 } else {
-                    score -= 1;
+                    score += incorrectMarks;
                     incorrect++;
                     result = 'incorrect';
                     // Track weak areas
@@ -337,6 +393,7 @@ router.post('/:id/submit', detectLabIp, async (req, res) => {
                     weakMap[key].incorrect++;
                 }
             } else {
+                score += unattemptedMarks;
                 unattempted++;
             }
 
