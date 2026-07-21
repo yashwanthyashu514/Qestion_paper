@@ -264,4 +264,26 @@ router.post('/:id/import', [auth, checkRole(['admin'])], async (req, res) => {
     }
 });
 
+// @route   DELETE /api/grand-tests/:id/questions/:questionId
+// @desc    Remove a question from a Grand Test
+// @access  Admin
+router.delete('/:id/questions/:questionId', [auth, checkRole(['admin'])], async (req, res) => {
+    try {
+        const gtPaper = await GrandTestPaper.findById(req.params.id);
+        if (!gtPaper) return res.status(404).json({ msg: 'Grand Test paper not found.' });
+
+        // Remove from questions array
+        gtPaper.questions = gtPaper.questions.filter(qId => qId.toString() !== req.params.questionId);
+        await gtPaper.save();
+
+        // Delete the question itself if it is a GT question
+        await Question.deleteOne({ _id: req.params.questionId });
+
+        res.json({ msg: 'Question removed from Grand Test.', questionsCount: gtPaper.questions.length });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 module.exports = router;

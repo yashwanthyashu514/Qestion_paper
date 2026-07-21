@@ -18,6 +18,17 @@ const GrandTestList = () => {
     const [isParsing, setIsParsing] = useState(false);
     const [duplicateWarnings, setDuplicateWarnings] = useState([]);
 
+    const [editingQuestion, setEditingQuestion] = useState(null);
+    const [editForm, setEditForm] = useState({
+        questionText: '',
+        options: ['', '', '', ''],
+        answer: '',
+        chapter: '',
+        concept: '',
+        level: 'medium',
+        solutionText: ''
+    });
+
     const fetchGrandTests = async () => {
         try {
             const res = await api.get('/api/grand-tests');
@@ -101,6 +112,52 @@ const GrandTestList = () => {
                 if (selectedGT?._id === id) setSelectedGT(null);
             } catch (err) {
                 alert('Delete failed');
+            }
+        }
+    };
+
+    const handleOpenEditQuestion = (q) => {
+        setEditingQuestion(q);
+        setEditForm({
+            questionText: q.questionText || '',
+            options: q.options && q.options.length === 4 ? q.options : (q.options || ['', '', '', '']),
+            answer: q.answer || '',
+            chapter: q.chapter || '',
+            concept: q.concept || '',
+            level: q.level || 'medium',
+            solutionText: q.solutionText || ''
+        });
+    };
+
+    const handleEditQuestionSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const submitData = new FormData();
+            submitData.append('questionText', editForm.questionText);
+            submitData.append('options', JSON.stringify(editForm.options));
+            submitData.append('answer', editForm.answer);
+            submitData.append('chapter', editForm.chapter);
+            submitData.append('concept', editForm.concept);
+            submitData.append('level', editForm.level);
+            submitData.append('solutionText', editForm.solutionText);
+
+            await api.post(`/api/questions/update/${editingQuestion._id}`, submitData);
+            alert('Question updated successfully!');
+            setEditingQuestion(null);
+            handleOpenGT(selectedGT._id);
+        } catch (err) {
+            alert(err.response?.data?.msg || err.message);
+        }
+    };
+
+    const handleRemoveQuestion = async (qId) => {
+        if (window.confirm('Are you sure you want to remove this question from this Grand Test?')) {
+            try {
+                await api.delete(`/api/grand-tests/${selectedGT._id}/questions/${qId}`);
+                alert('Question removed successfully!');
+                handleOpenGT(selectedGT._id);
+            } catch (err) {
+                alert('Failed to remove question');
             }
         }
     };
@@ -237,12 +294,29 @@ const GrandTestList = () => {
                                 <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
                                     {selectedGT.questions?.map(q => (
                                         <div key={q._id} className="p-4 bg-gray-50/50 border border-gray-100 rounded-2xl text-xs relative group">
+                                            <div className="absolute top-4 right-4 hidden group-hover:flex space-x-2 z-10">
+                                                <button onClick={() => handleOpenEditQuestion(q)} className="text-blue-600 hover:text-blue-800 font-bold bg-blue-50 px-2 py-1 rounded">Edit</button>
+                                                <button onClick={() => handleRemoveQuestion(q._id)} className="text-red-600 hover:text-red-800 font-bold bg-red-50 px-2 py-1 rounded">Remove</button>
+                                            </div>
                                             <div className="flex flex-wrap gap-2 mb-2">
                                                 <span className="font-black bg-navy text-gold px-2 py-0.5 rounded text-[8px] tracking-wider uppercase">{q.questionId}</span>
                                                 <span className="text-[9px] font-bold text-slate/40 uppercase tracking-wider">{q.type}</span>
                                                 <span className="text-[9px] font-bold text-slate/40 uppercase tracking-wider">Chapter: {q.chapter}</span>
+                                                {q.answer && (
+                                                    <span className="text-[9px] font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded">Correct: {q.answer}</span>
+                                                )}
                                             </div>
-                                            <p className="font-medium text-slate whitespace-pre-wrap">{q.questionText}</p>
+                                            <p className="font-medium text-slate whitespace-pre-wrap mb-2">{q.questionText}</p>
+                                            {q.options && q.options.length > 0 && (
+                                                <div className="grid grid-cols-2 gap-2 pl-4 text-slate/60 mb-2 border-t border-gray-100/50 pt-2 mt-2">
+                                                    {q.options.map((o, oi) => <div key={oi}>{String.fromCharCode(65+oi)}) {o}</div>)}
+                                                </div>
+                                            )}
+                                            {q.solutionText && (
+                                                <div className="text-gray-500 bg-green-50/20 p-2 rounded mt-2 border border-green-50/30">
+                                                    <strong>Solution:</strong> {q.solutionText}
+                                                </div>
+                                            )}
                                         </div>
                                     ))}
                                     {selectedGT.questions?.length === 0 && (
@@ -307,6 +381,99 @@ const GrandTestList = () => {
                             <div className="flex gap-4 pt-4">
                                 <button type="button" onClick={() => setShowCreateModal(false)} className="flex-1 border border-gray-200 text-slate py-3 rounded-xl text-xs font-black uppercase tracking-widest">Cancel</button>
                                 <button type="submit" className="flex-1 bg-navy text-gold py-3 rounded-xl text-xs font-black uppercase tracking-widest shadow-md">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+        {/* Edit Question Modal */}
+            {editingQuestion && (
+                <div className="fixed inset-0 bg-navy/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="bg-white p-10 rounded-[2.5rem] shadow-2xl max-w-2xl w-full border border-gray-100 max-h-[90vh] overflow-y-auto animate-fade-in-up">
+                        <h3 className="font-black text-xl text-navy uppercase tracking-wide mb-6">Edit Question</h3>
+                        <form onSubmit={handleEditQuestionSubmit} className="space-y-4">
+                            <div>
+                                <label className="block text-[10px] font-black text-navy/40 uppercase tracking-widest mb-2">Question Text</label>
+                                <textarea 
+                                    required rows={4}
+                                    className="w-full border border-gray-200 p-3 rounded-xl text-xs focus:ring-2 focus:ring-navy outline-none"
+                                    value={editForm.questionText} onChange={e => setEditForm({...editForm, questionText: e.target.value})}
+                                />
+                            </div>
+                            
+                            {editingQuestion.type === 'MCQ' && (
+                                <div className="grid grid-cols-2 gap-4">
+                                    {editForm.options.map((opt, oIdx) => (
+                                        <div key={oIdx}>
+                                            <label className="block text-[10px] font-black text-navy/40 uppercase tracking-widest mb-2">Option {String.fromCharCode(65+oIdx)}</label>
+                                            <input 
+                                                type="text" required
+                                                className="w-full border border-gray-200 p-3 rounded-xl text-xs focus:ring-2 focus:ring-navy outline-none"
+                                                value={opt} 
+                                                onChange={e => {
+                                                    const newOpts = [...editForm.options];
+                                                    newOpts[oIdx] = e.target.value;
+                                                    setEditForm({...editForm, options: newOpts});
+                                                }}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-[10px] font-black text-navy/40 uppercase tracking-widest mb-2">Correct Answer / Option</label>
+                                    <input 
+                                        type="text" required placeholder={editingQuestion.type === 'MCQ' ? "e.g. Option text or A/B/C/D" : "e.g. 10.5"}
+                                        className="w-full border border-gray-200 p-3 rounded-xl text-xs focus:ring-2 focus:ring-navy outline-none"
+                                        value={editForm.answer} onChange={e => setEditForm({...editForm, answer: e.target.value})}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-[10px] font-black text-navy/40 uppercase tracking-widest mb-2">Difficulty Level</label>
+                                    <select 
+                                        className="w-full border border-gray-200 p-3 rounded-xl text-xs bg-white focus:ring-2 focus:ring-navy outline-none font-bold"
+                                        value={editForm.level} onChange={e => setEditForm({...editForm, level: e.target.value})}
+                                    >
+                                        <option value="easy">Easy</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="hard">Hard</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-[10px] font-black text-navy/40 uppercase tracking-widest mb-2">Chapter</label>
+                                    <input 
+                                        type="text" required
+                                        className="w-full border border-gray-200 p-3 rounded-xl text-xs focus:ring-2 focus:ring-navy outline-none"
+                                        value={editForm.chapter} onChange={e => setEditForm({...editForm, chapter: e.target.value})}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-[10px] font-black text-navy/40 uppercase tracking-widest mb-2">Concept</label>
+                                    <input 
+                                        type="text" required
+                                        className="w-full border border-gray-200 p-3 rounded-xl text-xs focus:ring-2 focus:ring-navy outline-none"
+                                        value={editForm.concept} onChange={e => setEditForm({...editForm, concept: e.target.value})}
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-[10px] font-black text-navy/40 uppercase tracking-widest mb-2">Detailed Solution / Explanation</label>
+                                <textarea 
+                                    rows={3}
+                                    className="w-full border border-gray-200 p-3 rounded-xl text-xs focus:ring-2 focus:ring-navy outline-none"
+                                    value={editForm.solutionText} onChange={e => setEditForm({...editForm, solutionText: e.target.value})}
+                                />
+                            </div>
+
+                            <div className="flex gap-4 pt-4 border-t border-gray-100">
+                                <button type="button" onClick={() => setEditingQuestion(null)} className="flex-1 border border-gray-200 text-slate py-3 rounded-xl text-xs font-black uppercase tracking-widest">Cancel</button>
+                                <button type="submit" className="flex-1 bg-navy text-gold py-3 rounded-xl text-xs font-black uppercase tracking-widest shadow-md">Save Changes</button>
                             </div>
                         </form>
                     </div>
